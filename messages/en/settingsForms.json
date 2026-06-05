@@ -1,0 +1,256 @@
+{
+  "notificationPreferences": {
+    "title": "Notifications",
+    "description": "Account and Security notifications are always sent by email and cannot be changed.",
+    "table": {
+      "category": "Category",
+      "bell": "Bell",
+      "email": "Email"
+    },
+    "locked": "Locked",
+    "save": "Save preferences",
+    "saving": "Saving...",
+    "saved": "Notification preferences saved"
+  },
+  "notificationsPage": {
+    "title": "Notifications",
+    "subtitle": "Review recent account and workspace activity.",
+    "filter": {
+      "all": "All",
+      "unread": "Unread",
+      "archived": "Archived"
+    },
+    "empty": {
+      "title": "All caught up",
+      "description": "You have no unread notifications."
+    },
+    "archive": "Archive",
+    "loadMore": "Load more"
+  },
+  "profile": {
+    "title": "Profile",
+    "description": "Update the name shown across your workspace.",
+    "displayName": "Display name",
+    "email": "Email",
+    "emailHint": "Change it in Email settings.",
+    "role": "Role",
+    "roleFallback": "User",
+    "saved": "Profile updated",
+    "avatar": {
+      "label": "Profile picture",
+      "change": "Change",
+      "remove": "Remove",
+      "dropzoneHint": "JPEG, PNG, or WebP up to 25 MB.",
+      "cropTitle": "Crop your photo",
+      "cropDescription": "Drag to reposition, pinch or scroll to zoom.",
+      "save": "Save photo",
+      "uploaded": "Profile picture updated",
+      "removed": "Profile picture removed",
+      "errors": {
+        "tooLarge": "That image is too large. Try a smaller file.",
+        "unsupportedFormat": "Use a JPEG, PNG, or WebP image.",
+        "uploadFailed": "Could not upload the image.",
+        "removeFailed": "Could not remove the profile picture."
+      },
+      "removeConfirmTitle": "Remove profile picture?",
+      "removeConfirmDescription": "Your avatar will go back to your initials."
+    }
+  },
+  "email": {
+    "title": "Email",
+    "description": "Change the address used for sign-in and account alerts.",
+    "currentLabel": "Current email",
+    "currentHint": "This address remains active.",
+    "newLabel": "New email address",
+    "newHint": "We'll send a confirmation link to the new address.",
+    "passwordLabel": "Current password",
+    "submit": "Request change",
+    "submitting": "Requesting...",
+    "sentToast": "Confirmation link sent",
+    "pending": {
+      "title": "Confirmation pending",
+      "body": "We sent a link to <strong>{email}</strong>. Check your email to complete the change."
+    }
+  },
+  "confirmEmailChange": {
+    "loading": {
+      "title": "Confirming email change",
+      "description": "Please wait while we verify the confirmation link."
+    },
+    "success": {
+      "title": "Email updated",
+      "description": "Your new email address is ready to use.",
+      "cta": "Go to app"
+    },
+    "error": {
+      "title": "Invalid or expired link",
+      "description": "Request a fresh confirmation link from Email settings.",
+      "cta": "Back to Email settings"
+    },
+    "idle": {
+      "title": "Confirm email change",
+      "description": "Paste the confirmation token from your email to finish the change."
+    },
+    "tokenLabel": "Confirmation token",
+    "tokenPlaceholder": "Paste the token from your email",
+    "submit": "Confirm email change"
+  },
+  "password": {
+    "title": "Password",
+    "description": "Use a strong password that you do not use elsewhere.",
+    "currentLabel": "Current password",
+    "newLabel": "New password",
+    "confirmLabel": "Confirm new password",
+    "submit": "Update password",
+    "submitting": "Updating...",
+    "saved": "Password updated",
+    "mismatch": "Passwords must match.",
+    "invalidValue": "Invalid value",
+    "checkPassword": "Check your password."
+  },
+  "data": {
+    "export": {
+      "title": "Export personal data",
+      "description": "Download a JSON file with all data we hold about you.",
+      "submit": "Download my data",
+      "submitting": "Preparing..."
+    },
+    "delete": {
+      "title": "Delete account",
+      "description": "Permanently delete your account and all associated data. This cannot be undone.",
+      "trigger": "Delete my account",
+      "confirmTitle": "Delete your account?",
+      "confirmDescription": "This permanently removes your account and all associated data.",
+      "confirmLabel": "Type your email to confirm",
+      "submit": "Delete forever",
+      "submitting": "Deleting...",
+      "emailMismatch": "Email does not match",
+      "blocking": {
+        "title": "Action needed before you can delete your account",
+        "description": "You still own the organizations below. Transfer ownership or delete each one, then come back and try again. \"Sole owner\" rows have no other owners to inherit access — those have to be transferred or the organization deleted.",
+        "transferCta": "Manage members",
+        "deleteOrgCta": "Delete organization",
+        "soleOwnerBadge": "Sole owner"
+      }
+    },
+    "legal": {
+      "types": {
+        "termsOfService": "Terms of Service",
+        "privacyPolicy": "Privacy Policy",
+        "cookiePolicy": "Cookie Policy",
+        "dpa": "Data Processing Agreement"
+      },
+      "pending": {
+        "title": "Pending legal updates",
+        "description": "New versions of these documents are available. Please review and accept them.",
+        "versionLabel": "v{version}",
+        "effectiveLabel": "Effective {date}",
+        "viewAndAccept": "Review & accept",
+        "acceptSuccess": "Acceptance recorded"
+      },
+      "accepted": {
+        "title": "Legal documents you've accepted",
+        "description": "A record of every legal document version you've accepted, with timestamps.",
+        "empty": "You haven't accepted any legal documents yet.",
+        "versionLabel": "v{version}",
+        "acceptedLabel": "Accepted {date}",
+        "updateAvailable": "Update available",
+        "view": "View",
+        "loadError": "Couldn't load your acceptances. Refresh to try again."
+      },
+      "sheet": {
+        "loadingTitle": "Loading document…",
+        "loadError": "Couldn't load this document. Close the panel and try again.",
+        "notFound": "This version is no longer available from the server. Your acceptance record is still on file.",
+        "versionLabel": "Version {version}",
+        "publishedLabel": "Published {date}",
+        "effectiveLabel": "effective {date}",
+        "acceptedLabel": "accepted {date}",
+        "acknowledge": "I have read and accept the {title}.",
+        "accept": "Accept",
+        "accepting": "Recording…",
+        "cancel": "Cancel",
+        "close": "Close",
+        "acceptError": "We couldn't record your acceptance. Refresh and try again."
+      }
+    }
+  },
+  "security": {
+    "loadingTitle": "Two-factor authentication",
+    "loadingDescription": "Loading your security settings…",
+    "disabled": {
+      "title": "Two-factor authentication",
+      "description": "Add a second step to your sign-in for an extra layer of security.",
+      "status": "Two-factor authentication is off",
+      "explainer": "We'll ask for a code from your authenticator app the next time you sign in.",
+      "start": "Set up authenticator app",
+      "starting": "Starting…"
+    },
+    "scan": {
+      "title": "Scan with your authenticator",
+      "description": "Use Google Authenticator, 1Password, Authy, or any TOTP app.",
+      "manualPrompt": "Can't scan? Enter this code manually:",
+      "copySecret": "Copy secret",
+      "secretCopied": "Secret copied",
+      "back": "Cancel",
+      "continue": "I've added it, continue"
+    },
+    "confirm": {
+      "title": "Confirm with a code",
+      "description": "Enter the 6-digit code shown in your authenticator app right now.",
+      "codeLabel": "Code from app",
+      "back": "Back",
+      "submit": "Enable two-factor",
+      "submitting": "Confirming…",
+      "wrongCode": "That code did not match."
+    },
+    "codes": {
+      "title": "Save your recovery codes",
+      "description": "Each code works once. Store them somewhere safe, they will not be shown again.",
+      "acknowledge": "I have saved my recovery codes",
+      "finish": "Finish setup",
+      "copyAll": "Copy all",
+      "downloadTxt": "Download .txt",
+      "copied": "Recovery codes copied"
+    },
+    "enabled": {
+      "title": "Two-factor authentication",
+      "description": "You'll be asked for a code at every sign-in.",
+      "status": "Two-factor authentication is on",
+      "disabledToast": "Two-factor authentication is off"
+    },
+    "regenerate": {
+      "title": "Recovery codes",
+      "description": "Lost access to your codes? Generate a new set. Old codes stop working.",
+      "open": "Regenerate recovery codes",
+      "dialog": {
+        "title": "Regenerate recovery codes?",
+        "description": "Your existing recovery codes will stop working immediately. Enter your password and a current code to confirm."
+      },
+      "submit": "Regenerate codes",
+      "submitting": "Regenerating…",
+      "result": {
+        "title": "New recovery codes",
+        "description": "Your old recovery codes have been invalidated. Save these new codes, they will not be shown again.",
+        "acknowledge": "I have saved my new recovery codes",
+        "finish": "Finish saving codes"
+      }
+    },
+    "disableCard": {
+      "title": "Turn off two-factor",
+      "description": "Removes the second step from sign-in. You can turn it back on later.",
+      "open": "Turn off two-factor",
+      "dialog": {
+        "title": "Turn off two-factor authentication?",
+        "description": "Sign-in will no longer require a second step. You can re-enable it later. Enter your password and a current code to confirm."
+      },
+      "submit": "Turn off",
+      "submitting": "Turning off…"
+    },
+    "credentials": {
+      "passwordLabel": "Current password",
+      "codeLabel": "Code from app (or recovery code)",
+      "codePlaceholder": "123456 or abcd-efgh-ij"
+    }
+  }
+}

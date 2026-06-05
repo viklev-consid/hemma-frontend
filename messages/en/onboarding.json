@@ -1,0 +1,39 @@
+{
+  "page": {
+    "title": "Finish account setup",
+    "description": "Complete these steps before entering your workspace.",
+    "steps": {
+      "terms": "Terms",
+      "avatar": "Photo",
+      "createOrg": "Organization",
+      "complete": "Complete"
+    },
+    "terms": {
+      "acceptMarketing": "Send me product updates by email",
+      "marketingHint": "Optional.",
+      "submit": "Continue",
+      "loading": "Loading legal documents…",
+      "loadError": "Couldn't load the legal documents. Try again.",
+      "retry": "Try again",
+      "noneRequired": "No legal documents are currently required.",
+      "documentsUpdated": "These documents were updated while you were reading. Please review the latest version and acknowledge again.",
+      "errorAcceptDocuments": "Please accept all legal documents to continue."
+    },
+    "avatar": {
+      "title": "Add a profile picture",
+      "description": "Optional. You can change it later in Profile settings.",
+      "skip": "Skip for now",
+      "continue": "Continue"
+    },
+    "createOrg": {
+      "title": "Create your first organization",
+      "description": "Optional. Organizations are workspaces where you collaborate with others. You can also create or join one later from the picker.",
+      "skip": "I'll do this later"
+    },
+    "complete": {
+      "title": "Ready to enter Modulith",
+      "description": "We'll save your onboarding choices and open the app.",
+      "submit": "Complete setup"
+    }
+  }
+}

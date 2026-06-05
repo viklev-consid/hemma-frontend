@@ -1,0 +1,26 @@
+{
+  "shell": {
+    "title": "Settings",
+    "subtitle": "Manage your account preferences."
+  },
+  "nav": {
+    "profile": "Profile",
+    "password": "Password",
+    "email": "Email",
+    "security": "Security",
+    "activity": "Activity",
+    "notifications": "Notifications",
+    "data": "Your data"
+  },
+  "activity": {
+    "title": "Your activity",
+    "subtitle": "Recent security and account events on your profile."
+  },
+  "language": {
+    "title": "Language",
+    "description": "Choose the language used across the app.",
+    "options": {
+      "en": "English"
+    }
+  }
+}

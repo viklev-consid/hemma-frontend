@@ -1,0 +1,38 @@
+# dependencies / build output (rebuilt inside the image)
+node_modules
+.next
+out
+build
+dist
+.turbo
+
+# env / secrets — never bake these into the image; inject at runtime
+.env
+.env.*
+!.env.example
+
+# vcs / ci / editor
+.git
+.gitignore
+.github
+.husky
+.vscode
+.idea
+
+# tests & coverage
+coverage
+tests
+**/*.test.ts
+**/*.test.tsx
+
+# docs & local cruft
+docs
+*.md
+!README.md
+PLAN.md
+frontend-template-plan.html
+.DS_Store
+*.tsbuildinfo
+.agents
+.codex
+.claude

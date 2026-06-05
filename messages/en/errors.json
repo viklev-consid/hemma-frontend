@@ -1,0 +1,8 @@
+{
+  "generic": {
+    "title": "Something went wrong",
+    "description": "Please try again in a moment."
+  },
+  "failed": "Request failed",
+  "invalidValue": "Invalid value"
+}

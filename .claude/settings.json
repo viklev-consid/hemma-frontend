@@ -1,0 +1,88 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm dev)",
+      "Bash(pnpm dev:*)",
+      "Bash(pnpm build)",
+      "Bash(pnpm lint)",
+      "Bash(pnpm lint:*)",
+      "Bash(pnpm format)",
+      "Bash(pnpm typecheck)",
+      "Bash(pnpm test)",
+      "Bash(pnpm test:*)",
+      "Bash(pnpm api:sync)",
+      "Bash(pnpm api:generate)",
+      "Bash(pnpm dlx shadcn@latest *)",
+      "Bash(pnpm install *)",
+      "Bash(pnpm add *)",
+      "Bash(pnpm remove *)",
+      "Bash(npx tsc --noEmit*)",
+      "Bash(npx -y react-doctor@latest *)",
+      "Bash(eslint *)",
+      "Bash(prettier *)",
+      "Bash(vitest *)",
+      "Bash(ls *)",
+      "Bash(find *)",
+      "Bash(cat *)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Bash(wc *)",
+      "Bash(grep *)",
+      "Bash(rg *)",
+      "Bash(git status*)",
+      "Bash(git log*)",
+      "Bash(git diff*)",
+      "Bash(git branch*)",
+      "Bash(git show*)",
+      "Bash(git blame*)",
+      "Bash(git stash list*)",
+      "Bash(git rev-parse*)",
+      "Bash(git remote -v*)",
+      "Bash(git ls-files*)",
+      "Read(*)"
+    ],
+    "deny": []
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "FILE=$(jq -r '.tool_input.file_path // empty' < /dev/stdin); if [ -n \"$FILE\" ] && echo \"$FILE\" | grep -q 'api/generated'; then echo 'BLOCKED: files in api/generated/ are auto-generated and must not be hand-edited. Run pnpm api:generate instead.' && exit 1; fi; exit 0"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "FILE=$(jq -r '.tool_input.file_path // empty' < /dev/stdin); if [ -n \"$FILE\" ] && echo \"$FILE\" | grep -qE '\\.(ts|tsx)$'; then cd /Users/viktorlevine/Work/modulith-frontend && pnpm typecheck 2>&1 | head -30; fi"
+          },
+          {
+            "type": "command",
+            "command": "FILE=$(jq -r '.tool_input.file_path // empty' < /dev/stdin); if [ -n \"$FILE\" ] && echo \"$FILE\" | grep -qE '\\.(ts|tsx|js|jsx)$'; then cd /Users/viktorlevine/Work/modulith-frontend && npx eslint --no-warn-ignored \"$FILE\" 2>&1 | head -20; fi"
+          },
+          {
+            "type": "command",
+            "command": "FILE=$(jq -r '.tool_input.file_path // empty' < /dev/stdin); REPO=/Users/viktorlevine/Work/modulith-frontend; if [ -z \"$FILE\" ]; then exit 0; fi; REL=${FILE#${REPO}/}; SKILLS=\"\"; case \"$REL\" in app/api/*) SKILLS=\"bff-route-review\";; proxy.ts|lib/safe-next-path.ts|lib/session.ts|lib/constants.ts) SKILLS=\"bff-route-review\";; components/can.tsx|lib/org-permissions.ts|lib/org-permission-strings.ts|lib/org-roles.ts|lib/org-permissions.test.ts) SKILLS=\"permission-review\";; components/organizations/*|app/\\(app\\)/app/organizations/*|app/\\(app\\)/app/o/*) SKILLS=\"permission-review\";; components/ui/*) SKILLS=\"basui-composition-check\";; esac; if [ -n \"$SKILLS\" ]; then for S in $SKILLS; do case \"$S\" in basui-composition-check) printf '\\n<system-reminder>\\nYou edited a primitive in components/ui/. Base UI parts that require a context ancestor (Menu.GroupLabel → Menu.Group, Tabs.Tab → Tabs.List, etc.) fail only at runtime — not at typecheck. Before ending the turn, either (a) mount the affected surface in dev, or (b) confirm the ancestor wrappers are present at every call site. See components/ui/AGENTS.md for the cheat sheet.\\n</system-reminder>\\n';; *) printf '\\n<system-reminder>\\nThe edit touched a file whose review is owned by the %s skill. Before ending the turn, invoke that skill (or justify skipping it). Relevant file: %s\\n</system-reminder>\\n' \"$S\" \"$REL\";; esac; done; fi; exit 0"
+          }
+        ]
+      }
+    ],
+    "PreCommit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd /Users/viktorlevine/Work/modulith-frontend && pnpm typecheck && pnpm lint && pnpm test --run 2>&1 | tail -20 && npx -y react-doctor@latest . --diff --staged --fail-on error 2>&1 | tail -30"
+          }
+        ]
+      }
+    ]
+  }
+}

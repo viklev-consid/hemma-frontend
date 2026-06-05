@@ -1,0 +1,5791 @@
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "Modulith.Api | v1",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://localhost:7297/"
+    }
+  ],
+  "paths": {
+    "/api/auth/info": {
+      "get": {
+        "tags": ["TickerQ Dashboard"],
+        "summary": "Get authentication configuration",
+        "operationId": "GetAuthInfo",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/auth/validate": {
+      "post": {
+        "tags": ["TickerQ Dashboard"],
+        "summary": "Validate authentication credentials",
+        "operationId": "ValidateAuth",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/options": {
+      "get": {
+        "tags": ["TickerQ Dashboard"],
+        "summary": "Get dashboard options and status",
+        "operationId": "GetOptions",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/time-tickers": {
+      "get": {
+        "tags": ["TickerQ Dashboard"],
+        "summary": "Get all time tickers",
+        "operationId": "GetTimeTickers",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/time-tickers/paginated": {
+      "get": {
+        "tags": ["TickerQ Dashboard"],
+        "summary": "Get paginated time tickers",
+        "operationId": "GetTimeTickersPaginated",
+        "parameters": [
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": ["integer", "string"],
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": ["integer", "string"],
+              "format": "int32",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/time-tickers/graph-data-range": {
+      "get": {
+        "tags": ["TickerQ Dashboard"],
+        "summary": "Get time tickers graph data for specific date range",
+        "operationId": "GetTimeTickersGraphDataRange",
+        "parameters": [
+          {
+            "name": "pastDays",
+            "in": "query",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": ["integer", "string"],
+              "format": "int32",
+              "default": 3
+            }
+          },
+          {
+            "name": "futureDays",
+            "in": "query",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": ["integer", "string"],
+              "format": "int32",
+              "default": 3
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/time-tickers/graph-data": {
+      "get": {
+        "tags": ["TickerQ Dashboard"],
+        "summary": "Get time tickers graph data",
+        "operationId": "GetTimeTickersGraphData",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/time-ticker/add": {
+      "post": {
+        "tags": ["TickerQ Dashboard"],
+        "summary": "Create chain jobs",
+        "operationId": "CreateChainJobs",
+        "parameters": [
+          {
+            "name": "timeZoneId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/time-ticker/update": {
+      "put": {
+        "tags": ["TickerQ Dashboard"],
+        "summary": "Update time ticker",
+        "operationId": "UpdateTimeTicker",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "timeZoneId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/time-ticker/delete": {
+      "delete": {
+        "tags": ["TickerQ Dashboard"],
+        "summary": "Delete time ticker",
+        "operationId": "DeleteTimeTicker",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/time-ticker/delete-batch": {
+      "delete": {
+        "tags": ["TickerQ Dashboard"],
+        "summary": "Delete multiple time tickers",
+        "operationId": "DeleteTimeTickersBatch",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/cron-tickers": {
+      "get": {
+        "tags": ["TickerQ Dashboard"],
+        "summary": "Get all cron tickers",
+        "operationId": "GetCronTickers",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/cron-tickers/paginated": {
+      "get": {
+        "tags": ["TickerQ Dashboard"],
+        "summary": "Get paginated cron tickers",
+        "operationId": "GetCronTickersPaginated",
+        "parameters": [
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": ["integer", "string"],
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": ["integer", "string"],
+              "format": "int32",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/cron-tickers/graph-data-range": {
+      "get": {
+        "tags": ["TickerQ Dashboard"],
+        "summary": "Get cron tickers graph data for specific date range",
+        "operationId": "GetCronTickersGraphDataRange",
+        "parameters": [
+          {
+            "name": "pastDays",
+            "in": "query",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": ["integer", "string"],
+              "format": "int32",
+              "default": 3
+            }
+          },
+          {
+            "name": "futureDays",
+            "in": "query",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": ["integer", "string"],
+              "format": "int32",
+              "default": 3
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/cron-tickers/graph-data-range-id": {
+      "get": {
+        "tags": ["TickerQ Dashboard"],
+        "summary": "Get cron ticker graph data by ID for specific date range",
+        "operationId": "GetCronTickersByIdGraphDataRange",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "pastDays",
+            "in": "query",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": ["integer", "string"],
+              "format": "int32",
+              "default": 3
+            }
+          },
+          {
+            "name": "futureDays",
+            "in": "query",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": ["integer", "string"],
+              "format": "int32",
+              "default": 3
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/cron-tickers/graph-data": {
+      "get": {
+        "tags": ["TickerQ Dashboard"],
+        "summary": "Get cron tickers graph data",
+        "operationId": "GetCronTickersGraphData",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/cron-ticker-occurrences/{cronTickerId}": {
+      "get": {
+        "tags": ["TickerQ Dashboard"],
+        "summary": "Get cron ticker occurrences",
+        "operationId": "GetCronTickerOccurrences",
+        "parameters": [
+          {
+            "name": "cronTickerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/cron-ticker-occurrences/{cronTickerId}/paginated": {
+      "get": {
+        "tags": ["TickerQ Dashboard"],
+        "summary": "Get paginated cron ticker occurrences",
+        "operationId": "GetCronTickerOccurrencesPaginated",
+        "parameters": [
+          {
+            "name": "cronTickerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": ["integer", "string"],
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": ["integer", "string"],
+              "format": "int32",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/cron-ticker-occurrences/{cronTickerId}/graph-data": {
+      "get": {
+        "tags": ["TickerQ Dashboard"],
+        "summary": "Get cron ticker occurrences graph data",
+        "operationId": "GetCronTickerOccurrencesGraphData",
+        "parameters": [
+          {
+            "name": "cronTickerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/cron-ticker/add": {
+      "post": {
+        "tags": ["TickerQ Dashboard"],
+        "summary": "Add cron ticker",
+        "operationId": "AddCronTicker",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/cron-ticker/update": {
+      "put": {
+        "tags": ["TickerQ Dashboard"],
+        "summary": "Update cron ticker",
+        "operationId": "UpdateCronTicker",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/cron-ticker/run": {
+      "post": {
+        "tags": ["TickerQ Dashboard"],
+        "summary": "Run cron ticker on demand",
+        "operationId": "RunCronTickerOnDemand",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/cron-ticker/delete": {
+      "delete": {
+        "tags": ["TickerQ Dashboard"],
+        "summary": "Delete cron ticker",
+        "operationId": "DeleteCronTicker",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/cron-ticker-occurrence/delete": {
+      "delete": {
+        "tags": ["TickerQ Dashboard"],
+        "summary": "Delete cron ticker occurrence",
+        "operationId": "DeleteCronTickerOccurrence",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/ticker/cancel": {
+      "post": {
+        "tags": ["TickerQ Dashboard"],
+        "summary": "Cancel ticker by ID",
+        "operationId": "CancelTicker",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/ticker-request/{id}": {
+      "get": {
+        "tags": ["TickerQ Dashboard"],
+        "summary": "Get ticker request by ID",
+        "operationId": "GetTickerRequest",
+        "parameters": [
+          {
+            "name": "tickerId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "tickerType",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/TickerType"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/ticker-functions": {
+      "get": {
+        "tags": ["TickerQ Dashboard"],
+        "summary": "Get available ticker functions",
+        "operationId": "GetTickerFunctions",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/ticker-host/next-ticker": {
+      "get": {
+        "tags": ["TickerQ Dashboard"],
+        "summary": "Get next planned ticker",
+        "operationId": "GetNextTicker",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/ticker-host/stop": {
+      "post": {
+        "tags": ["TickerQ Dashboard"],
+        "summary": "Stop ticker host",
+        "operationId": "StopTickerHost",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/ticker-host/start": {
+      "post": {
+        "tags": ["TickerQ Dashboard"],
+        "summary": "Start ticker host",
+        "operationId": "StartTickerHost",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/ticker-host/restart": {
+      "post": {
+        "tags": ["TickerQ Dashboard"],
+        "summary": "Restart ticker host",
+        "operationId": "RestartTickerHost",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/ticker-host/status": {
+      "get": {
+        "tags": ["TickerQ Dashboard"],
+        "summary": "Get ticker host status",
+        "operationId": "GetTickerHostStatus",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/ticker/statuses/get-last-week": {
+      "get": {
+        "tags": ["TickerQ Dashboard"],
+        "summary": "Get last week job statuses",
+        "operationId": "GetLastWeekJobStatus",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/ticker/statuses/get": {
+      "get": {
+        "tags": ["TickerQ Dashboard"],
+        "summary": "Get overall job statuses",
+        "operationId": "GetJobStatuses",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/ticker/machine/jobs": {
+      "get": {
+        "tags": ["TickerQ Dashboard"],
+        "summary": "Get machine jobs",
+        "operationId": "GetMachineJobs",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/audit/trail": {
+      "get": {
+        "tags": ["Modulith.Api"],
+        "summary": "Get an audit trail. Defaults to the caller's own trail; admins may pass actorId to query any user.",
+        "operationId": "GetAuditTrail",
+        "parameters": [
+          {
+            "name": "actorId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "eventType",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": ["integer", "string"],
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": ["integer", "string"],
+              "format": "int32",
+              "default": 20
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAuditTrailResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/catalog/products": {
+      "get": {
+        "tags": ["Modulith.Api"],
+        "summary": "List all products.",
+        "operationId": "ListProducts",
+        "parameters": [
+          {
+            "name": "activeOnly",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListProductsResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Modulith.Api"],
+        "summary": "Create a new product.",
+        "operationId": "CreateProduct",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProductRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateProductResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/catalog/products/{productId}": {
+      "get": {
+        "tags": ["Modulith.Api"],
+        "summary": "Get a product by its ID.",
+        "operationId": "GetProductById",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetProductByIdResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/me/notifications": {
+      "get": {
+        "tags": ["Modulith.Api"],
+        "summary": "List the authenticated user's in-app notifications.",
+        "operationId": "ListMyNotifications",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": ["integer", "string"],
+              "format": "int32",
+              "default": 20
+            }
+          },
+          {
+            "name": "before",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListMyNotificationsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/me/notifications/unread-count": {
+      "get": {
+        "tags": ["Modulith.Api"],
+        "summary": "Get the authenticated user's unread in-app notification count.",
+        "operationId": "GetUnreadNotificationCount",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetUnreadNotificationCountResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/me/notifications/{notificationId}/read": {
+      "patch": {
+        "tags": ["Modulith.Api"],
+        "summary": "Mark one in-app notification as read.",
+        "operationId": "MarkNotificationAsRead",
+        "parameters": [
+          {
+            "name": "notificationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/me/notifications/read-all": {
+      "patch": {
+        "tags": ["Modulith.Api"],
+        "summary": "Mark all visible in-app notifications as read.",
+        "operationId": "MarkAllNotificationsAsRead",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/me/notifications/{notificationId}": {
+      "delete": {
+        "tags": ["Modulith.Api"],
+        "summary": "Archive one in-app notification.",
+        "operationId": "ArchiveNotification",
+        "parameters": [
+          {
+            "name": "notificationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/me/notifications/stream": {
+      "get": {
+        "tags": ["Modulith.Api"],
+        "summary": "Stream live in-app notification updates for the authenticated user.",
+        "operationId": "StreamMyNotifications",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/me/notification-preferences": {
+      "get": {
+        "tags": ["Modulith.Api"],
+        "summary": "Get the authenticated user's notification preferences.",
+        "operationId": "GetMyNotificationPreferences",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetMyNotificationPreferencesResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "put": {
+        "tags": ["Modulith.Api"],
+        "summary": "Update the authenticated user's notification preferences.",
+        "operationId": "UpdateMyNotificationPreferences",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateMyNotificationPreferencesRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/organizations": {
+      "post": {
+        "tags": ["Modulith.Api"],
+        "summary": "Create an organization and make the caller its owner.",
+        "operationId": "CreateOrganization",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrganizationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateOrganizationResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/organizations/my": {
+      "get": {
+        "tags": ["Modulith.Api"],
+        "summary": "List organizations where the caller has an active membership.",
+        "operationId": "ListMyOrganizations",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListMyOrganizationsResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/organizations/{organizationRef}": {
+      "get": {
+        "tags": ["Modulith.Api"],
+        "summary": "Get an organization by ID or slug.",
+        "operationId": "GetOrganization",
+        "parameters": [
+          {
+            "name": "organizationRef",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetOrganizationResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": ["Modulith.Api"],
+        "summary": "Update organization settings.",
+        "operationId": "UpdateOrganization",
+        "parameters": [
+          {
+            "name": "organizationRef",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateOrganizationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateOrganizationResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": ["Modulith.Api"],
+        "summary": "Soft-delete an organization.",
+        "operationId": "DeleteOrganization",
+        "parameters": [
+          {
+            "name": "organizationRef",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/organizations/{organizationRef}/members": {
+      "get": {
+        "tags": ["Modulith.Api"],
+        "summary": "List organization members.",
+        "operationId": "ListOrganizationMembers",
+        "parameters": [
+          {
+            "name": "organizationRef",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListOrganizationMembersResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/organizations/{organizationRef}/members/{userId}/role": {
+      "put": {
+        "tags": ["Modulith.Api"],
+        "summary": "Change an organization member role.",
+        "operationId": "ChangeOrganizationMemberRole",
+        "parameters": [
+          {
+            "name": "organizationRef",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeOrganizationMemberRoleRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChangeOrganizationMemberRoleResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/organizations/{organizationRef}/members/{userId}": {
+      "delete": {
+        "tags": ["Modulith.Api"],
+        "summary": "Remove a member or leave an organization.",
+        "operationId": "RemoveOrganizationMember",
+        "parameters": [
+          {
+            "name": "organizationRef",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/organizations/{organizationRef}/invitations": {
+      "post": {
+        "tags": ["Modulith.Api"],
+        "summary": "Invite a user to an organization.",
+        "operationId": "CreateOrganizationInvitation",
+        "parameters": [
+          {
+            "name": "organizationRef",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrganizationInvitationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateOrganizationInvitationResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "get": {
+        "tags": ["Modulith.Api"],
+        "summary": "List organization invitations.",
+        "operationId": "ListOrganizationInvitations",
+        "parameters": [
+          {
+            "name": "organizationRef",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListOrganizationInvitationsResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/organizations/invitations/accept": {
+      "post": {
+        "tags": ["Modulith.Api"],
+        "summary": "Accept an organization invitation for the current user.",
+        "operationId": "AcceptOrganizationInvitation",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AcceptOrganizationInvitationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AcceptOrganizationInvitationResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/organizations/{organizationRef}/invitations/{invitationId}": {
+      "delete": {
+        "tags": ["Modulith.Api"],
+        "summary": "Revoke an organization invitation.",
+        "operationId": "RevokeOrganizationInvitation",
+        "parameters": [
+          {
+            "name": "organizationRef",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "invitationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/organizations/{organizationRef}/audit": {
+      "get": {
+        "tags": ["Modulith.Api"],
+        "summary": "Get organization audit entries.",
+        "operationId": "GetOrganizationAudit",
+        "parameters": [
+          {
+            "name": "organizationRef",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": ["integer", "string"],
+              "format": "int32"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": ["integer", "string"],
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetOrganizationAuditResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/users/register": {
+      "post": {
+        "tags": ["Modulith.Api"],
+        "summary": "Register a new user account.",
+        "operationId": "Register",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegisterResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users/login": {
+      "post": {
+        "tags": ["Modulith.Api"],
+        "summary": "Authenticate and receive an access token and a refresh token.",
+        "operationId": "Login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users/login/2fa": {
+      "post": {
+        "tags": ["Modulith.Api"],
+        "summary": "Complete a two-factor login challenge and receive tokens.",
+        "operationId": "LoginTwoFactor",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginTwoFactorRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginTwoFactorResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users/me": {
+      "get": {
+        "tags": ["Modulith.Api"],
+        "summary": "Get the authenticated user's profile, role, and resolved permissions.",
+        "operationId": "GetCurrentUser",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetCurrentUserResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": ["Modulith.Api"],
+        "summary": "Permanently delete the authenticated user's account and all associated personal data.",
+        "operationId": "DeleteAccount",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/users/legal-documents/{type}/{version}": {
+      "get": {
+        "tags": ["Modulith.Api"],
+        "summary": "Get the current published content for a legal document version.",
+        "operationId": "GetLegalDocument",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "maxLength": 50,
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "maxLength": 50,
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetLegalDocumentResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/users/me/legal-compliance": {
+      "get": {
+        "tags": ["Modulith.Api"],
+        "summary": "Get the authenticated user's current legal document compliance status.",
+        "operationId": "GetLegalCompliance",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetLegalComplianceResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/users/me/onboarding/legal-requirements": {
+      "get": {
+        "tags": ["Modulith.Api"],
+        "summary": "Get the current legal documents required to complete onboarding.",
+        "operationId": "GetOnboardingLegalRequirements",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetOnboardingLegalRequirementsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/users/me/legal-acceptances": {
+      "post": {
+        "tags": ["Modulith.Api"],
+        "summary": "Accept one or more published legal document versions.",
+        "operationId": "AcceptLegalDocuments",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AcceptLegalDocumentsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/users/me/onboarding": {
+      "post": {
+        "tags": ["Modulith.Api"],
+        "summary": "Accept the terms of service to complete account setup.",
+        "operationId": "CompleteOnboarding",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompleteOnboardingRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/users/me/profile": {
+      "patch": {
+        "tags": ["Modulith.Api"],
+        "summary": "Update the authenticated user's profile.",
+        "operationId": "UpdateProfile",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProfileRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateProfileResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/users/me/avatar": {
+      "put": {
+        "tags": ["Modulith.Api"],
+        "summary": "Upload or replace the authenticated user's avatar.",
+        "operationId": "UpdateAvatar",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/IFormFile"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateAvatarResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": ["Modulith.Api"],
+        "summary": "Remove the authenticated user's avatar.",
+        "operationId": "DeleteAvatar",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/users/{userId}/avatar": {
+      "get": {
+        "tags": ["Modulith.Api"],
+        "summary": "Get a user's avatar when the authenticated caller is allowed to view it.",
+        "operationId": "GetUserAvatar",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/users/me/personal-data": {
+      "get": {
+        "tags": ["Modulith.Api"],
+        "summary": "Export all personal data held about the authenticated user.",
+        "operationId": "ExportPersonalData",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExportPersonalDataResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/users/password/forgot": {
+      "post": {
+        "tags": ["Modulith.Api"],
+        "summary": "Request a password reset email. Always returns 200 regardless of whether the email exists.",
+        "operationId": "ForgotPassword",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForgotPasswordRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForgotPasswordResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users/password/reset": {
+      "post": {
+        "tags": ["Modulith.Api"],
+        "summary": "Complete a password reset using the token from the reset email.",
+        "operationId": "ResetPassword",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResetPasswordResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users/me/password": {
+      "post": {
+        "tags": ["Modulith.Api"],
+        "summary": "Change the authenticated user's password. Revokes all other sessions.",
+        "operationId": "ChangePassword",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChangePasswordResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/users/email/confirm": {
+      "post": {
+        "tags": ["Modulith.Api"],
+        "summary": "Confirm a newly registered account using the token from the confirmation email.",
+        "operationId": "ConfirmEmail",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConfirmEmailRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConfirmEmailResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users/me/email/request": {
+      "post": {
+        "tags": ["Modulith.Api"],
+        "summary": "Request an email address change. A confirmation link will be sent to the new address.",
+        "operationId": "RequestEmailChange",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestEmailChangeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RequestEmailChangeResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/users/me/email/confirm": {
+      "post": {
+        "tags": ["Modulith.Api"],
+        "summary": "Confirm an email address change using the token from the confirmation email.",
+        "operationId": "ConfirmEmailChange",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConfirmEmailChangeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConfirmEmailChangeResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/users/email/confirmation/resend": {
+      "post": {
+        "tags": ["Modulith.Api"],
+        "summary": "Request another email confirmation link.",
+        "operationId": "ResendEmailConfirmation",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResendEmailConfirmationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResendEmailConfirmationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users/token/refresh": {
+      "post": {
+        "tags": ["Modulith.Api"],
+        "summary": "Exchange a refresh token for a new access token and rotated refresh token.",
+        "operationId": "RefreshToken",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshTokenRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefreshTokenResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/users/logout": {
+      "post": {
+        "tags": ["Modulith.Api"],
+        "summary": "Revoke the provided refresh token (single-session logout).",
+        "operationId": "Logout",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LogoutRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LogoutResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/users/logout/all": {
+      "post": {
+        "tags": ["Modulith.Api"],
+        "summary": "Revoke all refresh tokens for the authenticated user (logout everywhere).",
+        "operationId": "LogoutAll",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LogoutAllResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/users/{userId}/role": {
+      "put": {
+        "tags": ["Modulith.Api"],
+        "summary": "Change the role of a user. Admin only.",
+        "operationId": "ChangeUserRole",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeUserRoleRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChangeUserRoleResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/users": {
+      "get": {
+        "tags": ["Modulith.Api"],
+        "summary": "List all users. Requires users.users.read permission.",
+        "operationId": "ListUsers",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": ["integer", "string"],
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": ["integer", "string"],
+              "format": "int32",
+              "default": 20
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListUsersResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/users/{userId}": {
+      "get": {
+        "tags": ["Modulith.Api"],
+        "summary": "Get a specific user by ID. Requires users.users.read permission.",
+        "operationId": "GetUserById",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetUserByIdResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/users/invitations": {
+      "get": {
+        "tags": ["Modulith.Api"],
+        "summary": "List user invitations. Requires users.invitations.write permission.",
+        "operationId": "ListInvitations",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": ["integer", "string"],
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": ["integer", "string"],
+              "format": "int32",
+              "default": 20
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": "pending"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListInvitationsResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": ["Modulith.Api"],
+        "summary": "Create a user invitation. Admin only.",
+        "operationId": "CreateInvitation",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateInvitationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateInvitationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/users/invitations/{invitationId}": {
+      "delete": {
+        "tags": ["Modulith.Api"],
+        "summary": "Revoke a pending user invitation. Admin only.",
+        "operationId": "RevokeInvitation",
+        "parameters": [
+          {
+            "name": "invitationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RevokeInvitationResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/users/me/2fa/totp/setup": {
+      "post": {
+        "tags": ["Modulith.Api"],
+        "summary": "Start authenticator-app two-factor setup for the current user.",
+        "operationId": "SetupTotp",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SetupTotpResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/users/me/2fa/totp/confirm": {
+      "post": {
+        "tags": ["Modulith.Api"],
+        "summary": "Confirm authenticator-app two-factor setup and receive recovery codes.",
+        "operationId": "ConfirmTotp",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConfirmTotpRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConfirmTotpResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/users/me/2fa": {
+      "delete": {
+        "tags": ["Modulith.Api"],
+        "summary": "Disable two-factor authentication for the current user.",
+        "operationId": "DisableTwoFactor",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DisableTwoFactorRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DisableTwoFactorResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/users/me/2fa/recovery-codes/regenerate": {
+      "post": {
+        "tags": ["Modulith.Api"],
+        "summary": "Regenerate recovery codes for the current user.",
+        "operationId": "RegenerateRecoveryCodes",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegenerateRecoveryCodesRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegenerateRecoveryCodesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/admin/dead-letters": {
+      "get": {
+        "tags": ["Admin — Dead Letters"],
+        "summary": "Page through dead-lettered messages, optionally filtered by message type or exception type.",
+        "operationId": "ListDeadLetters",
+        "parameters": [
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": ["integer", "string"],
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": ["integer", "string"],
+              "format": "int32",
+              "default": 50
+            }
+          },
+          {
+            "name": "messageType",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "exceptionType",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeadLetterSummaryResultsDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/admin/dead-letters/{id}": {
+      "get": {
+        "tags": ["Admin — Dead Letters"],
+        "summary": "Get a single dead-lettered message by envelope ID.",
+        "operationId": "GetDeadLetter",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeadLetterSummaryDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/admin/dead-letters/replay": {
+      "post": {
+        "tags": ["Admin — Dead Letters"],
+        "summary": "Re-enqueue dead-lettered messages matching the query for reprocessing.",
+        "operationId": "ReplayDeadLetters",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeadLetterEnvelopeQuery"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Accepted"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/v1/admin/dead-letters/discard": {
+      "post": {
+        "tags": ["Admin — Dead Letters"],
+        "summary": "Permanently delete dead-lettered messages matching the query.",
+        "operationId": "DiscardDeadLetters",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeadLetterEnvelopeQuery"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AcceptedLegalDocumentRequest": {
+        "type": "object",
+        "properties": {
+          "documentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "version": {
+            "type": "string"
+          },
+          "contentHash": {
+            "type": "string"
+          }
+        }
+      },
+      "AcceptedLegalDocumentResponse": {
+        "required": ["type", "version", "acceptedAt", "contentHash"],
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "acceptedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "contentHash": {
+            "type": ["null", "string"]
+          }
+        }
+      },
+      "AcceptLegalDocumentsRequest": {
+        "type": "object",
+        "properties": {
+          "acceptedDocuments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AcceptedLegalDocumentRequest"
+            }
+          }
+        }
+      },
+      "AcceptOrganizationInvitationRequest": {
+        "required": ["invitationToken"],
+        "type": "object",
+        "properties": {
+          "invitationToken": {
+            "type": "string"
+          }
+        }
+      },
+      "AcceptOrganizationInvitationResponse": {
+        "required": ["organizationId", "role"],
+        "type": "object",
+        "properties": {
+          "organizationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "role": {
+            "type": "string"
+          }
+        }
+      },
+      "AuditEntryDto": {
+        "required": [
+          "id",
+          "eventType",
+          "actorId",
+          "resourceType",
+          "resourceId",
+          "occurredAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "eventType": {
+            "type": "string"
+          },
+          "actorId": {
+            "type": ["null", "string"],
+            "format": "uuid"
+          },
+          "resourceType": {
+            "type": ["null", "string"]
+          },
+          "resourceId": {
+            "type": ["null", "string"],
+            "format": "uuid"
+          },
+          "occurredAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ChangeOrganizationMemberRoleRequest": {
+        "required": ["role"],
+        "type": "object",
+        "properties": {
+          "role": {
+            "type": "string"
+          }
+        }
+      },
+      "ChangeOrganizationMemberRoleResponse": {
+        "required": ["userId", "role"],
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "role": {
+            "type": "string"
+          }
+        }
+      },
+      "ChangePasswordRequest": {
+        "required": ["currentPassword", "newPassword"],
+        "type": "object",
+        "properties": {
+          "currentPassword": {
+            "type": "string"
+          },
+          "newPassword": {
+            "type": "string"
+          }
+        }
+      },
+      "ChangePasswordResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "default": "Password changed successfully."
+          }
+        }
+      },
+      "ChangeUserRoleRequest": {
+        "required": ["role"],
+        "type": "object",
+        "properties": {
+          "role": {
+            "type": "string"
+          }
+        }
+      },
+      "ChangeUserRoleResponse": {
+        "required": ["userId", "newRole"],
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "newRole": {
+            "type": "string"
+          }
+        }
+      },
+      "CompleteOnboardingRequest": {
+        "type": "object",
+        "properties": {
+          "acceptMarketingEmails": {
+            "type": "boolean"
+          },
+          "acceptedDocuments": {
+            "type": ["null", "array"],
+            "items": {
+              "$ref": "#/components/schemas/AcceptedLegalDocumentRequest"
+            }
+          }
+        }
+      },
+      "ConfirmEmailChangeRequest": {
+        "required": ["token"],
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+      "ConfirmEmailChangeResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "default": "Email address changed successfully."
+          }
+        }
+      },
+      "ConfirmEmailRequest": {
+        "required": ["token"],
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+      "ConfirmEmailResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "default": "Email address confirmed successfully."
+          }
+        }
+      },
+      "ConfirmTotpRequest": {
+        "required": ["code"],
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          }
+        }
+      },
+      "ConfirmTotpResponse": {
+        "required": ["recoveryCodes"],
+        "type": "object",
+        "properties": {
+          "recoveryCodes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "CreateInvitationRequest": {
+        "required": ["email"],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateInvitationResponse": {
+        "required": ["invitationId", "email", "token", "expiresAt"],
+        "type": "object",
+        "properties": {
+          "invitationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "email": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "CreateOrganizationInvitationRequest": {
+        "required": ["email", "role"],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateOrganizationInvitationResponse": {
+        "required": ["invitationId", "email", "role", "expiresAt", "rawToken"],
+        "type": "object",
+        "properties": {
+          "invitationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "email": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "rawToken": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateOrganizationRequest": {
+        "required": ["name"],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "slug": {
+            "type": ["null", "string"]
+          }
+        }
+      },
+      "CreateOrganizationResponse": {
+        "required": ["organizationId", "name", "slug", "role"],
+        "type": "object",
+        "properties": {
+          "organizationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateProductRequest": {
+        "required": ["sku", "name", "price"],
+        "type": "object",
+        "properties": {
+          "sku": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
+            "type": ["number", "string"],
+            "format": "double"
+          },
+          "currency": {
+            "type": "string",
+            "default": "USD"
+          }
+        }
+      },
+      "CreateProductResponse": {
+        "required": ["productId", "sku", "name", "price", "currency"],
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "sku": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
+            "type": ["number", "string"],
+            "format": "double"
+          },
+          "currency": {
+            "type": "string"
+          }
+        }
+      },
+      "CurrentUserAvatarResponse": {
+        "required": ["url", "updatedAt"],
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "DeadLetterEnvelopeQuery": {
+        "type": "object",
+        "properties": {
+          "pageNumber": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": ["integer", "string"],
+            "format": "int32"
+          },
+          "pageSize": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": ["integer", "string"],
+            "format": "int32"
+          },
+          "messageType": {
+            "type": ["null", "string"]
+          },
+          "exceptionType": {
+            "type": ["null", "string"]
+          },
+          "receivedAt": {
+            "type": ["null", "string"]
+          },
+          "exceptionMessage": {
+            "type": ["null", "string"]
+          },
+          "range": {
+            "$ref": "#/components/schemas/TimeRange"
+          },
+          "messageIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "queryId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "DeadLetterSummaryDto": {
+        "required": [
+          "id",
+          "messageType",
+          "receivedAt",
+          "source",
+          "exceptionType",
+          "exceptionMessage",
+          "sentAt",
+          "executionTime",
+          "replayable"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "messageType": {
+            "type": "string"
+          },
+          "receivedAt": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "exceptionType": {
+            "type": "string"
+          },
+          "exceptionMessage": {
+            "type": "string"
+          },
+          "sentAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "executionTime": {
+            "type": ["null", "string"],
+            "format": "date-time"
+          },
+          "replayable": {
+            "type": "boolean"
+          }
+        },
+        "description": "Redacted projection of a Wolverine DeadLetterEnvelope.\nThe message body (`Envelope` and `Message` on the source type) is intentionally\nexcluded because integration events such as `PasswordResetRequestedV1`\nand `EmailChangeRequestedV1` carry single-use\nsecurity tokens. Exposing the raw payload to any admin who can call this API would\nallow token theft without touching the Users module."
+      },
+      "DeadLetterSummaryResultsDto": {
+        "required": ["totalCount", "pageNumber", "envelopes"],
+        "type": "object",
+        "properties": {
+          "totalCount": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": ["integer", "string"],
+            "format": "int32"
+          },
+          "pageNumber": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": ["integer", "string"],
+            "format": "int32"
+          },
+          "envelopes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DeadLetterSummaryDto"
+            }
+          }
+        },
+        "description": "Redacted projection of DeadLetterEnvelopeResults.\n`DatabaseUri` is excluded to avoid leaking internal infrastructure details."
+      },
+      "DisableTwoFactorRequest": {
+        "required": ["currentPassword", "code"],
+        "type": "object",
+        "properties": {
+          "currentPassword": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          }
+        }
+      },
+      "DisableTwoFactorResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "default": "Two-factor authentication has been disabled."
+          }
+        }
+      },
+      "ExportPersonalDataResponse": {
+        "required": ["exports"],
+        "type": "object",
+        "properties": {
+          "exports": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PersonalDataExport"
+            }
+          }
+        }
+      },
+      "ForgotPasswordRequest": {
+        "required": ["email"],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "ForgotPasswordResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "default": "If an account with that email exists, a reset link has been sent."
+          }
+        },
+        "description": "Always returned — even when the email is not found — to prevent enumeration."
+      },
+      "GetAuditTrailResponse": {
+        "required": ["entries", "total", "page", "pageSize"],
+        "type": "object",
+        "properties": {
+          "entries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AuditEntryDto"
+            }
+          },
+          "total": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": ["integer", "string"],
+            "format": "int32"
+          },
+          "page": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": ["integer", "string"],
+            "format": "int32"
+          },
+          "pageSize": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": ["integer", "string"],
+            "format": "int32"
+          }
+        }
+      },
+      "GetCurrentUserResponse": {
+        "required": [
+          "userId",
+          "email",
+          "displayName",
+          "createdAt",
+          "role",
+          "permissions",
+          "permissionsVersion",
+          "hasCompletedOnboarding",
+          "twoFactorEnabled",
+          "avatar"
+        ],
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "email": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "role": {
+            "type": "string"
+          },
+          "permissions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "permissionsVersion": {
+            "type": "string"
+          },
+          "hasCompletedOnboarding": {
+            "type": "boolean"
+          },
+          "twoFactorEnabled": {
+            "type": "boolean"
+          },
+          "avatar": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/CurrentUserAvatarResponse"
+              }
+            ]
+          }
+        }
+      },
+      "GetLegalComplianceResponse": {
+        "required": [
+          "isCompliant",
+          "blockingLevel",
+          "missingDocuments",
+          "acceptedDocuments"
+        ],
+        "type": "object",
+        "properties": {
+          "isCompliant": {
+            "type": "boolean"
+          },
+          "blockingLevel": {
+            "type": "string"
+          },
+          "missingDocuments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LegalComplianceDocumentResponse"
+            }
+          },
+          "acceptedDocuments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AcceptedLegalDocumentResponse"
+            }
+          }
+        }
+      },
+      "GetLegalDocumentResponse": {
+        "required": [
+          "id",
+          "type",
+          "title",
+          "version",
+          "effectiveAt",
+          "publishedAt",
+          "contentHash",
+          "markdown"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "type": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "effectiveAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "publishedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "contentHash": {
+            "type": "string"
+          },
+          "markdown": {
+            "type": "string"
+          }
+        }
+      },
+      "GetMyNotificationPreferencesResponse": {
+        "required": ["preferences"],
+        "type": "object",
+        "properties": {
+          "preferences": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MyNotificationPreferenceResponse"
+            }
+          }
+        }
+      },
+      "GetOnboardingLegalRequirementsResponse": {
+        "required": ["documents"],
+        "type": "object",
+        "properties": {
+          "documents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OnboardingLegalDocumentResponse"
+            }
+          }
+        }
+      },
+      "GetOrganizationAuditResponse": {
+        "required": [
+          "organizationId",
+          "accessMode",
+          "entries",
+          "total",
+          "page",
+          "pageSize"
+        ],
+        "type": "object",
+        "properties": {
+          "organizationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "accessMode": {
+            "type": "string"
+          },
+          "entries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrganizationAuditEntryDto"
+            }
+          },
+          "total": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": ["integer", "string"],
+            "format": "int32"
+          },
+          "page": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": ["integer", "string"],
+            "format": "int32"
+          },
+          "pageSize": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": ["integer", "string"],
+            "format": "int32"
+          }
+        }
+      },
+      "GetOrganizationResponse": {
+        "required": ["organizationId", "name", "slug", "accessMode"],
+        "type": "object",
+        "properties": {
+          "organizationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "accessMode": {
+            "type": "string"
+          }
+        }
+      },
+      "GetProductByIdResponse": {
+        "required": ["id", "sku", "name", "price", "currency", "isActive"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "sku": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
+            "type": ["number", "string"],
+            "format": "double"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        }
+      },
+      "GetUnreadNotificationCountResponse": {
+        "required": ["count"],
+        "type": "object",
+        "properties": {
+          "count": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": ["integer", "string"],
+            "format": "int32"
+          }
+        }
+      },
+      "GetUserByIdResponse": {
+        "required": [
+          "userId",
+          "email",
+          "displayName",
+          "role",
+          "createdAt",
+          "hasCompletedOnboarding"
+        ],
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "email": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "hasCompletedOnboarding": {
+            "type": "boolean"
+          }
+        }
+      },
+      "HttpValidationProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": ["null", "string"]
+          },
+          "title": {
+            "type": ["null", "string"]
+          },
+          "status": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": ["null", "integer", "string"],
+            "format": "int32"
+          },
+          "detail": {
+            "type": ["null", "string"]
+          },
+          "instance": {
+            "type": ["null", "string"]
+          },
+          "errors": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "IFormFile": {
+        "type": "string",
+        "format": "binary"
+      },
+      "LegalComplianceDocumentResponse": {
+        "required": [
+          "id",
+          "type",
+          "title",
+          "version",
+          "effectiveAt",
+          "contentHash",
+          "markdown"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "type": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "effectiveAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "contentHash": {
+            "type": "string"
+          },
+          "markdown": {
+            "type": "string"
+          }
+        }
+      },
+      "ListInvitationsInvitationDto": {
+        "required": [
+          "invitationId",
+          "email",
+          "status",
+          "invitedAt",
+          "expiresAt",
+          "acceptedAt",
+          "revokedAt"
+        ],
+        "type": "object",
+        "properties": {
+          "invitationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "email": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "invitedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "acceptedAt": {
+            "type": ["null", "string"],
+            "format": "date-time"
+          },
+          "revokedAt": {
+            "type": ["null", "string"],
+            "format": "date-time"
+          }
+        }
+      },
+      "ListInvitationsResponse": {
+        "required": ["invitations", "page", "pageSize", "totalCount"],
+        "type": "object",
+        "properties": {
+          "invitations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ListInvitationsInvitationDto"
+            }
+          },
+          "page": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": ["integer", "string"],
+            "format": "int32"
+          },
+          "pageSize": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": ["integer", "string"],
+            "format": "int32"
+          },
+          "totalCount": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": ["integer", "string"],
+            "format": "int32"
+          }
+        }
+      },
+      "ListMyNotificationsResponse": {
+        "required": ["items", "nextBefore"],
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MyNotificationResponse"
+            }
+          },
+          "nextBefore": {
+            "type": ["null", "string"],
+            "format": "date-time"
+          }
+        }
+      },
+      "ListMyOrganizationsResponse": {
+        "required": ["organizations"],
+        "type": "object",
+        "properties": {
+          "organizations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MyOrganizationItem"
+            }
+          }
+        }
+      },
+      "ListOrganizationInvitationsResponse": {
+        "required": ["invitations"],
+        "type": "object",
+        "properties": {
+          "invitations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrganizationInvitationItem"
+            }
+          }
+        }
+      },
+      "ListOrganizationMembersResponse": {
+        "required": ["members"],
+        "type": "object",
+        "properties": {
+          "members": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrganizationMemberItem"
+            }
+          }
+        }
+      },
+      "ListProductsResponse": {
+        "required": ["products"],
+        "type": "object",
+        "properties": {
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductSummary"
+            }
+          }
+        }
+      },
+      "ListUsersResponse": {
+        "required": ["users", "page", "pageSize", "totalCount"],
+        "type": "object",
+        "properties": {
+          "users": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ListUsersUserDto"
+            }
+          },
+          "page": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": ["integer", "string"],
+            "format": "int32"
+          },
+          "pageSize": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": ["integer", "string"],
+            "format": "int32"
+          },
+          "totalCount": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": ["integer", "string"],
+            "format": "int32"
+          }
+        }
+      },
+      "ListUsersUserDto": {
+        "required": ["userId", "email", "displayName", "role", "createdAt"],
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "email": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "LoginChallengeResponse": {
+        "required": ["challengeToken", "expiresAt"],
+        "type": "object",
+        "properties": {
+          "challengeToken": {
+            "type": "string"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "LoginRequest": {
+        "required": ["email", "password"],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "LoginResponse": {
+        "required": ["status"],
+        "type": "object",
+        "properties": {
+          "status": {
+            "enum": ["authenticated", "twoFactorRequired"],
+            "type": "string"
+          },
+          "session": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/LoginSessionResponse"
+              }
+            ]
+          },
+          "challenge": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/LoginChallengeResponse"
+              }
+            ]
+          }
+        }
+      },
+      "LoginSessionResponse": {
+        "required": [
+          "userId",
+          "accessToken",
+          "accessTokenExpiresAt",
+          "refreshToken",
+          "refreshTokenExpiresAt"
+        ],
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "accessToken": {
+            "type": "string"
+          },
+          "accessTokenExpiresAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "refreshToken": {
+            "type": "string"
+          },
+          "refreshTokenExpiresAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "LoginTwoFactorRequest": {
+        "required": ["challengeToken", "code"],
+        "type": "object",
+        "properties": {
+          "challengeToken": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          }
+        }
+      },
+      "LoginTwoFactorResponse": {
+        "required": [
+          "userId",
+          "accessToken",
+          "accessTokenExpiresAt",
+          "refreshToken",
+          "refreshTokenExpiresAt"
+        ],
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "accessToken": {
+            "type": "string"
+          },
+          "accessTokenExpiresAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "refreshToken": {
+            "type": "string"
+          },
+          "refreshTokenExpiresAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "LogoutAllResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "default": "Logged out from all devices successfully."
+          }
+        },
+        "description": "No request body needed — the authenticated user's ID comes from the JWT."
+      },
+      "LogoutRequest": {
+        "required": ["refreshToken"],
+        "type": "object",
+        "properties": {
+          "refreshToken": {
+            "type": "string"
+          }
+        }
+      },
+      "LogoutResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "default": "Logged out successfully."
+          }
+        }
+      },
+      "MyNotificationPreferenceResponse": {
+        "required": ["category", "bellEnabled", "emailEnabled", "isLocked"],
+        "type": "object",
+        "properties": {
+          "category": {
+            "$ref": "#/components/schemas/NotificationCategory"
+          },
+          "bellEnabled": {
+            "type": "boolean"
+          },
+          "emailEnabled": {
+            "type": "boolean"
+          },
+          "isLocked": {
+            "type": "boolean"
+          }
+        }
+      },
+      "MyNotificationResponse": {
+        "required": [
+          "id",
+          "type",
+          "category",
+          "severity",
+          "title",
+          "body",
+          "link",
+          "isRead",
+          "createdAt",
+          "readAt"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "type": {
+            "type": "string"
+          },
+          "category": {
+            "$ref": "#/components/schemas/NotificationCategory"
+          },
+          "severity": {
+            "$ref": "#/components/schemas/NotificationSeverity"
+          },
+          "title": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          },
+          "link": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/NotificationLinkDto"
+              }
+            ]
+          },
+          "isRead": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "readAt": {
+            "type": ["null", "string"],
+            "format": "date-time"
+          }
+        }
+      },
+      "MyOrganizationItem": {
+        "required": [
+          "organizationId",
+          "name",
+          "slug",
+          "role",
+          "permissions",
+          "permissionsVersion"
+        ],
+        "type": "object",
+        "properties": {
+          "organizationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "permissions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "permissionsVersion": {
+            "type": "string"
+          }
+        }
+      },
+      "NotificationCategory": {
+        "type": "integer"
+      },
+      "NotificationLinkDto": {
+        "required": ["href", "label"],
+        "type": "object",
+        "properties": {
+          "href": {
+            "type": "string"
+          },
+          "label": {
+            "type": ["null", "string"]
+          }
+        }
+      },
+      "NotificationSeverity": {
+        "type": "integer"
+      },
+      "OnboardingLegalDocumentResponse": {
+        "required": [
+          "id",
+          "type",
+          "title",
+          "version",
+          "effectiveAt",
+          "contentHash",
+          "markdown"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "type": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "effectiveAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "contentHash": {
+            "type": "string"
+          },
+          "markdown": {
+            "type": "string"
+          }
+        }
+      },
+      "OrganizationAuditEntryDto": {
+        "required": [
+          "id",
+          "eventType",
+          "actorId",
+          "resourceType",
+          "resourceId",
+          "occurredAt",
+          "payload"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "eventType": {
+            "type": "string"
+          },
+          "actorId": {
+            "type": ["null", "string"],
+            "format": "uuid"
+          },
+          "resourceType": {
+            "type": ["null", "string"]
+          },
+          "resourceId": {
+            "type": ["null", "string"],
+            "format": "uuid"
+          },
+          "occurredAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "payload": {
+            "type": "string"
+          }
+        }
+      },
+      "OrganizationInvitationItem": {
+        "required": ["invitationId", "email", "role", "expiresAt", "isPending"],
+        "type": "object",
+        "properties": {
+          "invitationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "email": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "isPending": {
+            "type": "boolean"
+          }
+        }
+      },
+      "OrganizationMemberItem": {
+        "required": [
+          "userId",
+          "role",
+          "joinedAt",
+          "isAnonymized",
+          "displayName",
+          "email"
+        ],
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": ["null", "string"],
+            "format": "uuid"
+          },
+          "role": {
+            "type": "string"
+          },
+          "joinedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "isAnonymized": {
+            "type": "boolean"
+          },
+          "displayName": {
+            "type": ["null", "string"]
+          },
+          "email": {
+            "type": ["null", "string"]
+          }
+        }
+      },
+      "PersonalDataExport": {
+        "required": ["userId", "moduleName", "data"],
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "moduleName": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object"
+          }
+        }
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": ["null", "string"]
+          },
+          "title": {
+            "type": ["null", "string"]
+          },
+          "status": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": ["null", "integer", "string"],
+            "format": "int32"
+          },
+          "detail": {
+            "type": ["null", "string"]
+          },
+          "instance": {
+            "type": ["null", "string"]
+          }
+        }
+      },
+      "ProductSummary": {
+        "required": ["id", "sku", "name", "price", "currency", "isActive"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "sku": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
+            "type": ["number", "string"],
+            "format": "double"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        }
+      },
+      "RefreshTokenRequest": {
+        "required": ["refreshToken"],
+        "type": "object",
+        "properties": {
+          "refreshToken": {
+            "type": "string"
+          }
+        }
+      },
+      "RefreshTokenResponse": {
+        "required": [
+          "accessToken",
+          "accessTokenExpiresAt",
+          "refreshToken",
+          "refreshTokenExpiresAt"
+        ],
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string"
+          },
+          "accessTokenExpiresAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "refreshToken": {
+            "type": "string"
+          },
+          "refreshTokenExpiresAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "RegenerateRecoveryCodesRequest": {
+        "required": ["currentPassword", "code"],
+        "type": "object",
+        "properties": {
+          "currentPassword": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          }
+        }
+      },
+      "RegenerateRecoveryCodesResponse": {
+        "required": ["recoveryCodes"],
+        "type": "object",
+        "properties": {
+          "recoveryCodes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "RegisterRequest": {
+        "required": ["email", "password", "displayName"],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "invitationToken": {
+            "type": ["null", "string"]
+          },
+          "organizationInvitationToken": {
+            "type": ["null", "string"]
+          }
+        }
+      },
+      "RegisterResponse": {
+        "required": ["userId"],
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "message": {
+            "type": "string",
+            "default": "Registration successful. Check your email to confirm your account before signing in."
+          }
+        }
+      },
+      "RequestEmailChangeRequest": {
+        "required": ["newEmail", "currentPassword"],
+        "type": "object",
+        "properties": {
+          "newEmail": {
+            "type": "string"
+          },
+          "currentPassword": {
+            "type": "string"
+          }
+        }
+      },
+      "RequestEmailChangeResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "default": "If that email address is available, a confirmation link has been sent to it."
+          }
+        },
+        "description": "Always returned — even when the email is taken — to prevent enumeration."
+      },
+      "ResendEmailConfirmationRequest": {
+        "required": ["email"],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "ResendEmailConfirmationResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "default": "If an account exists and needs confirmation, a confirmation email has been sent."
+          }
+        }
+      },
+      "ResetPasswordRequest": {
+        "required": ["token", "newPassword"],
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
+          },
+          "newPassword": {
+            "type": "string"
+          }
+        }
+      },
+      "ResetPasswordResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "default": "Password has been reset successfully."
+          }
+        }
+      },
+      "RevokeInvitationResponse": {
+        "required": ["invitationId", "email", "revokedAt"],
+        "type": "object",
+        "properties": {
+          "invitationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "email": {
+            "type": "string"
+          },
+          "revokedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "SetupTotpResponse": {
+        "required": ["secret", "otpAuthUri"],
+        "type": "object",
+        "properties": {
+          "secret": {
+            "type": "string"
+          },
+          "otpAuthUri": {
+            "type": "string"
+          }
+        }
+      },
+      "TickerType": {
+        "type": "integer"
+      },
+      "TimeRange": {
+        "required": ["from", "to"],
+        "type": "object",
+        "properties": {
+          "from": {
+            "type": ["null", "string"],
+            "format": "date-time"
+          },
+          "to": {
+            "type": ["null", "string"],
+            "format": "date-time"
+          }
+        }
+      },
+      "UpdateAvatarResponse": {
+        "required": ["url", "updatedAt"],
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "UpdateMyNotificationPreferenceRequest": {
+        "required": ["category", "bellEnabled", "emailEnabled"],
+        "type": "object",
+        "properties": {
+          "category": {
+            "$ref": "#/components/schemas/NotificationCategory"
+          },
+          "bellEnabled": {
+            "type": "boolean"
+          },
+          "emailEnabled": {
+            "type": "boolean"
+          }
+        }
+      },
+      "UpdateMyNotificationPreferencesRequest": {
+        "required": ["preferences"],
+        "type": "object",
+        "properties": {
+          "preferences": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UpdateMyNotificationPreferenceRequest"
+            }
+          }
+        }
+      },
+      "UpdateOrganizationRequest": {
+        "required": ["name", "slug"],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          }
+        }
+      },
+      "UpdateOrganizationResponse": {
+        "required": ["organizationId", "name", "slug"],
+        "type": "object",
+        "properties": {
+          "organizationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          }
+        }
+      },
+      "UpdateProfileRequest": {
+        "required": ["displayName"],
+        "type": "object",
+        "properties": {
+          "displayName": {
+            "type": "string"
+          }
+        }
+      },
+      "UpdateProfileResponse": {
+        "required": ["userId", "email", "displayName"],
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "email": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JSON Web Token"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "TickerQ Dashboard"
+    },
+    {
+      "name": "Modulith.Api"
+    },
+    {
+      "name": "Admin — Dead Letters"
+    }
+  ]
+}

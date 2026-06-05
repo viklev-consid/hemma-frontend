@@ -1,0 +1,118 @@
+{
+  "pagination": {
+    "prev": "Prev",
+    "next": "Next"
+  },
+  "auditTrail": {
+    "title": "Audit trail",
+    "summary": "{total, plural, =0 {No entries} one {# entry} other {# entries}} · page {page} of {totalPages}",
+    "filters": {
+      "actorLabel": "Actor (user ID)",
+      "actorPlaceholder": "e.g. 8f3a…c2d1",
+      "eventTypeLabel": "Event type",
+      "eventTypePlaceholder": "e.g. user.role.changed"
+    },
+    "row": {
+      "detail": "detail",
+      "toggleAria": "Toggle details for {eventType}",
+      "actorPrefix": "actor"
+    },
+    "empty": "No audit entries match these filters."
+  },
+  "invitations": {
+    "title": "Invitations",
+    "subtitle": "Invite users to your workspace and manage pending invites.",
+    "send": {
+      "title": "Send invitation",
+      "description": "Invited users receive an email link valid for 7 days.",
+      "emailLabel": "Email",
+      "submit": "Send invite",
+      "submitting": "Sending…"
+    },
+    "list": {
+      "title": "Pending invitations",
+      "description": "All invitations that have not yet been accepted or revoked.",
+      "empty": "No invitations yet.",
+      "columns": {
+        "email": "Email",
+        "status": "Status",
+        "expires": "Expires",
+        "action": "Action"
+      }
+    },
+    "status": {
+      "expired": "Expired"
+    },
+    "expiry": {
+      "past": "expired {when}",
+      "future": "expires {when}"
+    },
+    "revoke": "Revoke",
+    "toast": {
+      "sent": {
+        "title": "Invitation sent",
+        "description": "An email has been sent to {email}. It expires {when}."
+      },
+      "revoked": {
+        "title": "Invitation revoked",
+        "description": "The invitation for {email} has been revoked."
+      }
+    }
+  },
+  "roleChange": {
+    "title": "Change user role",
+    "description": "Changing the role for <strong>{name}</strong>.",
+    "placeholder": "Select a role",
+    "hint": "Admins can manage users, invitations, and audit logs. Regular users only see their own account.",
+    "submit": "Confirm",
+    "submitting": "Updating…",
+    "roles": {
+      "Admin": "Admin",
+      "User": "User"
+    },
+    "toast": {
+      "title": "Role updated",
+      "description": "{name} is now a {role}."
+    }
+  },
+  "userDetail": {
+    "backToUsers": "Back to users",
+    "loadError": "We couldn't load this user. They may have been removed.",
+    "info": {
+      "title": "Account info",
+      "description": "Read-only profile details from the user's record.",
+      "email": "Email",
+      "joined": "Joined",
+      "onboarding": "Onboarding",
+      "completed": "Completed",
+      "pending": "Pending"
+    },
+    "actions": {
+      "title": "Actions",
+      "description": "Admin-only changes to this user's account.",
+      "changeRole": "Change role"
+    },
+    "activity": {
+      "title": "Recent activity",
+      "description": "Latest audit entries with this user as the actor.",
+      "empty": "No recent activity recorded."
+    }
+  },
+  "usersTable": {
+    "title": "Users",
+    "summary": "{total} total · page {page} of {totalPages}",
+    "search": {
+      "aria": "Search users",
+      "placeholder": "Search by name or email"
+    },
+    "empty": {
+      "title": "No users match this search",
+      "description": "Try a different name or email."
+    },
+    "columns": {
+      "name": "Name",
+      "email": "Email",
+      "role": "Role"
+    }
+  }
+}

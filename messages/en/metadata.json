@@ -1,0 +1,79 @@
+{
+  "root": {
+    "title": "Modulith",
+    "description": "Modulith frontend application"
+  },
+  "landing": {
+    "title": "Modulith",
+    "description": "The modular .NET application template with a Next.js companion frontend."
+  },
+  "auth": {
+    "login": {
+      "title": "Sign in | Modulith",
+      "description": "Access your Modulith workspace."
+    },
+    "twoFactor": {
+      "title": "Verify sign-in | Modulith",
+      "description": "Enter your authenticator code to finish signing in."
+    },
+    "register": {
+      "title": "Create account | Modulith",
+      "description": "Set up your Modulith workspace access."
+    },
+    "forgotPassword": {
+      "title": "Reset password | Modulith",
+      "description": "Request a link to reset your Modulith account password."
+    },
+    "resetPassword": {
+      "title": "Set new password | Modulith",
+      "description": "Choose a new password for your Modulith account."
+    },
+    "confirmEmail": {
+      "title": "Confirm email | Modulith"
+    },
+    "confirmEmailChange": {
+      "title": "Confirm email change | Modulith"
+    },
+    "goodbye": {
+      "title": "Account deleted | Modulith"
+    }
+  },
+  "onboarding": {
+    "title": "Finish setup | Modulith",
+    "description": "Complete onboarding to enter your Modulith workspace."
+  },
+  "invite": {
+    "title": "Organization invitation | Modulith",
+    "description": "Accept an invitation to join an organization."
+  },
+  "app": {
+    "dashboard": "Dashboard | Modulith",
+    "notifications": "Notifications | Modulith",
+    "organizations": {
+      "list": "Organizations | Modulith",
+      "create": "Create organization | Modulith",
+      "overview": "Organization | Modulith",
+      "settings": "Organization settings | Modulith",
+      "members": "Members | Modulith",
+      "invitations": "Invitations | Modulith",
+      "audit": "Audit | Modulith"
+    }
+  },
+  "settings": {
+    "shell": "Settings | Modulith",
+    "profile": "Profile settings | Modulith",
+    "password": "Password settings | Modulith",
+    "email": "Email settings | Modulith",
+    "security": "Security | Modulith",
+    "activity": "Activity | Modulith",
+    "notifications": "Notification settings | Modulith",
+    "data": "Your data | Modulith"
+  },
+  "admin": {
+    "shell": "Admin | Modulith",
+    "users": "Users | Admin | Modulith",
+    "userDetail": "User detail | Admin | Modulith",
+    "invitations": "Invitations | Admin | Modulith",
+    "auditTrail": "Audit trail | Admin | Modulith"
+  }
+}

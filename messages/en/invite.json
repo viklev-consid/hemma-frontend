@@ -1,0 +1,25 @@
+{
+  "invalid": {
+    "title": "Invitation unavailable"
+  },
+  "opaqueError": "This invitation isn't usable. Ask whoever sent it for a new one.",
+  "signedIn": {
+    "title": "Join this organization",
+    "body": "You're signed in as <strong>{email}</strong>. Accept to join."
+  },
+  "emailMismatch": {
+    "title": "Heads up — different email",
+    "body": "This invitation was addressed to {inviteEmail}, but you're signed in as {sessionEmail}. The backend will only accept it if both addresses match."
+  },
+  "signedOut": {
+    "title": "You've been invited",
+    "body": "Create an account or sign in to accept this invitation.",
+    "bodyWithEmail": "The invitation was sent to <strong>{email}</strong>. Create an account or sign in to accept.",
+    "register": "Create account",
+    "signIn": "I already have an account"
+  },
+  "acceptCta": "Accept invitation",
+  "acceptedShort": "Joined",
+  "accepting": "Joining…",
+  "acceptedToast": "You're in."
+}

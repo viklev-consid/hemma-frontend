@@ -1,0 +1,16 @@
+{
+  "shell": {
+    "title": "Admin",
+    "subtitle": "Manage users, invitations, and audit logs.",
+    "accessDenied": {
+      "title": "Access denied",
+      "description": "You don't have permission to view the admin area. If you think this is a mistake, contact a workspace administrator.",
+      "back": "Back to dashboard"
+    }
+  },
+  "nav": {
+    "users": "Users",
+    "invitations": "Invitations",
+    "auditTrail": "Audit trail"
+  }
+}

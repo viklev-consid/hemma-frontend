@@ -1,0 +1,28 @@
+{
+  "confirmEmail": {
+    "loading": {
+      "title": "Confirming your account",
+      "description": "Please wait while we verify your confirmation link."
+    },
+    "success": {
+      "title": "Account confirmed",
+      "description": "You can now sign in to your account."
+    },
+    "error": {
+      "title": "Invalid or expired link",
+      "description": "Request a new confirmation email and try again."
+    },
+    "idle": {
+      "title": "Confirm your account",
+      "description": "Paste the confirmation token from your email to activate your account."
+    },
+    "continueToSignIn": "Continue to sign in",
+    "tokenLabel": "Confirmation token",
+    "tokenPlaceholder": "Paste the token from your email",
+    "confirmButton": "Confirm account",
+    "emailLabel": "Email address",
+    "emailPlaceholder": "you@example.com",
+    "resending": "Resending…",
+    "resendButton": "Resend confirmation email"
+  }
+}

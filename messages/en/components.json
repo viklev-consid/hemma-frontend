@@ -1,0 +1,55 @@
+{
+  "notifications": {
+    "bell": {
+      "aria": "Notifications",
+      "title": "Notifications",
+      "markAllRead": "Mark all read",
+      "empty": "All caught up",
+      "viewAll": "View all notifications"
+    },
+    "toast": {
+      "newNotification": "New notification",
+      "open": "Open",
+      "justNow": "just now"
+    },
+    "category": {
+      "product": "Product",
+      "collaboration": "Collaboration",
+      "system": "System",
+      "account": "Account",
+      "security": "Security",
+      "unknown": "Notification"
+    }
+  },
+  "auth": {
+    "toast": {
+      "confirmationSent": {
+        "title": "Confirmation email sent",
+        "description": "If an account exists and needs confirmation, a new email is on its way."
+      }
+    }
+  },
+  "activityFeed": {
+    "empty": "No activity yet. Account events will appear here after you sign in, change your password, or update your profile.",
+    "loadMore": "Load more",
+    "endOfFeed": "End of feed"
+  },
+  "legal": {
+    "acceptance": {
+      "versionLabel": "Version {version}",
+      "acknowledgeDocument": "I have read and accept {title}",
+      "acknowledgeAllHint": "Read and acknowledge each document above to continue.",
+      "documentsUpdated": "These documents were updated while you were reading. Please review the latest version and acknowledge again.",
+      "submitFailed": "We couldn't record your acceptance. Please try again."
+    },
+    "gate": {
+      "title": "Updated legal documents",
+      "description": "Please review and accept the updated documents to continue using Modulith.",
+      "submit": "Accept and continue",
+      "logout": "Log out",
+      "manageAccount": "Manage account",
+      "loading": "Loading documents…",
+      "loadError": "Couldn't load the latest documents. Try again or log out."
+    }
+  }
+}

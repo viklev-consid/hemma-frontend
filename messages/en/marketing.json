@@ -1,0 +1,14 @@
+{
+  "header": {
+    "brand": "Modulith",
+    "openApp": "Open app",
+    "signIn": "Sign in",
+    "getStarted": "Get started"
+  },
+  "landing": {
+    "title": "Build modular .NET applications, faster.",
+    "description": "Modulith pairs a modular .NET backend with a Next.js frontend that talks to it through a single OpenAPI spec. Auth, permissions, and background workflows are wired end-to-end so you can focus on shipping the feature that matters.",
+    "getStarted": "Get started",
+    "signIn": "Sign in"
+  }
+}

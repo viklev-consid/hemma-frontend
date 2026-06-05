@@ -1,0 +1,16 @@
+{
+  "actions": {
+    "cancel": "Cancel",
+    "save": "Save",
+    "saving": "Saving…",
+    "loading": "Loading…",
+    "send": "Send",
+    "sending": "Sending…",
+    "submit": "Submit",
+    "submitting": "Submitting…",
+    "continue": "Continue",
+    "back": "Back",
+    "close": "Close",
+    "done": "Done"
+  }
+}

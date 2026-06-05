@@ -1,0 +1,88 @@
+{
+  "dashboard": {
+    "title": "Dashboard",
+    "body": "A placeholder operations view for the selected organization context.",
+    "placeholder": "Placeholder",
+    "stats": {
+      "activeUsers": "Active users",
+      "activeUsersDetail": "+12% from last month",
+      "workflowRuns": "Workflow runs",
+      "workflowRunsDetail": "Across all demo modules",
+      "approvals": "Pending approvals",
+      "approvalsDetail": "Typical dashboard signal"
+    },
+    "activity": {
+      "title": "Recent activity",
+      "description": "Fictional events showing where operational updates will live.",
+      "items": {
+        "invites": {
+          "title": "Invitations reviewed",
+          "body": "Three pending collaborators were prepared for manager approval.",
+          "time": "12m ago"
+        },
+        "audit": {
+          "title": "Audit export prepared",
+          "body": "A weekly compliance package is ready for download.",
+          "time": "1h ago"
+        },
+        "policy": {
+          "title": "Policy check completed",
+          "body": "No critical configuration drift was detected.",
+          "time": "Today"
+        }
+      }
+    },
+    "health": {
+      "title": "Workspace health",
+      "description": "Demo readiness indicators for the app shell.",
+      "ok": "OK",
+      "items": {
+        "sync": "Directory sync",
+        "permissions": "Permissions model",
+        "notifications": "Notification stream"
+      }
+    }
+  },
+  "shell": {
+    "brand": "Modulith",
+    "workspaceLabel": "Workspace",
+    "quickCreate": "Quick create",
+    "search": "Search",
+    "dashboard": "Dashboard",
+    "organizations": "Organizations",
+    "notifications": "Notifications",
+    "administration": "Administration",
+    "settings": "Settings",
+    "personal": "Personal",
+    "mySettings": "My settings",
+    "orgNavLabel": "Organization",
+    "orgOverview": "Overview",
+    "help": "Get help",
+    "signOut": "Sign out",
+    "profileMenu": {
+      "label": "Account menu"
+    },
+    "command": {
+      "title": "Search",
+      "description": "Find pages and settings",
+      "placeholder": "Search pages, settings…",
+      "empty": "No results found.",
+      "pages": "Pages",
+      "settings": "Settings",
+      "administration": "Administration"
+    },
+    "breadcrumb": {
+      "dashboard": "Dashboard",
+      "account": "Account",
+      "settings": "Settings",
+      "administration": "Administration",
+      "notifications": "Notifications",
+      "organizationsNew": "Create organization",
+      "organizationsActive": "Organization",
+      "organizationsMembers": "Members",
+      "organizationsInvitations": "Invitations",
+      "organizationsAudit": "Audit",
+      "organizationsSettings": "Settings"
+    }
+  }
+}
