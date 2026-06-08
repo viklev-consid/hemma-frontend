@@ -23,7 +23,7 @@ import { useActiveHousehold } from "@/lib/active-household-context";
  *
  * Renders nothing when no household is active. The picker remains visible in
  * the header so the user can switch / create — they just don't see a
- * contextual nav until they pick or arrive inside an household.
+ * contextual nav until they pick or arrive inside a household.
  */
 export function HouseholdNav() {
   const t = useTranslations("app.shell");

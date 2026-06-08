@@ -7,8 +7,8 @@ unit-tested next to the implementation (`*.test.ts`). When you add a helper:
   if more than one feature uses it.
 - Add a test file. Vitest, jsdom, Jest-compatible API.
 - Export constants and predicates separately so callers can branch on
-  named constants instead of magic strings (see `lib/org-access-mode.ts`,
-  `lib/org-errors.ts`, `lib/org-permission-strings.ts`).
+  named constants instead of magic strings (see `lib/household-access-mode.ts`,
+  `lib/household-errors.ts`, `lib/household-permission-strings.ts`).
 
 ## React Query — subscribe vs peek
 
@@ -27,12 +27,12 @@ register the calling component as a subscriber. If the data changes (after
 
 ```ts
 // Hook used in render — subscribes; reacts to cache updates.
-export function useHasOrgPermission(orgId, permission) {
+export function useHasHouseholdPermission(orgId, permission) {
   const { data } = useQuery({
-    ...listMyOrganizationsOptions(),
+    ...listMyHouseholdsOptions(),
     select: (response) =>
-      response.organizations
-        .find((o) => o.organizationId === orgId)
+      response.households
+        .find((o) => o.householdId === orgId)
         ?.permissions.includes(permission) ?? false,
   });
   return data ?? false;
@@ -43,13 +43,13 @@ export function useHasOrgPermission(orgId, permission) {
 
 ```ts
 // Reads cache during render — stale on the next refresh.
-export function useHasOrgPermission(orgId, permission) {
+export function useHasHouseholdPermission(orgId, permission) {
   const qc = useQueryClient();
-  return hasOrgPermission(qc, orgId, permission); // not subscribed
+  return hasHouseholdPermission(qc, orgId, permission); // not subscribed
 }
 ```
 
-The non-hook `hasOrgPermission(client, ...)` form is fine — it just must be
+The non-hook `hasHouseholdPermission(client, ...)` form is fine — it just must be
 called from event handlers, effects, or tests, never directly during render.
 
 ### `select` for projection
@@ -60,37 +60,37 @@ unrelated changes to other fields won't re-render the consumer.
 
 ## Permission helpers
 
-`org-permissions.ts` exposes both forms:
+`household-permissions.ts` exposes both forms:
 
 | Form                                | Use from                       |
 | ----------------------------------- | ------------------------------ |
-| `useHasOrgPermission(orgId, perm)`  | React render                   |
-| `useMyOrganization(orgId)`          | React render                   |
-| `hasOrgPermission(qc, orgId, perm)` | Event handlers, effects, tests |
-| `findMyOrganization(qc, orgId)`     | Event handlers, effects, tests |
+| `useHasHouseholdPermission(orgId, perm)`  | React render                   |
+| `useMyHousehold(orgId)`          | React render                   |
+| `hasHouseholdPermission(qc, orgId, perm)` | Event handlers, effects, tests |
+| `findMyHousehold(qc, orgId)`     | Event handlers, effects, tests |
 
-The `<Can inOrg=...>` and `usePermission(perm, orgId)` wrappers in
+The `<Can inHousehold=...>` and `usePermission(perm, orgId)` wrappers in
 `components/can.tsx` go through the subscribing form.
 
-### Active-org checks and PlatformOverride
+### Active-household checks and PlatformOverride
 
-For UI that gates on a permission inside whichever org is currently
+For UI that gates on a permission inside whichever household is currently
 active — the global sidebar's contextual section is the canonical case
-— use `useCanInActiveOrg(perm)` from `lib/active-org-permissions.ts`
-instead of `<Can inOrg=...>`. The reason is platform admins:
+— use `useCanInActiveHousehold(perm)` from `lib/active-household-permissions.ts`
+instead of `<Can inHousehold=...>`. The reason is platform admins:
 
 A user acting under `accessMode: PlatformOverride` is **not in `/my`**.
-`ActiveOrgProvider` synthesises a `MyOrganizationItem` for them so the
+`ActiveHouseholdProvider` synthesises a `MyHouseholdItem` for them so the
 sidebar can still render, but its `permissions` array is empty by
-design. A raw `<Can inOrg={activeOrg.id} permission={X}>` therefore
+design. A raw `<Can inHousehold={activeHousehold.id} permission={X}>` therefore
 hides everything from an override admin even though the backend would
 accept their actions.
 
-`useCanInActiveOrg` reads `OrgContext.accessMode` and grants override
+`useCanInActiveHousehold` reads `HouseholdContext.accessMode` and grants override
 admins through; for ScopedPermission users it falls back to the same
-`useHasOrgPermission` lookup. The non-hook `hasOrgPermission(...)`
+`useHasHouseholdPermission` lookup. The non-hook `hasHouseholdPermission(...)`
 does NOT carry this behaviour — for event handlers that run for both
-member and override admins, branch on `org.accessMode` explicitly.
+member and override admins, branch on `household.accessMode` explicitly.
 
 ## Constants vs magic strings
 
@@ -98,10 +98,10 @@ Every string the backend ships that the UI branches on lives as a named
 constant here. Backend renames then surface as TypeScript errors at call
 sites instead of silently broken guards. Current catalogs:
 
-- `org-access-mode.ts` — `ACCESS_MODE`
-- `org-errors.ts` — `ORG_ERRORS`
-- `org-permission-strings.ts` — `ORG_PERMISSION`
-- `org-roles.ts` — `ORG_ROLES`
+- `household-access-mode.ts` — `ACCESS_MODE`
+- `household-errors.ts` — `HOUSEHOLD_ERRORS`
+- `household-permission-strings.ts` — `HOUSEHOLD_PERMISSION`
+- `household-roles.ts` — `HOUSEHOLD_ROLES`
 
 When you add another module's contract here, mirror the pattern: a const
 object with `as const`, a derived union type, and predicate helpers.

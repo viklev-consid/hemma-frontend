@@ -15,21 +15,21 @@ The convention is documented in
 and `parallel-routes.md`. Read them before adding another modal; the
 geometry is non-obvious.
 
-### File layout (current: create-org)
+### File layout (current: create-household)
 
 ```
 app/(app)/app/
 ├── layout.tsx                      — accepts { children, modal } and renders both
 ├── @modal/
 │   ├── default.tsx                 — returns null (slot fallback for hard nav)
-│   └── (.)organizations/new/page.tsx  — intercepts the create-org route
-└── organizations/new/page.tsx      — standalone page (direct URL hit / refresh)
+│   └── (.)households/new/page.tsx  — intercepts the create-household route
+└── households/new/page.tsx      — standalone page (direct URL hit / refresh)
 ```
 
 The `(.)` matcher is segment-relative — and **slots are not segments**.
-So from inside `@modal/` the `organizations` segment is one segment
+So from inside `@modal/` the `households` segment is one segment
 away (same level as `@modal`'s host layout's children), which is why
-`(.)organizations/new/` is correct. `(..)` would be wrong here.
+`(.)households/new/` is correct. `(..)` would be wrong here.
 
 ### Form sharing
 
@@ -38,8 +38,8 @@ page mounts it bare; the modal wraps it in `<Dialog>`. To keep the form
 oblivious to which chrome it's in, the form exposes optional handlers:
 
 ```tsx
-<CreateOrgForm
-  onSuccess={(data) => push(`/app/o/${data.slug}`)}
+<CreateHouseholdForm
+  onSuccess={(data) => push(`/app/h/${data.slug}`)}
   onCancel={close}
 />
 ```
@@ -52,7 +52,7 @@ slot) and "cancel" pops back to the originating route.
 ### Adding a new intercepted modal
 
 1. Add the standalone page at `app/(app)/app/<segment>/<sub>/page.tsx`
-   (or under `o/[slug]/...` if it's org-scoped).
+   (or under `h/[slug]/...` if it's household-scoped).
 2. Make the form component accept optional `onSuccess` and `onCancel`.
 3. Add a modal wrapper at `components/<feature>/<name>-modal.tsx` that
    pulls the form in with the `Dialog` chrome.

@@ -40,7 +40,7 @@ type RegisterInput = {
   /** Token for an existing pending system-level user invitation. */
   invitationToken?: string | null;
   /**
-   * Token from an household invitation link
+   * Token from a household invitation link
    * (`/invite?token=...`). The server cross-validates this against the
    * Households module, creates the account, then auto-consumes the
    * invite — joining the user to the inviting household as part of registration.

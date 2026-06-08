@@ -2,7 +2,7 @@
   "shell": {
     "switcher": {
       "label": "Household",
-      "placeholder": "Select an household",
+      "placeholder": "Select a household",
       "search": "Search households…",
       "empty": "No households.",
       "viewAll": "All households",
@@ -185,7 +185,7 @@
     },
     "dangerZone": {
       "title": "Danger zone",
-      "description": "Deleting an household is permanent. Members lose access immediately."
+      "description": "Deleting a household is permanent. Members lose access immediately."
     },
     "delete": {
       "trigger": "Delete household",

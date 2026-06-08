@@ -29,8 +29,8 @@ import { householdSwitchTarget } from "@/lib/household-switch-target";
  * Household switcher.
  *
  * Reads `/v1/households/my` from the cache and the app-level active-household
- * context. Selecting an household pins it for cross-household / personal routes; when the
- * user is already in an household-scoped route, selection preserves the current
+ * context. Selecting a household pins it for cross-household / personal routes; when the
+ * user is already in a household-scoped route, selection preserves the current
  * sub-page under the newly selected slug.
  *
  * When the user has no households, the trigger collapses to a
