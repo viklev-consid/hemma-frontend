@@ -24,7 +24,7 @@ This repository provides the Next.js user interface layer for that backend. It i
 The frontend expects the backend OpenAPI document to be available at:
 
 ```text
-http://localhost:5000/openapi/v1.json
+https://localhost:7297/openapi/v1.json
 ```
 
 In the backend repository, the full stack is run through .NET Aspire:

@@ -8,14 +8,18 @@ Status: Accepted
 
 This repository is explicitly optimized for agent-driven development. Agents rely heavily on written conventions, and small documentation mismatches can lead to incorrect file edits, wrong commands, or fabricated generated output.
 
-Some current project docs contain drift that should be resolved deliberately:
+Some current project docs contain drift that should be resolved deliberately.
 
-- `README.md` says the backend OpenAPI endpoint is `http://localhost:5000/openapi/v1.json`.
-- `AGENTS.md` also says `pnpm api:sync` expects `http://localhost:5000/openapi/v1.json`.
-- `package.json` currently implements `pnpm api:sync` as `https://localhost:7297/openapi/v1.json`.
-- `CLAUDE.md` refers to generated files under `src/api/generated`, while this repository uses `api/generated`.
-- `CLAUDE.md` mentions `middleware.ts`, while this Next.js 16 project uses `proxy.ts`.
-- `README.md` mentions Base UI primitives, but the practical component convention is to reuse existing shadcn/ui components from `components/ui`.
+**Resolved (2026-06-08):**
+
+- ~~`README.md` says the backend OpenAPI endpoint is `http://localhost:5000/openapi/v1.json`.~~ Fixed: aligned to the `package.json` script (`https://localhost:7297/openapi/v1.json`). The script is the source of truth; the `:7297` HTTPS profile (with `curl -k` for the .NET dev cert) is the current backend launch profile, not the legacy `:5000` HTTP default.
+- ~~`AGENTS.md` also says `pnpm api:sync` expects `http://localhost:5000/openapi/v1.json`.~~ Fixed: aligned to `https://localhost:7297/openapi/v1.json` (also corrected in `docs/codegen.md`).
+- ~~`CLAUDE.md` refers to generated files under `src/api/generated`, while this repository uses `api/generated`.~~ Already corrected; `CLAUDE.md` now references `api/generated`.
+- ~~`CLAUDE.md` mentions `middleware.ts`, while this Next.js 16 project uses `proxy.ts`.~~ Already corrected; `CLAUDE.md` now references `proxy.ts`.
+- ~~`README.md` mentions Base UI primitives, but the practical component convention is to reuse existing shadcn/ui components from `components/ui`.~~ Already corrected; `README.md` now references shadcn/ui (`base-lyra`).
+
+**Open (backend confirmation required — do not silently normalize):**
+
 - The admin shell gates the audit-trail nav on `audit.trail.read`, but `GET /v1/audit/trail` in `openapi.json` documents no required permission. The endpoint defaults to the caller's own trail and only admins can pass `actorId`. Resolution requires either the backend advertising the permission claim or the frontend switching to a different gate; do not silently rename the string without confirming which side is canonical.
 - `AuditEntryDto` exposes `id`, `eventType`, `actorId`, `resourceType`, `resourceId`, and `occurredAt` but no `payload` field. The phase 4 admin audit-trail UI was specified to render an expanded JSON detail block (e.g. `oldRole`/`newRole`/`changedBy` for `user.role.changed`). The current expanded view shows only the fields the DTO has — adding payload requires either widening `AuditEntryDto` or exposing a per-event detail endpoint. Do not synthesize fields client-side.
 

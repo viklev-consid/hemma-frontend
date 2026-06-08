@@ -29,7 +29,7 @@ Before any Next.js work, find and read the relevant doc in `node_modules/next/di
 
 # Generated/API workflow
 
-- `pnpm api:sync` expects the backend OpenAPI endpoint at `http://localhost:5000/openapi/v1.json`.
+- `pnpm api:sync` expects the backend OpenAPI endpoint at `https://localhost:7297/openapi/v1.json`.
 - If the backend is unavailable, explain that API sync could not be verified instead of fabricating generated output.
 - Files in `api/generated/` are protected by a PreToolUse hook — edits are mechanically blocked. If a generated type is wrong, update `openapi.json` and run `pnpm api:generate`.
 
