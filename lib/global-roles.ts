@@ -1,7 +1,7 @@
 /**
  * Global (platform-wide) user roles.
  *
- * Distinct from `lib/org-roles.ts`, which covers per-organization roles.
+ * Distinct from `lib/household-roles.ts`, which covers per-household roles.
  * The backend gates platform-admin endpoints (e.g. `ChangeUserRole`,
  * documented as "Admin only") on this role value directly — there is no
  * fine-grained permission string for these. Centralising the literal so
