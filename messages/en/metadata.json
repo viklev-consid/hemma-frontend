@@ -1,79 +1,79 @@
 {
   "root": {
-    "title": "Modulith",
-    "description": "Modulith frontend application"
+    "title": "Hemma",
+    "description": "Hemma frontend application"
   },
   "landing": {
-    "title": "Modulith",
-    "description": "The modular .NET application template with a Next.js companion frontend."
+    "title": "Hemma",
+    "description": "The Hemma application frontend."
   },
   "auth": {
     "login": {
-      "title": "Sign in | Modulith",
-      "description": "Access your Modulith workspace."
+      "title": "Sign in | Hemma",
+      "description": "Access your Hemma workspace."
     },
     "twoFactor": {
-      "title": "Verify sign-in | Modulith",
+      "title": "Verify sign-in | Hemma",
       "description": "Enter your authenticator code to finish signing in."
     },
     "register": {
-      "title": "Create account | Modulith",
-      "description": "Set up your Modulith workspace access."
+      "title": "Create account | Hemma",
+      "description": "Set up your Hemma workspace access."
     },
     "forgotPassword": {
-      "title": "Reset password | Modulith",
-      "description": "Request a link to reset your Modulith account password."
+      "title": "Reset password | Hemma",
+      "description": "Request a link to reset your Hemma account password."
     },
     "resetPassword": {
-      "title": "Set new password | Modulith",
-      "description": "Choose a new password for your Modulith account."
+      "title": "Set new password | Hemma",
+      "description": "Choose a new password for your Hemma account."
     },
     "confirmEmail": {
-      "title": "Confirm email | Modulith"
+      "title": "Confirm email | Hemma"
     },
     "confirmEmailChange": {
-      "title": "Confirm email change | Modulith"
+      "title": "Confirm email change | Hemma"
     },
     "goodbye": {
-      "title": "Account deleted | Modulith"
+      "title": "Account deleted | Hemma"
     }
   },
   "onboarding": {
-    "title": "Finish setup | Modulith",
-    "description": "Complete onboarding to enter your Modulith workspace."
+    "title": "Finish setup | Hemma",
+    "description": "Complete onboarding to enter your Hemma workspace."
   },
   "invite": {
-    "title": "Organization invitation | Modulith",
+    "title": "Organization invitation | Hemma",
     "description": "Accept an invitation to join an organization."
   },
   "app": {
-    "dashboard": "Dashboard | Modulith",
-    "notifications": "Notifications | Modulith",
+    "dashboard": "Dashboard | Hemma",
+    "notifications": "Notifications | Hemma",
     "organizations": {
-      "list": "Organizations | Modulith",
-      "create": "Create organization | Modulith",
-      "overview": "Organization | Modulith",
-      "settings": "Organization settings | Modulith",
-      "members": "Members | Modulith",
-      "invitations": "Invitations | Modulith",
-      "audit": "Audit | Modulith"
+      "list": "Organizations | Hemma",
+      "create": "Create organization | Hemma",
+      "overview": "Organization | Hemma",
+      "settings": "Organization settings | Hemma",
+      "members": "Members | Hemma",
+      "invitations": "Invitations | Hemma",
+      "audit": "Audit | Hemma"
     }
   },
   "settings": {
-    "shell": "Settings | Modulith",
-    "profile": "Profile settings | Modulith",
-    "password": "Password settings | Modulith",
-    "email": "Email settings | Modulith",
-    "security": "Security | Modulith",
-    "activity": "Activity | Modulith",
-    "notifications": "Notification settings | Modulith",
-    "data": "Your data | Modulith"
+    "shell": "Settings | Hemma",
+    "profile": "Profile settings | Hemma",
+    "password": "Password settings | Hemma",
+    "email": "Email settings | Hemma",
+    "security": "Security | Hemma",
+    "activity": "Activity | Hemma",
+    "notifications": "Notification settings | Hemma",
+    "data": "Your data | Hemma"
   },
   "admin": {
-    "shell": "Admin | Modulith",
-    "users": "Users | Admin | Modulith",
-    "userDetail": "User detail | Admin | Modulith",
-    "invitations": "Invitations | Admin | Modulith",
-    "auditTrail": "Audit trail | Admin | Modulith"
+    "shell": "Admin | Hemma",
+    "users": "Users | Admin | Hemma",
+    "userDetail": "User detail | Admin | Hemma",
+    "invitations": "Invitations | Admin | Hemma",
+    "auditTrail": "Audit trail | Admin | Hemma"
   }
 }

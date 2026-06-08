@@ -1,7 +1,7 @@
 {
   "openapi": "3.1.1",
   "info": {
-    "title": "Modulith.Api | v1",
+    "title": "Hemma.Api | v1",
     "version": "1.0.0"
   },
   "servers": [
@@ -897,7 +897,7 @@
     },
     "/v1/audit/trail": {
       "get": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Get an audit trail. Defaults to the caller's own trail; admins may pass actorId to query any user.",
         "operationId": "GetAuditTrail",
         "parameters": [
@@ -978,7 +978,7 @@
     },
     "/v1/catalog/products": {
       "get": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "List all products.",
         "operationId": "ListProducts",
         "parameters": [
@@ -1005,7 +1005,7 @@
         }
       },
       "post": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Create a new product.",
         "operationId": "CreateProduct",
         "requestBody": {
@@ -1059,7 +1059,7 @@
     },
     "/v1/catalog/products/{productId}": {
       "get": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Get a product by its ID.",
         "operationId": "GetProductById",
         "parameters": [
@@ -1099,7 +1099,7 @@
     },
     "/v1/me/notifications": {
       "get": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "List the authenticated user's in-app notifications.",
         "operationId": "ListMyNotifications",
         "parameters": [
@@ -1160,7 +1160,7 @@
     },
     "/v1/me/notifications/unread-count": {
       "get": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Get the authenticated user's unread in-app notification count.",
         "operationId": "GetUnreadNotificationCount",
         "responses": {
@@ -1194,7 +1194,7 @@
     },
     "/v1/me/notifications/{notificationId}/read": {
       "patch": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Mark one in-app notification as read.",
         "operationId": "MarkNotificationAsRead",
         "parameters": [
@@ -1242,7 +1242,7 @@
     },
     "/v1/me/notifications/read-all": {
       "patch": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Mark all visible in-app notifications as read.",
         "operationId": "MarkAllNotificationsAsRead",
         "responses": {
@@ -1269,7 +1269,7 @@
     },
     "/v1/me/notifications/{notificationId}": {
       "delete": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Archive one in-app notification.",
         "operationId": "ArchiveNotification",
         "parameters": [
@@ -1317,7 +1317,7 @@
     },
     "/v1/me/notifications/stream": {
       "get": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Stream live in-app notification updates for the authenticated user.",
         "operationId": "StreamMyNotifications",
         "parameters": [
@@ -1363,7 +1363,7 @@
     },
     "/v1/me/notification-preferences": {
       "get": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Get the authenticated user's notification preferences.",
         "operationId": "GetMyNotificationPreferences",
         "responses": {
@@ -1395,7 +1395,7 @@
         ]
       },
       "put": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Update the authenticated user's notification preferences.",
         "operationId": "UpdateMyNotificationPreferences",
         "requestBody": {
@@ -1442,7 +1442,7 @@
     },
     "/v1/organizations": {
       "post": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Create an organization and make the caller its owner.",
         "operationId": "CreateOrganization",
         "requestBody": {
@@ -1486,7 +1486,7 @@
     },
     "/v1/organizations/my": {
       "get": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "List organizations where the caller has an active membership.",
         "operationId": "ListMyOrganizations",
         "responses": {
@@ -1510,7 +1510,7 @@
     },
     "/v1/organizations/{organizationRef}": {
       "get": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Get an organization by ID or slug.",
         "operationId": "GetOrganization",
         "parameters": [
@@ -1542,7 +1542,7 @@
         ]
       },
       "patch": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Update organization settings.",
         "operationId": "UpdateOrganization",
         "parameters": [
@@ -1584,7 +1584,7 @@
         ]
       },
       "delete": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Soft-delete an organization.",
         "operationId": "DeleteOrganization",
         "parameters": [
@@ -1611,7 +1611,7 @@
     },
     "/v1/organizations/{organizationRef}/members": {
       "get": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "List organization members.",
         "operationId": "ListOrganizationMembers",
         "parameters": [
@@ -1645,7 +1645,7 @@
     },
     "/v1/organizations/{organizationRef}/members/{userId}/role": {
       "put": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Change an organization member role.",
         "operationId": "ChangeOrganizationMemberRole",
         "parameters": [
@@ -1698,7 +1698,7 @@
     },
     "/v1/organizations/{organizationRef}/members/{userId}": {
       "delete": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Remove a member or leave an organization.",
         "operationId": "RemoveOrganizationMember",
         "parameters": [
@@ -1734,7 +1734,7 @@
     },
     "/v1/organizations/{organizationRef}/invitations": {
       "post": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Invite a user to an organization.",
         "operationId": "CreateOrganizationInvitation",
         "parameters": [
@@ -1776,7 +1776,7 @@
         ]
       },
       "get": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "List organization invitations.",
         "operationId": "ListOrganizationInvitations",
         "parameters": [
@@ -1810,7 +1810,7 @@
     },
     "/v1/organizations/invitations/accept": {
       "post": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Accept an organization invitation for the current user.",
         "operationId": "AcceptOrganizationInvitation",
         "requestBody": {
@@ -1844,7 +1844,7 @@
     },
     "/v1/organizations/{organizationRef}/invitations/{invitationId}": {
       "delete": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Revoke an organization invitation.",
         "operationId": "RevokeOrganizationInvitation",
         "parameters": [
@@ -1880,7 +1880,7 @@
     },
     "/v1/organizations/{organizationRef}/audit": {
       "get": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Get organization audit entries.",
         "operationId": "GetOrganizationAudit",
         "parameters": [
@@ -1932,7 +1932,7 @@
     },
     "/v1/users/register": {
       "post": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Register a new user account.",
         "operationId": "Register",
         "requestBody": {
@@ -1981,7 +1981,7 @@
     },
     "/v1/users/login": {
       "post": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Authenticate and receive an access token and a refresh token.",
         "operationId": "Login",
         "requestBody": {
@@ -2030,7 +2030,7 @@
     },
     "/v1/users/login/2fa": {
       "post": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Complete a two-factor login challenge and receive tokens.",
         "operationId": "LoginTwoFactor",
         "requestBody": {
@@ -2079,7 +2079,7 @@
     },
     "/v1/users/me": {
       "get": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Get the authenticated user's profile, role, and resolved permissions.",
         "operationId": "GetCurrentUser",
         "responses": {
@@ -2111,7 +2111,7 @@
         ]
       },
       "delete": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Permanently delete the authenticated user's account and all associated personal data.",
         "operationId": "DeleteAccount",
         "responses": {
@@ -2148,7 +2148,7 @@
     },
     "/v1/users/legal-documents/{type}/{version}": {
       "get": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Get the current published content for a legal document version.",
         "operationId": "GetLegalDocument",
         "parameters": [
@@ -2214,7 +2214,7 @@
     },
     "/v1/users/me/legal-compliance": {
       "get": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Get the authenticated user's current legal document compliance status.",
         "operationId": "GetLegalCompliance",
         "responses": {
@@ -2248,7 +2248,7 @@
     },
     "/v1/users/me/onboarding/legal-requirements": {
       "get": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Get the current legal documents required to complete onboarding.",
         "operationId": "GetOnboardingLegalRequirements",
         "responses": {
@@ -2282,7 +2282,7 @@
     },
     "/v1/users/me/legal-acceptances": {
       "post": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Accept one or more published legal document versions.",
         "operationId": "AcceptLegalDocuments",
         "requestBody": {
@@ -2329,7 +2329,7 @@
     },
     "/v1/users/me/onboarding": {
       "post": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Accept the terms of service to complete account setup.",
         "operationId": "CompleteOnboarding",
         "requestBody": {
@@ -2376,7 +2376,7 @@
     },
     "/v1/users/me/profile": {
       "patch": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Update the authenticated user's profile.",
         "operationId": "UpdateProfile",
         "requestBody": {
@@ -2440,7 +2440,7 @@
     },
     "/v1/users/me/avatar": {
       "put": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Upload or replace the authenticated user's avatar.",
         "operationId": "UpdateAvatar",
         "requestBody": {
@@ -2502,7 +2502,7 @@
         ]
       },
       "delete": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Remove the authenticated user's avatar.",
         "operationId": "DeleteAvatar",
         "responses": {
@@ -2539,7 +2539,7 @@
     },
     "/v1/users/{userId}/avatar": {
       "get": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Get a user's avatar when the authenticated caller is allowed to view it.",
         "operationId": "GetUserAvatar",
         "parameters": [
@@ -2597,7 +2597,7 @@
     },
     "/v1/users/me/personal-data": {
       "get": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Export all personal data held about the authenticated user.",
         "operationId": "ExportPersonalData",
         "responses": {
@@ -2631,7 +2631,7 @@
     },
     "/v1/users/password/forgot": {
       "post": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Request a password reset email. Always returns 200 regardless of whether the email exists.",
         "operationId": "ForgotPassword",
         "requestBody": {
@@ -2660,7 +2660,7 @@
     },
     "/v1/users/password/reset": {
       "post": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Complete a password reset using the token from the reset email.",
         "operationId": "ResetPassword",
         "requestBody": {
@@ -2709,7 +2709,7 @@
     },
     "/v1/users/me/password": {
       "post": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Change the authenticated user's password. Revokes all other sessions.",
         "operationId": "ChangePassword",
         "requestBody": {
@@ -2763,7 +2763,7 @@
     },
     "/v1/users/email/confirm": {
       "post": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Confirm a newly registered account using the token from the confirmation email.",
         "operationId": "ConfirmEmail",
         "requestBody": {
@@ -2802,7 +2802,7 @@
     },
     "/v1/users/me/email/request": {
       "post": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Request an email address change. A confirmation link will be sent to the new address.",
         "operationId": "RequestEmailChange",
         "requestBody": {
@@ -2846,7 +2846,7 @@
     },
     "/v1/users/me/email/confirm": {
       "post": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Confirm an email address change using the token from the confirmation email.",
         "operationId": "ConfirmEmailChange",
         "requestBody": {
@@ -2900,7 +2900,7 @@
     },
     "/v1/users/email/confirmation/resend": {
       "post": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Request another email confirmation link.",
         "operationId": "ResendEmailConfirmation",
         "requestBody": {
@@ -2929,7 +2929,7 @@
     },
     "/v1/users/token/refresh": {
       "post": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Exchange a refresh token for a new access token and rotated refresh token.",
         "operationId": "RefreshToken",
         "requestBody": {
@@ -2978,7 +2978,7 @@
     },
     "/v1/users/logout": {
       "post": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Revoke the provided refresh token (single-session logout).",
         "operationId": "Logout",
         "requestBody": {
@@ -3022,7 +3022,7 @@
     },
     "/v1/users/logout/all": {
       "post": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Revoke all refresh tokens for the authenticated user (logout everywhere).",
         "operationId": "LogoutAll",
         "responses": {
@@ -3056,7 +3056,7 @@
     },
     "/v1/users/{userId}/role": {
       "put": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Change the role of a user. Admin only.",
         "operationId": "ChangeUserRole",
         "parameters": [
@@ -3141,7 +3141,7 @@
     },
     "/v1/users": {
       "get": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "List all users. Requires users.users.read permission.",
         "operationId": "ListUsers",
         "parameters": [
@@ -3204,7 +3204,7 @@
     },
     "/v1/users/{userId}": {
       "get": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Get a specific user by ID. Requires users.users.read permission.",
         "operationId": "GetUserById",
         "parameters": [
@@ -3259,7 +3259,7 @@
     },
     "/v1/users/invitations": {
       "get": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "List user invitations. Requires users.invitations.write permission.",
         "operationId": "ListInvitations",
         "parameters": [
@@ -3321,7 +3321,7 @@
         ]
       },
       "post": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Create a user invitation. Admin only.",
         "operationId": "CreateInvitation",
         "requestBody": {
@@ -3375,7 +3375,7 @@
     },
     "/v1/users/invitations/{invitationId}": {
       "delete": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Revoke a pending user invitation. Admin only.",
         "operationId": "RevokeInvitation",
         "parameters": [
@@ -3440,7 +3440,7 @@
     },
     "/v1/users/me/2fa/totp/setup": {
       "post": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Start authenticator-app two-factor setup for the current user.",
         "operationId": "SetupTotp",
         "responses": {
@@ -3474,7 +3474,7 @@
     },
     "/v1/users/me/2fa/totp/confirm": {
       "post": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Confirm authenticator-app two-factor setup and receive recovery codes.",
         "operationId": "ConfirmTotp",
         "requestBody": {
@@ -3528,7 +3528,7 @@
     },
     "/v1/users/me/2fa": {
       "delete": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Disable two-factor authentication for the current user.",
         "operationId": "DisableTwoFactor",
         "requestBody": {
@@ -3582,7 +3582,7 @@
     },
     "/v1/users/me/2fa/recovery-codes/regenerate": {
       "post": {
-        "tags": ["Modulith.Api"],
+        "tags": ["Hemma.Api"],
         "summary": "Regenerate recovery codes for the current user.",
         "operationId": "RegenerateRecoveryCodes",
         "requestBody": {
@@ -5782,7 +5782,7 @@
       "name": "TickerQ Dashboard"
     },
     {
-      "name": "Modulith.Api"
+      "name": "Hemma.Api"
     },
     {
       "name": "Admin — Dead Letters"

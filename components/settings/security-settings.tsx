@@ -66,7 +66,7 @@ function downloadCodes(codes: string[]) {
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = "modulith-recovery-codes.txt";
+  link.download = "hemma-recovery-codes.txt";
   link.click();
   URL.revokeObjectURL(url);
 }

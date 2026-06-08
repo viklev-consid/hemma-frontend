@@ -20,7 +20,7 @@ let notificationSourceSubscribers = 0;
 let notificationSourceCloseTimer: ReturnType<typeof setTimeout> | null = null;
 let cachedClientId: string | null = null;
 
-const NOTIFICATION_CLIENT_ID_KEY = "modulith.notifications.clientId";
+const NOTIFICATION_CLIENT_ID_KEY = "hemma.notifications.clientId";
 
 function getOrCreateClientId(): string {
   if (cachedClientId) {

@@ -1,6 +1,6 @@
-# Modulith Frontend
+# Hemma Frontend
 
-Frontend application for [Modulith](https://github.com/viklev-consid/modulith), an opinionated .NET modular monolith template for building RESTful APIs with clear module boundaries, OpenAPI contracts, authentication, notifications, scheduled jobs, and agent-ready development workflows.
+Frontend application for Hemma, a .NET-backed product with OpenAPI contracts, authentication, notifications, scheduled jobs, and agent-ready development workflows.
 
 This repository provides the Next.js user interface layer for that backend. It is intentionally API-contract driven: the backend owns the OpenAPI document, and this app generates typed clients, schemas, SDK helpers, and TanStack Query bindings from that contract.
 
@@ -19,7 +19,7 @@ This repository provides the Next.js user interface layer for that backend. It i
 ## Prerequisites
 
 - Node.js and pnpm
-- The Modulith backend when syncing the OpenAPI contract or developing against live API endpoints
+- The Hemma backend when syncing the OpenAPI contract or developing against live API endpoints
 
 The frontend expects the backend OpenAPI document to be available at:
 
@@ -137,4 +137,4 @@ The paired backend provides the platform capabilities this frontend is expected 
 - Per-module health checks and observability
 - Scheduled jobs, transactional messaging, and audit history
 
-See the [backend README](https://github.com/viklev-consid/modulith/blob/main/README.md) for architecture, module boundaries, backend setup, and platform feature details.
+See the backend README for architecture, module boundaries, backend setup, and platform feature details.

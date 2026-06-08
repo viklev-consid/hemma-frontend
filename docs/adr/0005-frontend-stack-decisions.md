@@ -6,7 +6,7 @@ Status: Accepted
 
 ## Context
 
-This app is intended to be a reusable, agent-friendly frontend companion to the Modulith backend. Consistency matters more than local preference because future features should compose predictably.
+This app is intended to be a reusable, agent-friendly frontend companion to the Hemma backend. Consistency matters more than local preference because future features should compose predictably.
 
 ## Decision
 

@@ -17,7 +17,7 @@ describe("problemHasErrorCode", () => {
       problemHasErrorCode(
         {
           status: 401,
-          type: "https://errors.modulith.dev/Users.Email.NotConfirmed",
+          type: "https://errors.hemma.dev/Users.Email.NotConfirmed",
         },
         "Users.Email.NotConfirmed",
       ),

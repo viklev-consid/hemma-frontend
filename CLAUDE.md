@@ -1,8 +1,8 @@
 @AGENTS.md
 
-# Modulith Frontend
+# Hemma Frontend
 
-Next.js companion app for the Modulith .NET backend. This is a template project — the frontend is a separate repo, communicating with the backend exclusively through its OpenAPI spec.
+Next.js companion app for the Hemma .NET backend. The frontend is a separate repo, communicating with the backend exclusively through its OpenAPI spec.
 
 ## Architecture
 

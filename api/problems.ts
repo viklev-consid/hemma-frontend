@@ -20,7 +20,7 @@ export type MissingLegalDocument = {
   contentHash: string;
 };
 
-const LEGAL_COMPLIANCE_REQUIRED_EVENT = "modulith:legal-compliance-required";
+const LEGAL_COMPLIANCE_REQUIRED_EVENT = "hemma:legal-compliance-required";
 
 export type LegalComplianceRequiredDetail = {
   missingDocuments?: MissingLegalDocument[];
