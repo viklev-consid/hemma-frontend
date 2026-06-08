@@ -43,17 +43,17 @@
     "description": "Complete onboarding to enter your Hemma workspace."
   },
   "invite": {
-    "title": "Organization invitation | Hemma",
-    "description": "Accept an invitation to join an organization."
+    "title": "Household invitation | Hemma",
+    "description": "Accept an invitation to join a household."
   },
   "app": {
     "dashboard": "Dashboard | Hemma",
     "notifications": "Notifications | Hemma",
-    "organizations": {
-      "list": "Organizations | Hemma",
-      "create": "Create organization | Hemma",
-      "overview": "Organization | Hemma",
-      "settings": "Organization settings | Hemma",
+    "households": {
+      "list": "Households | Hemma",
+      "create": "Create household | Hemma",
+      "overview": "Household | Hemma",
+      "settings": "Household settings | Hemma",
       "members": "Members | Hemma",
       "invitations": "Invitations | Hemma",
       "audit": "Audit | Hemma"

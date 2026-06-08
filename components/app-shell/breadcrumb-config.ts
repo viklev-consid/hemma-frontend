@@ -8,7 +8,7 @@ import {
  * Breadcrumb trail resolver.
  *
  * The trail roots vary by scope:
- *   - Cross-org pages (`/app`, `/app/notifications`, org pages)   → Dashboard › ...
+ *   - Cross-household pages (`/app`, `/app/notifications`, household pages)   → Dashboard › ...
  *   - Personal pages (`/app/me/*`)                                → Account › ...
  *   - Admin pages (`/app/admin/*`)                                → Administration › ...
  *
@@ -16,8 +16,8 @@ import {
  * `startsWith` catch-alls. Use the same href ladder pattern (parent +
  * leaf) so the chevron-separated chain stays clickable.
  *
- * Org pages currently render a static "Organization" label rather than
- * the actual org name. Plumbing the dynamic name through would require
+ * Household pages currently render a static "Household" label rather than
+ * the actual household name. Plumbing the dynamic name through would require
  * either a hook variant of this resolver or shape changes to the Crumb
  * type; deferred until there's product pressure for it.
  */
@@ -27,12 +27,12 @@ type ShellBreadcrumbKey =
   | "settings"
   | "administration"
   | "notifications"
-  | "organizationsNew"
-  | "organizationsActive"
-  | "organizationsMembers"
-  | "organizationsInvitations"
-  | "organizationsAudit"
-  | "organizationsSettings";
+  | "householdsNew"
+  | "householdsActive"
+  | "householdsMembers"
+  | "householdsInvitations"
+  | "householdsAudit"
+  | "householdsSettings";
 
 export type Crumb =
   | {
@@ -56,20 +56,23 @@ type Trail = {
   build: (path: string) => Crumb[];
 };
 
-const ORG_SUB_PAGES: ReadonlyArray<[string, ShellBreadcrumbKey]> = [
-  ["members", "organizationsMembers"],
-  ["invitations", "organizationsInvitations"],
-  ["audit", "organizationsAudit"],
-  ["settings", "organizationsSettings"],
+const HOUSEHOLD_SUB_PAGES: ReadonlyArray<[string, ShellBreadcrumbKey]> = [
+  ["members", "householdsMembers"],
+  ["invitations", "householdsInvitations"],
+  ["audit", "householdsAudit"],
+  ["settings", "householdsSettings"],
 ];
 
-function orgSubPageCrumbs(slug: string, leafKey: ShellBreadcrumbKey): Crumb[] {
+function householdSubPageCrumbs(
+  slug: string,
+  leafKey: ShellBreadcrumbKey,
+): Crumb[] {
   return [
     { ns: "app.shell.breadcrumb", key: "dashboard", href: "/app" },
     {
       ns: "app.shell.breadcrumb",
-      key: "organizationsActive",
-      href: `/app/o/${slug}`,
+      key: "householdsActive",
+      href: `/app/h/${slug}`,
     },
     { ns: "app.shell.breadcrumb", key: leafKey },
   ];
@@ -122,31 +125,31 @@ const trails: Trail[] = [
     build: () => [{ ns: "app.shell.breadcrumb", key: "administration" }],
   },
   {
-    match: (p) => p === "/app/organizations/new",
+    match: (p) => p === "/app/households/new",
     build: () => [
       { ns: "app.shell.breadcrumb", key: "dashboard", href: "/app" },
-      { ns: "app.shell.breadcrumb", key: "organizationsNew" },
+      { ns: "app.shell.breadcrumb", key: "householdsNew" },
     ],
   },
-  // Per-org sub-pages. Each leaf links the parent overview so the trail
-  // reads Dashboard › Organization › Members. Order matters: these
-  // specific suffix matchers must run before the catch-all org-overview
+  // Per-household sub-pages. Each leaf links the parent overview so the trail
+  // reads Dashboard › Household › Members. Order matters: these
+  // specific suffix matchers must run before the catch-all household-overview
   // entry below.
-  ...ORG_SUB_PAGES.map<Trail>(([segment, key]) => ({
+  ...HOUSEHOLD_SUB_PAGES.map<Trail>(([segment, key]) => ({
     match: (p) => {
-      const m = p.match(/^\/app\/o\/([^/]+)\/([^/]+)$/);
+      const m = p.match(/^\/app\/h\/([^/]+)\/([^/]+)$/);
       return m !== null && m[2] === segment;
     },
     build: (p) => {
-      const m = p.match(/^\/app\/o\/([^/]+)\//);
-      return orgSubPageCrumbs(m?.[1] ?? "", key);
+      const m = p.match(/^\/app\/h\/([^/]+)\//);
+      return householdSubPageCrumbs(m?.[1] ?? "", key);
     },
   })),
   {
-    match: (p) => p.startsWith("/app/o/"),
+    match: (p) => p.startsWith("/app/h/"),
     build: () => [
       { ns: "app.shell.breadcrumb", key: "dashboard", href: "/app" },
-      { ns: "app.shell.breadcrumb", key: "organizationsActive" },
+      { ns: "app.shell.breadcrumb", key: "householdsActive" },
     ],
   },
 ];

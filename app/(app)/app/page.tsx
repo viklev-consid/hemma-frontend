@@ -22,11 +22,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 /**
- * Cross-org dashboard.
+ * Cross-household dashboard.
  *
  * Placeholder widgets for the application landing area. Real product
- * metrics should replace these once the domain modules arrive; the org
- * picker remains the entry point for selecting and creating organizations.
+ * metrics should replace these once the domain modules arrive; the household
+ * picker remains the entry point for selecting and creating households.
  */
 export default async function DashboardPage() {
   const tDash = await getTranslations("app.dashboard");

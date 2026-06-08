@@ -36,11 +36,11 @@ export function RegisterContent() {
   const { register, resendEmailConfirmation } = useAuth();
   const searchParams = useSearchParams();
   const invitationToken = searchParams.get("token");
-  // Org-invitation flow uses `?orgToken=` to avoid colliding with the
+  // Household-invitation flow uses `?orgToken=` to avoid colliding with the
   // existing system-invitation `?token=` flow. When present we additionally
   // forward the email from the invite URL and lock the input so the user
   // can't accidentally diverge from what the backend expects.
-  const organizationInvitationToken = searchParams.get("orgToken");
+  const householdInvitationToken = searchParams.get("orgToken");
   const prefilledEmail = searchParams.get("email") ?? "";
   // Both invite paths lock the email when explicitly requested — the
   // backend enforces that the registered address matches the one the
@@ -48,7 +48,7 @@ export function RegisterContent() {
   // produces a guaranteed validation error.
   const lockEmail =
     searchParams.get("lockEmail") === "1" &&
-    Boolean(organizationInvitationToken || invitationToken);
+    Boolean(householdInvitationToken || invitationToken);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [registeredEmail, setRegisteredEmail] = useState<string | null>(null);
 
@@ -72,7 +72,7 @@ export function RegisterContent() {
         email: value.email,
         password: value.password,
         invitationToken,
-        organizationInvitationToken,
+        householdInvitationToken,
       });
 
       if (!parsed.success) {
@@ -102,7 +102,7 @@ export function RegisterContent() {
   if (
     registrationMode === "InviteOnly" &&
     !invitationToken &&
-    !organizationInvitationToken
+    !householdInvitationToken
   ) {
     return (
       <RegisterMessage
@@ -132,7 +132,7 @@ export function RegisterContent() {
       <Card className="w-full max-w-sm">
         <CardHeader>
           <CardTitle>
-            {invitationToken || organizationInvitationToken
+            {invitationToken || householdInvitationToken
               ? t("titleInvited")
               : t("title")}
           </CardTitle>

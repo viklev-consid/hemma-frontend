@@ -5,7 +5,7 @@
     "steps": {
       "terms": "Terms",
       "avatar": "Photo",
-      "createOrg": "Organization",
+      "createHousehold": "Household",
       "complete": "Complete"
     },
     "terms": {
@@ -25,9 +25,9 @@
       "skip": "Skip for now",
       "continue": "Continue"
     },
-    "createOrg": {
-      "title": "Create your first organization",
-      "description": "Optional. Organizations are workspaces where you collaborate with others. You can also create or join one later from the picker.",
+    "createHousehold": {
+      "title": "Create your first household",
+      "description": "Optional. Households are workspaces where you collaborate with others. You can also create or join one later from the picker.",
       "skip": "I'll do this later"
     },
     "complete": {

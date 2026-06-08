@@ -67,8 +67,8 @@
     "submit": "Confirm",
     "submitting": "Updating…",
     "roles": {
-      "Admin": "Admin",
-      "User": "User"
+      "admin": "Admin",
+      "user": "User"
     },
     "toast": {
       "title": "Role updated",

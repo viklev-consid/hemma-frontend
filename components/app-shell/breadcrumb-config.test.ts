@@ -53,34 +53,34 @@ describe("resolveBreadcrumb", () => {
     ]);
   });
 
-  it("returns Dashboard › Create organization for /app/organizations/new", () => {
-    expect(resolveBreadcrumb("/app/organizations/new")).toEqual([
+  it("returns Dashboard › Create household for /app/households/new", () => {
+    expect(resolveBreadcrumb("/app/households/new")).toEqual([
       { ns: "app.shell.breadcrumb", key: "dashboard", href: "/app" },
-      { ns: "app.shell.breadcrumb", key: "organizationsNew" },
+      { ns: "app.shell.breadcrumb", key: "householdsNew" },
     ]);
   });
 
-  it("returns Dashboard › Organization for /app/o/:slug", () => {
-    expect(resolveBreadcrumb("/app/o/acme")).toEqual([
+  it("returns Dashboard › Household for /app/h/:slug", () => {
+    expect(resolveBreadcrumb("/app/h/acme")).toEqual([
       { ns: "app.shell.breadcrumb", key: "dashboard", href: "/app" },
-      { ns: "app.shell.breadcrumb", key: "organizationsActive" },
+      { ns: "app.shell.breadcrumb", key: "householdsActive" },
     ]);
   });
 
   it.each([
-    ["members", "organizationsMembers"],
-    ["invitations", "organizationsInvitations"],
-    ["audit", "organizationsAudit"],
-    ["settings", "organizationsSettings"],
+    ["members", "householdsMembers"],
+    ["invitations", "householdsInvitations"],
+    ["audit", "householdsAudit"],
+    ["settings", "householdsSettings"],
   ])(
-    "returns Dashboard › Organization › leaf for /app/o/:slug/%s",
+    "returns Dashboard › Household › leaf for /app/h/:slug/%s",
     (segment, key) => {
-      expect(resolveBreadcrumb(`/app/o/acme/${segment}`)).toEqual([
+      expect(resolveBreadcrumb(`/app/h/acme/${segment}`)).toEqual([
         { ns: "app.shell.breadcrumb", key: "dashboard", href: "/app" },
         {
           ns: "app.shell.breadcrumb",
-          key: "organizationsActive",
-          href: "/app/o/acme",
+          key: "householdsActive",
+          href: "/app/h/acme",
         },
         { ns: "app.shell.breadcrumb", key },
       ]);

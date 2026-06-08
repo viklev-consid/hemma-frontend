@@ -11,9 +11,9 @@ import {
 import { useTranslations } from "next-intl";
 
 import { Can } from "@/components/can";
-import { OrgNav } from "@/components/app-shell/org-nav";
+import { HouseholdNav } from "@/components/app-shell/household-nav";
 import { ProfileMenu } from "@/components/app-shell/profile-menu";
-import { OrgSwitcher } from "@/components/organizations/org-switcher";
+import { HouseholdSwitcher } from "@/components/households/household-switcher";
 import {
   Sidebar,
   SidebarContent,
@@ -31,11 +31,11 @@ const ADMIN_PERMISSIONS = adminRoutes.map((route) => route.permission);
 /**
  * Sidebar shape:
  *   Header — brand + Dashboard + Picker
- *   Content — active-org contextual nav (rendered by <OrgNav/>)
+ *   Content — active-household contextual nav (rendered by <HouseholdNav/>)
  *   Footer — Search, Administration, Help, ProfileMenu
  *
- * The cross-org/personal/active-org split corresponds to the three
- * scope categories the app exposes (see lib/active-org-context.ts).
+ * The cross-household/personal/active-household split corresponds to the three
+ * scope categories the app exposes (see lib/active-household-context.ts).
  */
 export function AppSidebar({ onSearchOpen }: { onSearchOpen: () => void }) {
   const t = useTranslations("app.shell");
@@ -77,12 +77,12 @@ export function AppSidebar({ onSearchOpen }: { onSearchOpen: () => void }) {
         </SidebarGroup>
 
         <div className="group-data-[collapsible=icon]:hidden">
-          <OrgSwitcher />
+          <HouseholdSwitcher />
         </div>
       </SidebarHeader>
 
       <SidebarContent>
-        <OrgNav />
+        <HouseholdNav />
       </SidebarContent>
 
       <SidebarFooter>

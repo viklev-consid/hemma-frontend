@@ -11,6 +11,28 @@ const nextConfig = {
   logging: {
     browserToTerminal: true,
   },
+  async redirects() {
+    // Phase 0 households rename: organizations → households, /app/o → /app/h.
+    // 308 (permanent) so bookmarks, emailed deep links, and search engines
+    // follow the new shape while preserving the request method.
+    return [
+      {
+        source: "/app/o/:path*",
+        destination: "/app/h/:path*",
+        permanent: true,
+      },
+      {
+        source: "/app/organizations",
+        destination: "/app/households",
+        permanent: true,
+      },
+      {
+        source: "/app/organizations/:path*",
+        destination: "/app/households/:path*",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

@@ -48,11 +48,11 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import {
-  extractBlockingOrganizations,
-  isOrgError,
-  ORG_ERRORS,
-  type BlockingOrganization,
-} from "@/lib/org-errors";
+  extractBlockingHouseholds,
+  isHouseholdError,
+  HOUSEHOLD_ERRORS,
+  type BlockingHousehold,
+} from "@/lib/household-errors";
 
 export function DataSettings() {
   const t = useTranslations("settingsForms.data");
@@ -63,11 +63,11 @@ export function DataSettings() {
   const [isDeleting, setIsDeleting] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
   // When the backend rejects deletion because the user is the sole owner
-  // of one or more organizations, we surface them here and switch the
+  // of one or more households, we surface them here and switch the
   // confirm dialog to a remediation view. Cleared on Cancel / dialog
   // close so a retry starts from a blank slate.
-  const [blockingOrgs, setBlockingOrgs] = useState<
-    BlockingOrganization[] | null
+  const [blockingHouseholds, setBlockingHouseholds] = useState<
+    BlockingHousehold[] | null
   >(null);
   const email = currentUser?.email ?? "";
   const canDelete = confirmEmail === email;
@@ -110,12 +110,12 @@ export function DataSettings() {
 
       const problem = (await problemFromResponse(response)) as ProblemDetails;
 
-      // The Organizations module attaches a structured
-      // blockingOrganizations list to UserErasureBlocked. Each entry
+      // The Households module attaches a structured
+      // blockingHouseholds list to UserErasureBlocked. Each entry
       // carries `isSoleOwner` so the remediation panel can flag the
       // hard blockers distinctly.
-      if (isOrgError(problem, ORG_ERRORS.UserErasureBlocked)) {
-        setBlockingOrgs(extractBlockingOrganizations(problem));
+      if (isHouseholdError(problem, HOUSEHOLD_ERRORS.UserErasureBlocked)) {
+        setBlockingHouseholds(extractBlockingHouseholds(problem));
         return;
       }
 
@@ -162,7 +162,7 @@ export function DataSettings() {
                 // Reset both the email-confirm field and any remediation
                 // state so reopening starts from scratch.
                 setConfirmEmail("");
-                setBlockingOrgs(null);
+                setBlockingHouseholds(null);
               }
             }}
           >
@@ -175,10 +175,10 @@ export function DataSettings() {
               }
             />
             <AlertDialogContent>
-              {blockingOrgs ? (
-                <BlockingOrgsRemediation
-                  organizations={blockingOrgs}
-                  onClose={() => setBlockingOrgs(null)}
+              {blockingHouseholds ? (
+                <BlockingHouseholdsRemediation
+                  households={blockingHouseholds}
+                  onClose={() => setBlockingHouseholds(null)}
                 />
               ) : (
                 <>
@@ -240,23 +240,23 @@ export function DataSettings() {
 
 /**
  * Remediation panel shown when account deletion is refused because the
- * user is the sole Owner of one or more organizations.
+ * user is the sole Owner of one or more households.
  *
  * Each row offers two deep links:
- * - "Manage members" → /o/:slug/members so they can transfer ownership.
- * - "Delete organization" → /o/:slug/settings where the Danger zone
- *   lives. Deleting all blocking orgs (or transferring ownership)
+ * - "Manage members" → /h/:slug/members so they can transfer ownership.
+ * - "Delete household" → /h/:slug/settings where the Danger zone
+ *   lives. Deleting all blocking households (or transferring ownership)
  *   unblocks the account-deletion path.
  *
  * We intentionally don't auto-retry the deletion after a successful
  * remediation — the user should explicitly come back and click Delete
  * again so they reconfirm the irreversible step.
  */
-function BlockingOrgsRemediation({
-  organizations,
+function BlockingHouseholdsRemediation({
+  households,
   onClose,
 }: {
-  organizations: BlockingOrganization[];
+  households: BlockingHousehold[];
   onClose: () => void;
 }) {
   const t = useTranslations("settingsForms.data.delete.blocking");
@@ -269,28 +269,28 @@ function BlockingOrgsRemediation({
         <AlertDialogDescription>{t("description")}</AlertDialogDescription>
       </AlertDialogHeader>
       <ul className="grid gap-2 py-2">
-        {organizations.map((org) => (
+        {households.map((household) => (
           <li
-            key={org.organizationId}
+            key={household.householdId}
             className="grid gap-2 rounded-md border p-3 sm:flex sm:items-center sm:justify-between"
           >
             <div className="flex items-center gap-2">
               <Building2Icon className="size-4 text-muted-foreground" />
               <div className="grid">
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium">{org.name}</span>
-                  {org.isSoleOwner ? (
+                  <span className="text-sm font-medium">{household.name}</span>
+                  {household.isSoleOwner ? (
                     <Badge variant="destructive">{t("soleOwnerBadge")}</Badge>
                   ) : null}
                 </div>
                 <span className="text-xs text-muted-foreground">
-                  /{org.slug}
+                  /{household.slug}
                 </span>
               </div>
             </div>
             <div className="flex gap-2">
               <Link
-                href={`/app/o/${org.slug}/members`}
+                href={`/app/h/${household.slug}/members`}
                 className={buttonVariants({ size: "sm", variant: "outline" })}
                 onClick={onClose}
               >
@@ -298,14 +298,14 @@ function BlockingOrgsRemediation({
                 <ExternalLinkIcon />
               </Link>
               <Link
-                href={`/app/o/${org.slug}/settings`}
+                href={`/app/h/${household.slug}/settings`}
                 className={buttonVariants({
                   size: "sm",
                   variant: "destructive",
                 })}
                 onClick={onClose}
               >
-                {t("deleteOrgCta")}
+                {t("deleteHouseholdCta")}
                 <ExternalLinkIcon />
               </Link>
             </div>

@@ -4,7 +4,7 @@
   },
   "opaqueError": "This invitation isn't usable. Ask whoever sent it for a new one.",
   "signedIn": {
-    "title": "Join this organization",
+    "title": "Join this household",
     "body": "You're signed in as <strong>{email}</strong>. Accept to join."
   },
   "emailMismatch": {

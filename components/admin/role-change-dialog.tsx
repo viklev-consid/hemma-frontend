@@ -30,6 +30,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { GLOBAL_ROLE } from "@/lib/global-roles";
+import type { PlatformRole } from "@/api/generated";
 
 const ROLE_OPTIONS = [
   { value: GLOBAL_ROLE.Admin },
@@ -158,7 +159,7 @@ function RoleChangeForm({
           onClick={() =>
             mutation.mutate({
               path: { userId },
-              body: { role },
+              body: { role: role as PlatformRole },
             })
           }
           disabled={!isDirty || mutation.isPending}
