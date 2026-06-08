@@ -1,0 +1,14 @@
+# Generated artifacts — owned by the codegen pipeline, not Prettier.
+# Mirrors the eslint `globalIgnores` for api/generated and the
+# doctor.config exclusion. Keeping these Prettier-free ensures the
+# committed output stays byte-identical to `pnpm api:generate` /
+# `pnpm api:sync`, so CI's regenerate-and-diff check stays clean.
+api/generated/**
+openapi.json
+
+# Build output / deps
+.next/**
+out/**
+build/**
+node_modules/**
+pnpm-lock.yaml
