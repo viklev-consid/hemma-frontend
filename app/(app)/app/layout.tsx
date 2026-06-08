@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 /**
  * Hosts the `@modal` parallel slot so any route under `/app/...` can be
- * intercepted into a modal. Today only `/app/organizations/new` uses
+ * intercepted into a modal. Today only `/app/households/new` uses
  * this; the pattern is reusable for future create flows (see
  * `components/CLAUDE.md` for the recipe).
  *

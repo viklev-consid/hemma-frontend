@@ -5,14 +5,14 @@ import { useState, type ReactNode } from "react";
 import { AppHeader } from "@/components/app-shell/app-header";
 import { AppSearchCommand } from "@/components/app-shell/app-search-command";
 import { AppSidebar } from "@/components/app-shell/app-sidebar";
-import { ActiveOrgProvider } from "@/components/organizations/active-org-provider";
+import { ActiveHouseholdProvider } from "@/components/households/active-household-provider";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
 export function AppShell({ children }: { children: ReactNode }) {
   const [searchOpen, setSearchOpen] = useState(false);
 
   return (
-    <ActiveOrgProvider>
+    <ActiveHouseholdProvider>
       <SidebarProvider>
         <AppSidebar onSearchOpen={() => setSearchOpen(true)} />
         <SidebarInset>
@@ -23,6 +23,6 @@ export function AppShell({ children }: { children: ReactNode }) {
         </SidebarInset>
         <AppSearchCommand open={searchOpen} onOpenChange={setSearchOpen} />
       </SidebarProvider>
-    </ActiveOrgProvider>
+    </ActiveHouseholdProvider>
   );
 }

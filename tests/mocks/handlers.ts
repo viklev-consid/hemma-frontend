@@ -29,7 +29,7 @@ export const handlers = [
 
     return HttpResponse.json(
       {
-        type: "https://tools.ietf.org/html/rfc9110#section-15.5.2",
+        type: "https://tools.ietf.household/html/rfc9110#section-15.5.2",
         title: "Invalid credentials",
         status: 401,
         detail: "The email or password is incorrect.",
@@ -57,7 +57,7 @@ export const handlers = [
 
     return HttpResponse.json(
       {
-        type: "https://tools.ietf.org/html/rfc9110#section-15.5.2",
+        type: "https://tools.ietf.household/html/rfc9110#section-15.5.2",
         title: "Invalid code",
         status: 401,
         detail: "That verification code did not match.",

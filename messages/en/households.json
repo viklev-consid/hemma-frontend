@@ -1,0 +1,240 @@
+{
+  "shell": {
+    "switcher": {
+      "label": "Household",
+      "placeholder": "Select an household",
+      "search": "Search households…",
+      "empty": "No households.",
+      "viewAll": "All households",
+      "create": "Create household",
+      "manage": "Manage household",
+      "noMemberships": "You aren't a member of any household yet."
+    },
+    "accessMode": {
+      "platformOverrideLabel": "Platform admin",
+      "platformOverrideDescription": "You're acting on this household as a platform admin. You aren't a member — owners and other members won't see you on the team."
+    },
+    "nav": {
+      "label": "Household sections",
+      "overview": "Overview",
+      "members": "Members",
+      "invitations": "Invitations",
+      "audit": "Audit",
+      "settings": "Settings"
+    },
+    "removed": {
+      "title": "Household unavailable",
+      "description": "It may have been deleted or your membership was removed."
+    },
+    "error": {
+      "title": "Couldn't load this household",
+      "description": "Something went wrong fetching the household. Try again in a moment."
+    }
+  },
+  "overview": {
+    "title": "{name}",
+    "description": "Household overview.",
+    "slugLabel": "Slug",
+    "roleLabel": "Your role"
+  },
+  "audit": {
+    "columns": {
+      "occurredAt": "When",
+      "eventType": "Event",
+      "actor": "Actor",
+      "resource": "Resource",
+      "payload": "Payload"
+    },
+    "system": "System",
+    "payload": {
+      "show": "Show",
+      "hide": "Hide",
+      "truncated": "Payload truncated for display. Use the API for the full event."
+    },
+    "empty": {
+      "title": "No audit entries",
+      "description": "Actions taken in this household will show up here."
+    },
+    "pagination": {
+      "summary": "Page {page} of {total}",
+      "prev": "Previous page",
+      "next": "Next page"
+    }
+  },
+  "invitations": {
+    "table": {
+      "title": "Pending invitations",
+      "description": "People who have been invited but haven't joined yet.",
+      "createCta": "Invite person",
+      "rowActionsLabel": "Actions for {email}",
+      "columns": {
+        "email": "Email",
+        "role": "Role",
+        "status": "Status",
+        "expires": "Expires",
+        "actions": "Actions"
+      },
+      "empty": {
+        "title": "No pending invitations",
+        "description": "Invite someone to give them access to this household."
+      }
+    },
+    "status": {
+      "pending": "Pending",
+      "expired": "Expired",
+      "consumed": "Accepted"
+    },
+    "actions": {
+      "revoke": "Revoke invitation"
+    },
+    "create": {
+      "title": "Invite to household",
+      "description": "We'll email an invitation link to the address below. You can also copy the link from the next step and share it yourself.",
+      "emailLabel": "Email",
+      "emailRequired": "Email is required.",
+      "roleLabel": "Role",
+      "rolePlaceholder": "Select a role",
+      "roleRequired": "Pick a role.",
+      "submit": "Send invitation",
+      "submitting": "Sending…",
+      "successTitle": "Invitation sent",
+      "successDescription": "An email is on its way to {email}. If you'd rather share the link yourself, copy it below."
+    },
+    "revoke": {
+      "title": "Revoke invitation for {email}?",
+      "description": "The link will stop working immediately. You can issue a new invitation later.",
+      "submit": "Revoke",
+      "submitting": "Revoking…",
+      "toast": "Invitation for {email} revoked."
+    },
+    "rawToken": {
+      "warningTitle": "This is the only time you'll see this link",
+      "warningBody": "We've also emailed it to the invitee, but if you'd like to send it through another channel, copy it now. The token isn't recoverable once you close this dialog — you'd have to revoke and reissue.",
+      "urlLabel": "Invite link",
+      "tokenLabel": "Raw token",
+      "copyUrl": "Copy invite link",
+      "copyToken": "Copy raw token"
+    }
+  },
+  "members": {
+    "table": {
+      "columns": {
+        "member": "Member",
+        "role": "Role",
+        "joined": "Joined",
+        "actions": "Actions"
+      },
+      "empty": {
+        "title": "No members",
+        "description": "Invite someone to join this household."
+      },
+      "anonymized": "Unknown user",
+      "rowActionsLabel": "Actions for {name}"
+    },
+    "actions": {
+      "changeRole": "Change role",
+      "remove": "Remove from household",
+      "leave": "Leave household"
+    },
+    "roleChange": {
+      "title": "Change role",
+      "description": "Choose a new role for <strong>{name}</strong>.",
+      "placeholder": "Select a role",
+      "hint": "You can only assign roles below your own.",
+      "submit": "Save role",
+      "submitting": "Saving…",
+      "toast": {
+        "title": "Role updated",
+        "description": "{name} is now {role}."
+      }
+    },
+    "remove": {
+      "removeTitle": "Remove {name}?",
+      "removeDescription": "They'll immediately lose access to this household. They can be re-invited later.",
+      "removeAction": "Remove",
+      "leaveTitle": "Leave this household?",
+      "leaveDescription": "You'll immediately lose access. Another owner will need to invite you back.",
+      "leaveAction": "Leave",
+      "submitting": "Working…",
+      "toast": {
+        "removeSuccess": "{name} removed.",
+        "leaveSuccess": "You left the household."
+      }
+    }
+  },
+  "settings": {
+    "edit": {
+      "title": "Household details",
+      "description": "Change the display name or the URL slug.",
+      "name": {
+        "label": "Name",
+        "hint": "Up to 200 characters."
+      },
+      "slug": {
+        "label": "Slug",
+        "hint": "Lowercase letters, numbers, and single hyphens.",
+        "invalid": "Use lowercase letters, numbers, and single hyphens. No leading or trailing hyphens."
+      },
+      "slugChangeWarning": "Changing the slug breaks existing links to this household. There is no automatic redirect from the old slug.",
+      "submit": "Save changes",
+      "submitConfirm": "Save and update URL",
+      "submitting": "Saving…",
+      "toast": {
+        "saved": "Household updated."
+      }
+    },
+    "dangerZone": {
+      "title": "Danger zone",
+      "description": "Deleting an household is permanent. Members lose access immediately."
+    },
+    "delete": {
+      "trigger": "Delete household",
+      "confirmTitle": "Delete {name}?",
+      "confirmDescription": "This action cannot be undone. All members lose access immediately and there is no restore.",
+      "confirmLabel": "Type the slug to confirm",
+      "confirmAction": "Delete forever",
+      "deleting": "Deleting…",
+      "toast": {
+        "deleted": "{name} deleted."
+      }
+    },
+    "noAccess": {
+      "title": "You can't change this household",
+      "description": "Only members with update or delete permissions can edit settings."
+    }
+  },
+  "list": {
+    "title": "Households",
+    "description": "Households you belong to.",
+    "create": "Create household",
+    "empty": {
+      "title": "No households yet",
+      "description": "Create one to start inviting members.",
+      "action": "Create your first household"
+    },
+    "role": {
+      "owner": "Owner",
+      "member": "Member"
+    },
+    "open": "Open"
+  },
+  "create": {
+    "title": "Create household",
+    "description": "Pick a name and a URL slug. The slug can be changed later, but existing links will break.",
+    "name": {
+      "label": "Name",
+      "placeholder": "Acme, Inc.",
+      "hint": "Up to 200 characters."
+    },
+    "slug": {
+      "label": "Slug",
+      "placeholder": "acme",
+      "hint": "Lowercase letters, numbers, and single hyphens.",
+      "invalid": "Use lowercase letters, numbers, and single hyphens. No leading or trailing hyphens."
+    },
+    "submit": "Create household",
+    "submitting": "Creating…",
+    "cancel": "Cancel",
+    "back": "Back to households"
+  }
+}

@@ -21,7 +21,7 @@ import {
 } from "@/components/legal/legal-acceptance-form";
 import { AvatarUploader } from "@/components/avatar-uploader";
 import { useAuth } from "@/components/auth-provider";
-import { CreateOrgForm } from "@/components/organizations/create-org-form";
+import { CreateHouseholdForm } from "@/components/households/create-household-form";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -42,9 +42,9 @@ import {
 } from "@/components/ui/field";
 import { cn } from "@/lib/utils";
 
-type Step = "terms" | "avatar" | "createOrg" | "complete";
+type Step = "terms" | "avatar" | "createHousehold" | "complete";
 
-const STEPS: Step[] = ["terms", "avatar", "createOrg", "complete"];
+const STEPS: Step[] = ["terms", "avatar", "createHousehold", "complete"];
 
 export default function OnboardingPage() {
   const t = useTranslations("onboarding.page");
@@ -59,11 +59,11 @@ export default function OnboardingPage() {
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [avatarUploading, setAvatarUploading] = useState(false);
-  // Slug of the org the user (optionally) creates in the createOrg
-  // step. If set, finishOnboarding lands the user inside that org;
-  // otherwise they land on the cross-org dashboard. Stored in a ref —
+  // Slug of the household the user (optionally) creates in the createHousehold
+  // step. If set, finishOnboarding lands the user inside that household;
+  // otherwise they land on the cross-household dashboard. Stored in a ref —
   // only read in the finishOnboarding event handler, never in render.
-  const createdOrgSlugRef = useRef<string | null>(null);
+  const createdHouseholdSlugRef = useRef<string | null>(null);
 
   const legalQuery = useQuery({
     ...getOnboardingLegalRequirementsOptions(),
@@ -97,13 +97,13 @@ export default function OnboardingPage() {
     }
 
     try {
-      const slug = createdOrgSlugRef.current;
+      const slug = createdHouseholdSlugRef.current;
       await completeOnboarding(
         {
           acceptMarketingEmails: marketingAccepted,
           acceptedDocuments,
         },
-        slug ? { next: `/app/o/${slug}` } : undefined,
+        slug ? { next: `/app/h/${slug}` } : undefined,
       );
     } catch (error) {
       const problem = error as ProblemDetails;
@@ -219,14 +219,14 @@ export default function OnboardingPage() {
                 <Button
                   type="button"
                   variant="outline"
-                  onClick={() => setStep("createOrg")}
+                  onClick={() => setStep("createHousehold")}
                   disabled={avatarUploading}
                 >
                   {t("avatar.skip")}
                 </Button>
                 <Button
                   type="button"
-                  onClick={() => setStep("createOrg")}
+                  onClick={() => setStep("createHousehold")}
                   disabled={avatarUploading}
                 >
                   {t("avatar.continue")}
@@ -235,14 +235,14 @@ export default function OnboardingPage() {
             </section>
           )}
 
-          {step === "createOrg" && (
+          {step === "createHousehold" && (
             <section className="space-y-5">
               <div className="flex items-start gap-2 border border-border p-3">
                 <Building2Icon className="mt-0.5 size-4 text-muted-foreground" />
                 <div className="space-y-1 text-xs">
-                  <FieldTitle>{t("createOrg.title")}</FieldTitle>
+                  <FieldTitle>{t("createHousehold.title")}</FieldTitle>
                   <FieldDescription>
-                    {t("createOrg.description")}
+                    {t("createHousehold.description")}
                   </FieldDescription>
                 </div>
               </div>
@@ -251,9 +251,9 @@ export default function OnboardingPage() {
                   advances without creating. The form invalidates /my
                   itself, so the rest of the app will see the
                   membership as soon as it mounts. */}
-              <CreateOrgForm
+              <CreateHouseholdForm
                 onSuccess={(data) => {
-                  createdOrgSlugRef.current = data.slug;
+                  createdHouseholdSlugRef.current = data.slug;
                   setStep("complete");
                 }}
                 onCancel={() => setStep("complete")}
@@ -264,7 +264,7 @@ export default function OnboardingPage() {
                 className="w-full"
                 onClick={() => setStep("complete")}
               >
-                {t("createOrg.skip")}
+                {t("createHousehold.skip")}
               </Button>
             </section>
           )}

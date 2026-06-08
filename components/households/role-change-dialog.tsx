@@ -7,12 +7,11 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 
-import { handleProblem, type ProblemDetails } from "@/api/problems";
 import {
-  changeUserRoleMutation,
-  getUserByIdQueryKey,
-  listUsersQueryKey,
+  changeHouseholdMemberRoleMutation,
+  listHouseholdMembersQueryKey,
 } from "@/api/generated/@tanstack/react-query.gen";
+import { handleProblem, type ProblemDetails } from "@/api/problems";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -29,29 +28,37 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { GLOBAL_ROLE } from "@/lib/global-roles";
-import type { PlatformRole } from "@/api/generated";
+import { useHousehold } from "@/lib/household-context";
+import {
+  formatRoleLabel,
+  HOUSEHOLD_ROLES,
+  rolesBelow,
+} from "@/lib/household-roles";
+import type { HouseholdRole } from "@/api/generated";
 
-const ROLE_OPTIONS = [
-  { value: GLOBAL_ROLE.Admin },
-  { value: GLOBAL_ROLE.User },
-] as const;
+type RoleChangeDialogProps = {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  userId: string;
+  userName: string;
+  currentRole: string;
+};
 
-type RoleKey = (typeof ROLE_OPTIONS)[number]["value"];
-
+/**
+ * Change another member's role within the active household.
+ *
+ * Role options are filtered to `rolesBelow(callerRole)` — strictly lower
+ * than the caller's rank. The backend enforces the same rule and returns
+ * `Households.Role.EscalationForbidden` if violated, but trimming the
+ * dropdown prevents the user from clicking through to a guaranteed error.
+ */
 export function RoleChangeDialog({
   open,
   onOpenChange,
   userId,
   userName,
   currentRole,
-}: {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  userId: string;
-  userName: string;
-  currentRole: string;
-}) {
+}: RoleChangeDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
@@ -80,31 +87,37 @@ function RoleChangeForm({
   currentRole: string;
   onClose: () => void;
 }) {
-  const t = useTranslations("adminComponents.roleChange");
+  const t = useTranslations("households.members.roleChange");
   const tCommon = useTranslations("common.actions");
+  const household = useHousehold();
   const queryClient = useQueryClient();
   const [role, setRole] = useState(currentRole);
 
-  const roleLabel = (value: string) =>
-    (ROLE_OPTIONS as readonly { value: string }[]).some(
-      (option) => option.value === value,
-    )
-      ? t(`roles.${value as RoleKey}`)
-      : value;
+  // The caller's own role within this household. Undefined for platform-override
+  // admins; in that case we can't enforce escalation client-side, so we
+  // fall back to allowing all role tiers and rely on the backend's
+  // EscalationForbidden response if the call would actually escalate.
+  // An empty list here would dead-end the dialog for override admins, so
+  // the fallback is the full HOUSEHOLD_ROLES, not [].
+  const callerRole = household.role;
+  const candidateRoles: HouseholdRole[] = callerRole
+    ? rolesBelow(callerRole)
+    : [...HOUSEHOLD_ROLES];
 
   const mutation = useMutation({
-    ...changeUserRoleMutation(),
+    ...changeHouseholdMemberRoleMutation(),
     onSuccess: async () => {
       toast.success(t("toast.title"), {
         description: t("toast.description", {
           name: userName,
-          role: roleLabel(role),
+          role: formatRoleLabel(role),
         }),
       });
       await queryClient.invalidateQueries({
-        queryKey: getUserByIdQueryKey({ path: { userId } }),
+        queryKey: listHouseholdMembersQueryKey({
+          path: { householdRef: household.slug },
+        }),
       });
-      await queryClient.invalidateQueries({ queryKey: listUsersQueryKey() });
       onClose();
     },
     onError: (error) => {
@@ -112,7 +125,7 @@ function RoleChangeForm({
     },
   });
 
-  const isDirty = role !== currentRole;
+  const isDirty = role.toLowerCase() !== currentRole.toLowerCase();
 
   return (
     <>
@@ -129,18 +142,16 @@ function RoleChangeForm({
         <Select
           value={role}
           onValueChange={(value) => {
-            if (value) {
-              setRole(value);
-            }
+            if (value) setRole(value);
           }}
         >
           <SelectTrigger>
             <SelectValue placeholder={t("placeholder")} />
           </SelectTrigger>
           <SelectContent>
-            {ROLE_OPTIONS.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
-                {t(`roles.${option.value}`)}
+            {candidateRoles.map((option) => (
+              <SelectItem key={option} value={option}>
+                {formatRoleLabel(option)}
               </SelectItem>
             ))}
           </SelectContent>
@@ -158,8 +169,8 @@ function RoleChangeForm({
         <Button
           onClick={() =>
             mutation.mutate({
-              path: { userId },
-              body: { role: role as PlatformRole },
+              path: { householdRef: household.slug, userId },
+              body: { role: role as HouseholdRole },
             })
           }
           disabled={!isDirty || mutation.isPending}

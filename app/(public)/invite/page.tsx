@@ -13,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 /**
- * Public landing page for organization invitation links.
+ * Public landing page for household invitation links.
  *
  * The backend embeds `${origin}/invite?token=...&email=...` in
  * invitation emails. The page branches on session state:

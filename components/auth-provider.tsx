@@ -12,7 +12,7 @@ import type {
   GetCurrentUserResponse,
   RegisterResponse,
 } from "@/api/generated";
-import { listMyOrganizationsOptions } from "@/api/generated/@tanstack/react-query.gen";
+import { listMyHouseholdsOptions } from "@/api/generated/@tanstack/react-query.gen";
 import {
   currentUserQueryKey,
   fetchCurrentUserQuery,
@@ -40,12 +40,12 @@ type RegisterInput = {
   /** Token for an existing pending system-level user invitation. */
   invitationToken?: string | null;
   /**
-   * Token from an organization invitation link
+   * Token from an household invitation link
    * (`/invite?token=...`). The server cross-validates this against the
-   * Organizations module, creates the account, then auto-consumes the
-   * invite — joining the user to the inviting org as part of registration.
+   * Households module, creates the account, then auto-consumes the
+   * invite — joining the user to the inviting household as part of registration.
    */
-  organizationInvitationToken?: string | null;
+  householdInvitationToken?: string | null;
 };
 
 type AuthContextValue = {
@@ -121,13 +121,13 @@ function AuthProviderInner({ children }: { children: ReactNode }) {
     retry: false,
   });
 
-  // Prefetch the caller's organizations once the user resolves. Scoped
-  // permissions live on these entries and are needed by `<Can inOrg>` /
+  // Prefetch the caller's households once the user resolves. Scoped
+  // permissions live on these entries and are needed by `<Can inHousehold>` /
   // `usePermission(_, orgId)` everywhere under `/app`. We also re-trigger on
   // currentUser changes so a re-login picks up a fresh list.
   useEffect(() => {
     if (!currentUserQuery.data) return;
-    void queryClient.prefetchQuery(listMyOrganizationsOptions());
+    void queryClient.prefetchQuery(listMyHouseholdsOptions());
   }, [currentUserQuery.data, queryClient]);
 
   const value = useMemo<AuthContextValue>(
@@ -168,7 +168,7 @@ function AuthProviderInner({ children }: { children: ReactNode }) {
           queryFn: fetchCurrentUserQuery,
         });
         if (profile.hasCompletedOnboarding) {
-          await queryClient.prefetchQuery(listMyOrganizationsOptions());
+          await queryClient.prefetchQuery(listMyHouseholdsOptions());
         }
         push(
           profile.hasCompletedOnboarding
@@ -206,7 +206,7 @@ function AuthProviderInner({ children }: { children: ReactNode }) {
           queryFn: fetchCurrentUserQuery,
         });
         if (profile.hasCompletedOnboarding) {
-          await queryClient.prefetchQuery(listMyOrganizationsOptions());
+          await queryClient.prefetchQuery(listMyHouseholdsOptions());
         }
         const target = nextPath ?? challenge.nextPath;
         push(
@@ -237,9 +237,9 @@ function AuthProviderInner({ children }: { children: ReactNode }) {
           body: JSON.stringify(data),
         });
         await queryClient.invalidateQueries({ queryKey: currentUserQueryKey });
-        // Default lands on the cross-org dashboard; callers can override
+        // Default lands on the cross-household dashboard; callers can override
         // when they want to drop the user into a specific destination
-        // (e.g. the org they just created during onboarding).
+        // (e.g. the household they just created during onboarding).
         push(options?.next ?? "/app");
       },
       async logout() {

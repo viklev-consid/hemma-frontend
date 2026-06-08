@@ -11,8 +11,8 @@ import { CheckCircle2Icon, MailIcon } from "lucide-react";
 import { toast } from "sonner";
 
 import {
-  acceptOrganizationInvitationMutation,
-  listMyOrganizationsQueryKey,
+  acceptHouseholdInvitationMutation,
+  listMyHouseholdsQueryKey,
 } from "@/api/generated/@tanstack/react-query.gen";
 import { problemHasErrorCode, type ProblemDetails } from "@/api/problems";
 import { useAuth } from "@/components/auth-provider";
@@ -27,16 +27,16 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Spinner } from "@/components/ui/spinner";
-import { ORG_ERRORS } from "@/lib/org-errors";
+import { HOUSEHOLD_ERRORS, USER_ERRORS } from "@/lib/household-errors";
 
 /**
- * Public landing page for organization invitation links.
+ * Public landing page for household invitation links.
  *
  * Routes the user differently depending on session state:
  *
  * - Signed in: shows "Accept invitation" → POST
- *   /v1/organizations/invitations/accept with the raw token, then
- *   bounces to /app/organizations on success.
+ *   /v1/households/invitations/accept with the raw token, then
+ *   bounces to /app/households on success.
  *
  * - Not signed in: prompts to register (carrying the token + email
  *   forward to the register form for prefill) or to sign in (carrying
@@ -44,7 +44,7 @@ import { ORG_ERRORS } from "@/lib/org-errors";
  *   lands back here, signed in, ready to accept).
  *
  * Backend error contract:
- * - `Organizations.Invitation.Invalid` and `Organizations.RegistrationUnavailable`
+ * - `Households.Invitation.Invalid` and `Households.RegistrationUnavailable`
  *   are deliberately opaque (anti-enumeration). We collapse both into a
  *   single "This invitation isn't usable" message — no leak about whether
  *   the token was expired vs. never existed.
@@ -60,12 +60,12 @@ export function InviteLanding() {
   const [opaqueError, setOpaqueError] = useState<string | null>(null);
 
   const mutation = useMutation({
-    ...acceptOrganizationInvitationMutation(),
+    ...acceptHouseholdInvitationMutation(),
     onSuccess: async () => {
       // Picking up the new membership: invalidate /my so the switcher
       // and list page reflect it, then route into the app.
       await queryClient.invalidateQueries({
-        queryKey: listMyOrganizationsQueryKey(),
+        queryKey: listMyHouseholdsQueryKey(),
       });
       toast.success(t("acceptedToast"));
       // An onboarding-incomplete user can land here (the `/invite` route
@@ -74,11 +74,11 @@ export function InviteLanding() {
       // /onboarding by the proxy when we push to /app. Route them
       // directly to /onboarding so the trip is honest. Membership is
       // already attached to their account — finishing onboarding lands
-      // them in /app with the new org visible.
+      // them in /app with the new household visible.
       //
-      // The accept response only carries `organizationId`, not slug, so
+      // The accept response only carries `householdId`, not slug, so
       // even when onboarding IS complete we send to /app and let the
-      // dashboard / picker route the user into the org.
+      // dashboard / picker route the user into the household.
       if (currentUser && !currentUser.hasCompletedOnboarding) {
         replace("/onboarding");
       } else {
@@ -88,8 +88,8 @@ export function InviteLanding() {
     onError: (error) => {
       const problem = error as unknown as ProblemDetails;
       if (
-        problemHasErrorCode(problem, ORG_ERRORS.InvitationInvalid) ||
-        problemHasErrorCode(problem, ORG_ERRORS.RegistrationUnavailable)
+        problemHasErrorCode(problem, HOUSEHOLD_ERRORS.InvitationInvalid) ||
+        problemHasErrorCode(problem, USER_ERRORS.RegistrationUnavailable)
       ) {
         setOpaqueError(t("opaqueError"));
         return;

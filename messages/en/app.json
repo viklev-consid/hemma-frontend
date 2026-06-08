@@ -1,7 +1,7 @@
 {
   "dashboard": {
     "title": "Dashboard",
-    "body": "A placeholder operations view for the selected organization context.",
+    "body": "A placeholder operations view for the selected household context.",
     "placeholder": "Placeholder",
     "stats": {
       "activeUsers": "Active users",
@@ -49,13 +49,13 @@
     "quickCreate": "Quick create",
     "search": "Search",
     "dashboard": "Dashboard",
-    "organizations": "Organizations",
+    "households": "Households",
     "notifications": "Notifications",
     "administration": "Administration",
     "settings": "Settings",
     "personal": "Personal",
     "mySettings": "My settings",
-    "orgNavLabel": "Organization",
+    "orgNavLabel": "Household",
     "orgOverview": "Overview",
     "help": "Get help",
     "signOut": "Sign out",
@@ -77,12 +77,12 @@
       "settings": "Settings",
       "administration": "Administration",
       "notifications": "Notifications",
-      "organizationsNew": "Create organization",
-      "organizationsActive": "Organization",
-      "organizationsMembers": "Members",
-      "organizationsInvitations": "Invitations",
-      "organizationsAudit": "Audit",
-      "organizationsSettings": "Settings"
+      "householdsNew": "Create household",
+      "householdsActive": "Household",
+      "householdsMembers": "Members",
+      "householdsInvitations": "Invitations",
+      "householdsAudit": "Audit",
+      "householdsSettings": "Settings"
     }
   }
 }
