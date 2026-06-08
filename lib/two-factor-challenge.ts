@@ -1,4 +1,4 @@
-const STORAGE_KEY = "modulith.twoFactorChallenge";
+const STORAGE_KEY = "hemma.twoFactorChallenge";
 
 export type TwoFactorChallenge = {
   challengeToken: string;
