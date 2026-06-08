@@ -80,3 +80,32 @@ links / bookmarks from the pre-restructure shape.
 
 **Remediation:** delete both after one release. External links should
 have either updated or fallen out of usage by then.
+
+## household-errorcode-exposure
+
+**Where:** backend — household endpoints using `ToProblemDetailsOr`;
+consumed by the frontend ProblemDetails mapper (`api/problems.ts`) and
+`lib/household-errors.ts` (formerly `lib/org-errors.ts`).
+
+**Why:** Backend confirmed (2026-06-08, during Phase 0 households rename)
+that most household **non-validation** ProblemDetails currently expose
+only `title/status/detail` — **no `extensions.errorCode`**. Only
+validation errors (code as an `errors` key) and a few Users flows
+(`extensions.errorCode`, e.g. `Households.Owner.UserErasureBlocked`)
+carry a machine-readable code. So the FE cannot reliably map many
+household business errors (e.g. `Households.Slug.AlreadyExists`,
+`Households.Owner.LastOwnerRequired`) to specific toasts — it must fall
+back to generic status-based messaging. There is also no 1:1 successor
+to the old `Organizations.Role.EscalationForbidden` (escalation now
+surfaces as `Households.PlatformOverride.MutationForbidden`,
+`Households.Role.Invalid`, or an owner-invariant error by path).
+
+**Remediation (backend):** add `extensions.errorCode` to the household
+`ToProblemDetailsOr` path for parity with the Users flows, so the
+frontend mapper has a stable discriminator for non-validation business
+errors. Backend flagged this as a known consistency gap to fix next.
+
+**Frontend interim:** the mapper reads `problem.extensions?.errorCode`
+when present, matches validation `errors` keys, and degrades to a
+status-based generic toast otherwise — it must not assume a specific
+household business code is always readable.
