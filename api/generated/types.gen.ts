@@ -471,6 +471,14 @@ export type GetCurrentUserResponse = {
     avatar: null | CurrentUserAvatarResponse;
 };
 
+export type GetEconomySettingsResponse = {
+    settingsId: string;
+    householdId: string;
+    cycleStartDay: number | string;
+    defaultCurrency: string;
+    createdOn: string;
+};
+
 export type GetHouseholdAuditResponse = {
     householdId: string;
     accessMode: HouseholdAccessMode;
@@ -1221,6 +1229,33 @@ export type GetAuditTrailResponses = {
 };
 
 export type GetAuditTrailResponse2 = GetAuditTrailResponses[keyof GetAuditTrailResponses];
+
+export type GetEconomySettingsData = {
+    body?: never;
+    path?: never;
+    query: {
+        householdId: string;
+    };
+    url: '/v1/economy/settings';
+};
+
+export type GetEconomySettingsErrors = {
+    /**
+     * Not Found
+     */
+    404: ProblemDetails;
+};
+
+export type GetEconomySettingsError = GetEconomySettingsErrors[keyof GetEconomySettingsErrors];
+
+export type GetEconomySettingsResponses = {
+    /**
+     * OK
+     */
+    200: GetEconomySettingsResponse;
+};
+
+export type GetEconomySettingsResponse2 = GetEconomySettingsResponses[keyof GetEconomySettingsResponses];
 
 export type CreateEconomySettingsData = {
     body: CreateEconomySettingsRequest;

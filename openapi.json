@@ -143,6 +143,51 @@
             "Bearer": [ ]
           }
         ]
+      },
+      "get": {
+        "tags": [
+          "Hemma.Api"
+        ],
+        "summary": "Get economy settings for a household.",
+        "operationId": "GetEconomySettings",
+        "parameters": [
+          {
+            "name": "householdId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetEconomySettingsResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
       }
     },
     "/v1/economy/settings/cycle-start-day": {
@@ -6881,6 +6926,41 @@
                 "$ref": "#/components/schemas/CurrentUserAvatarResponse"
               }
             ]
+          }
+        }
+      },
+      "GetEconomySettingsResponse": {
+        "required": [
+          "settingsId",
+          "householdId",
+          "cycleStartDay",
+          "defaultCurrency",
+          "createdOn"
+        ],
+        "type": "object",
+        "properties": {
+          "settingsId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "householdId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "cycleStartDay": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "defaultCurrency": {
+            "type": "string"
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date"
           }
         }
       },
