@@ -57,6 +57,12 @@
       "members": "Members | Hemma",
       "invitations": "Invitations | Hemma",
       "audit": "Audit | Hemma"
+    },
+    "economy": {
+      "setup": "Set up economy | Hemma",
+      "budget": "Budget | Hemma",
+      "accounts": "Accounts | Hemma",
+      "categories": "Categories | Hemma"
     }
   },
   "settings": {

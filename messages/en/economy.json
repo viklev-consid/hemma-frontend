@@ -1,0 +1,111 @@
+{
+  "shell": {
+    "nav": {
+      "label": "Economy sections",
+      "budget": "Budget",
+      "accounts": "Accounts",
+      "categories": "Categories"
+    },
+    "error": {
+      "title": "Couldn't load economy",
+      "description": "Something went wrong loading this household's economy. Try again in a moment."
+    }
+  },
+  "setup": {
+    "title": "Set up your economy",
+    "description": "Choose when each budget period begins. You can change this later.",
+    "currency": {
+      "label": "Currency",
+      "fixedValue": "Swedish kronor (SEK)",
+      "hint": "Hemma works in SEK. This can't be changed."
+    },
+    "cycleStartDay": {
+      "label": "Cycle start day",
+      "placeholder": "Select a day",
+      "hint": "The day of the month each budget period starts (1–28).",
+      "dayLabel": "Day {day}"
+    },
+    "submit": "Create economy",
+    "submitting": "Creating…",
+    "categories": {
+      "title": "Your starter categories",
+      "description": "These categories were created automatically. You can add or change them later.",
+      "budgetable": "Budgeted",
+      "tracked": "Tracked",
+      "continue": "Go to budget",
+      "empty": "No categories were created."
+    }
+  },
+  "accounts": {
+    "title": "Accounts",
+    "description": "Spending and savings accounts in this household.",
+    "add": {
+      "trigger": "Add account",
+      "title": "Add account",
+      "name": { "label": "Name", "placeholder": "e.g. Everyday account" },
+      "type": { "label": "Type", "Spending": "Spending", "Savings": "Savings" },
+      "openingBalance": {
+        "label": "Opening balance",
+        "hint": "Starting balance for this account."
+      },
+      "submit": "Add account",
+      "submitting": "Adding…",
+      "cancel": "Cancel"
+    },
+    "columns": { "name": "Account", "type": "Type", "balance": "Balance" },
+    "type": { "Spending": "Spending", "Savings": "Savings" },
+    "empty": {
+      "title": "No accounts yet",
+      "description": "Add a spending or savings account to start tracking balances."
+    }
+  },
+  "categories": {
+    "title": "Categories",
+    "description": "Organize spending into categories and subcategories.",
+    "budgetable": "Budgeted",
+    "tracked": "Tracked",
+    "trackedHint": "Tracked only — no budget line.",
+    "addRoot": "Add category",
+    "addChild": "Add subcategory",
+    "maxDepthHint": "Subcategories can't have their own subcategories.",
+    "add": {
+      "title": "Add category",
+      "childTitle": "Add subcategory to {parent}",
+      "name": { "label": "Name", "placeholder": "e.g. Groceries" },
+      "budgetable": {
+        "label": "Budgeted",
+        "hint": "Budgeted categories get a budget line. Turn off for tracked-only categories."
+      },
+      "submit": "Add",
+      "submitting": "Adding…",
+      "cancel": "Cancel"
+    },
+    "empty": {
+      "title": "No categories",
+      "description": "Add a category to organize spending."
+    }
+  },
+  "budget": {
+    "title": "Budget",
+    "description": "Plan spending for each category this period.",
+    "copyFromPrevious": "Copy from previous period",
+    "copying": "Copying…",
+    "columns": {
+      "category": "Category",
+      "planned": "Planned",
+      "actual": "Actual"
+    },
+    "tracked": "Tracked — no budget",
+    "save": "Save",
+    "saving": "Saving…",
+    "saved": "Budget updated",
+    "empty": {
+      "title": "Nothing to budget yet",
+      "description": "Add budgeted categories to plan spending for this period."
+    },
+    "emptyPeriod": {
+      "title": "Empty budget",
+      "description": "No budget lines for this period yet. Set amounts below, or copy from the previous period."
+    }
+  }
+}

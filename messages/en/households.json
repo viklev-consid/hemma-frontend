@@ -17,6 +17,7 @@
     "nav": {
       "label": "Household sections",
       "overview": "Overview",
+      "economy": "Economy",
       "members": "Members",
       "invitations": "Invitations",
       "audit": "Audit",

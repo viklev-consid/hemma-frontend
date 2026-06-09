@@ -5,6 +5,7 @@ import auth from "./auth.json";
 import authComponents from "./authComponents.json";
 import common from "./common.json";
 import components from "./components.json";
+import economy from "./economy.json";
 import errors from "./errors.json";
 import invite from "./invite.json";
 import marketing from "./marketing.json";
@@ -22,6 +23,7 @@ const messages = {
   authComponents,
   common,
   components,
+  economy,
   errors,
   invite,
   marketing,
