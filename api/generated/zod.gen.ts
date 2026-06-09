@@ -257,6 +257,17 @@ export const zGetAuditTrailResponse = z.object({
     ])
 });
 
+export const zGetEconomySettingsResponse = z.object({
+    settingsId: z.uuid(),
+    householdId: z.uuid(),
+    cycleStartDay: z.union([
+        z.int().min(-2147483648, { error: 'Invalid value: Expected int32 to be >= -2147483648' }).max(2147483647, { error: 'Invalid value: Expected int32 to be <= 2147483647' }),
+        z.string().regex(/^-?(?:0|[1-9]\d*)$/)
+    ]),
+    defaultCurrency: z.string(),
+    createdOn: z.iso.date()
+});
+
 export const zGetLegalDocumentResponse = z.object({
     id: z.uuid(),
     type: z.string(),
@@ -1373,6 +1384,15 @@ export const zGetAuditTrailQuery = z.object({
  * OK
  */
 export const zGetAuditTrailResponse2 = zGetAuditTrailResponse;
+
+export const zGetEconomySettingsQuery = z.object({
+    householdId: z.uuid()
+});
+
+/**
+ * OK
+ */
+export const zGetEconomySettingsResponse2 = zGetEconomySettingsResponse;
 
 export const zCreateEconomySettingsBody = zCreateEconomySettingsRequest;
 

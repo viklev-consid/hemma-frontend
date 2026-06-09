@@ -20,7 +20,10 @@ import { problemHasErrorCode, type ProblemDetails } from "@/api/problems";
 import { AccessModeBadge } from "@/components/households/access-mode-badge";
 import { HouseholdRoleBadge } from "@/components/households/household-role-badge";
 import { Spinner } from "@/components/ui/spinner";
-import { HouseholdContext, type HouseholdContextValue } from "@/lib/household-context";
+import {
+  HouseholdContext,
+  type HouseholdContextValue,
+} from "@/lib/household-context";
 import { isPlatformOverride } from "@/lib/household-access-mode";
 import { HOUSEHOLD_PERMISSION } from "@/lib/household-permission-strings";
 
@@ -66,7 +69,9 @@ export function HouseholdShell({ slug, children }: HouseholdShellProps) {
   // aren't actually members of this household.
   const myHouseholdsQuery = useQuery(listMyHouseholdsOptions());
   const myHouseholds = myHouseholdsQuery.data;
-  const membership = myHouseholds?.households.find((household) => household.slug === slug);
+  const membership = myHouseholds?.households.find(
+    (household) => household.slug === slug,
+  );
 
   // Handle 404 as "no longer accessible": evict the stale /my entry (if any)
   // and bounce out. Effect rather than render-time redirect so it runs once
@@ -159,6 +164,11 @@ export function HouseholdShell({ slug, children }: HouseholdShellProps) {
 
   const tabs = [
     { href: `/app/h/${slug}`, key: "overview", exact: true },
+    {
+      href: `/app/h/${slug}/economy`,
+      key: "economy",
+      exact: false,
+    },
     {
       href: `/app/h/${slug}/members`,
       key: "members",
