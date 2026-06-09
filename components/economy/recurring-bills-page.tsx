@@ -44,7 +44,6 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { todayAnchorDate } from "@/lib/economy/anchor-date";
 import { formatCadence } from "@/lib/economy/cadence";
 import { flattenCategories } from "@/lib/economy/category-tree";
 import { isValidMoneyAmount, toMoneyRequest } from "@/lib/economy/money";
@@ -173,7 +172,10 @@ function InboxRow({ item }: { item: ConfirmableOccurrence }) {
   const { householdId } = useHousehold();
   const [open, setOpen] = useState(false);
   const [amount, setAmount] = useState(item.amount.amount);
-  const [occurredOn, setOccurredOn] = useState(todayAnchorDate());
+  // Default to the occurrence's own due date, not today — confirming a backlog
+  // occurrence must book the transaction into the period it belongs to, not the
+  // current one. The user can still override the date deliberately.
+  const [occurredOn, setOccurredOn] = useState(item.dueOn);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   const mutation = useMutation({
