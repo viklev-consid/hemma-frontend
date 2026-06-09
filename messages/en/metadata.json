@@ -65,7 +65,9 @@
       "categories": "Categories | Hemma",
       "transactions": "Transactions | Hemma",
       "transactionNew": "Record transaction | Hemma",
-      "transfers": "Transfers | Hemma"
+      "transfers": "Transfers | Hemma",
+      "recurring": "Recurring bills | Hemma",
+      "recurringNew": "Add recurring bill | Hemma"
     }
   },
   "settings": {

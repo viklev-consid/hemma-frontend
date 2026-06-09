@@ -1,10 +1,12 @@
 # Economy module — frontend contract crib sheet
 
 UI for the backend **Economy** module (Phase 1: setup, accounts, categories,
-budget; Phase 2: transactions, receipts, transfers, budget pace). Built per
-`docs/workflows/phase-1-economy-core.md` and
-`docs/workflows/phase-2-transactions-receipts-transfers.md`. Records the
-non-obvious contract points so an agent walking in cold makes correct calls.
+budget; Phase 2: transactions, receipts, transfers, budget pace; Phase 3:
+recurring bills + confirmation inbox). Built per
+`docs/workflows/phase-1-economy-core.md`,
+`docs/workflows/phase-2-transactions-receipts-transfers.md`, and
+`docs/workflows/phase-3-recurring-bills.md`. Records the non-obvious contract
+points so an agent walking in cold makes correct calls.
 
 ## Source-of-truth files in this repo
 
@@ -18,6 +20,8 @@ non-obvious contract points so an agent walking in cold makes correct calls.
 | `?period=` nuqs parser, **client-only**                 | `lib/economy/nuqs-parsers.ts`          |
 | slug → householdId for prefetch, **server-only**        | `lib/economy/resolve-household-id.ts`  |
 | first-run gate + economy sub-nav                        | `components/economy/economy-shell.tsx` |
+| cadence label + interval/day options (1–12 / 1–28)      | `lib/economy/cadence.ts`               |
+| recurring enums + `confirmableOccurrences` (inbox src)  | `lib/economy/recurring-bill.ts`        |
 
 ## Contract points — get these right
 
@@ -138,11 +142,65 @@ formatted ×100 for display in `budget-page.tsx`. ⚠️ This scale is an assump
 — verify against real backend data; if the backend already sends whole percents,
 drop the ×100.
 
+## Phase 3 contract points
+
+### 16. One list query feeds both the bills list and the confirmation inbox
+
+`listEconomyRecurringBills` returns `recurringBills[]`, each carrying
+`pendingOccurrences[]` + `nextDueOn`. There is **no** separate occurrence
+endpoint, **no** single-bill GET, and **no** history — pending occurrences are
+all that exist in the contract (don't build a timeline). The inbox is derived
+client-side via `confirmableOccurrences(bills)`, not fetched. Render it only
+when non-empty, above the list, in `recurring-bills-page.tsx`.
+
+### 17. The confirmable set = `Estimated` bills' occurrences with `transactionId != null`
+
+`confirmableOccurrences` gates on a **non-null `transactionId`** (the robust
+check — you can't confirm an occurrence with no posted transaction). Confirm via
+`confirmEconomyEstimatedBillMutation({ path: { recurringBillId }, body: {
+householdId, transactionId, amount: toMoneyRequest(real), occurredOn } })` — the
+`transactionId` comes from the occurrence, default the amount input to the
+estimate. It returns a `TransactionResponse`; on success the confirmed
+occurrence drops out of the inbox after the list refetch.
+
+### 18. Occurrence actions target the occurrence's own `dueOn` — never a picker
+
+skip / pause / resume all take `{ path: { recurringBillId }, body: {
+householdId, dueOn } }` where `dueOn` is the occurrence's **own** value. There
+is **no date picker** on these actions (the "no future-date drift" guard).
+Offer **resume** only on a `Paused` occurrence; **skip/pause** on
+`Pending`/`Posted`. Skipping one occurrence must not visually alter the rest of
+the schedule — trust the backend's returned `nextDueOn` and other occurrences.
+
+### 19. No edit, no delete
+
+The client has only list / create / confirm / skip / pause / resume. There is
+**no** update-bill or delete-bill operation — don't invent one; flag to product
+if editing is needed.
+
+### 20. Cadence is monthly-only; label-only, no schedule math
+
+`cadenceFrequency` is `'Monthly'` (render fixed, no picker). `cadenceInterval`
+is 1–12 and `cadenceDayOfMonth` is 1–28 (`cadence.ts`; reuses the cycle 1–28
+bound — the day must exist in every month). `formatCadence` builds a label
+only; the backend owns `nextDueOn`. Out-of-range → 422 via the standard mapper.
+`formatCadence` takes a translator callback typed to a literal `CadenceMessageKey`
+union so next-intl's typed keys accept the dynamic `cadence.${key}` lookup.
+
+### 21. Confirm/occurrence changes book real transactions — invalidate broadly
+
+A confirm (and occurrence state changes) can settle a real transaction and shift
+balances + budget actuals. `recurring-bills-page.tsx` invalidates the recurring
+list **plus** transactions, account balances, and every budget-summary period
+for the household (predicate match — same pattern as `transfer-form.tsx`), not
+just the bills list.
+
 ## Forms
 
 TanStack Forms + generated Zod (`zCreateEconomySettingsRequest`,
-`zCreateAccountRequest`, `zAddCategoryRequest`, `zUpsertBudgetLineRequest`) +
-the ProblemDetails mapper (`api/problems.ts`). No per-form error handling.
+`zCreateAccountRequest`, `zAddCategoryRequest`, `zUpsertBudgetLineRequest`,
+`zCreateRecurringBillRequest`, `zConfirmEstimatedBillRequest`) + the
+ProblemDetails mapper (`api/problems.ts`). No per-form error handling.
 After scope-changing mutations, invalidate the relevant economy query keys
 (and balances/accounts together on account create).
 

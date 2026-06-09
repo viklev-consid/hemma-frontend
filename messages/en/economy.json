@@ -5,6 +5,7 @@
       "transactions": "Transactions",
       "transfers": "Transfers",
       "budget": "Budget",
+      "recurring": "Recurring",
       "accounts": "Accounts",
       "categories": "Categories"
     },
@@ -203,6 +204,111 @@
     "empty": {
       "title": "Not enough accounts",
       "description": "Add at least two accounts to transfer between them."
+    }
+  },
+  "recurring": {
+    "title": "Recurring bills",
+    "description": "Manage fixed and estimated bills that repeat each period.",
+    "add": "Add bill",
+    "type": {
+      "Fixed": "Fixed",
+      "Estimated": "Estimated"
+    },
+    "direction": {
+      "Expense": "Expense",
+      "Income": "Income"
+    },
+    "cadence": {
+      "monthly": {
+        "one": "Every month on day {day}",
+        "many": "Every {interval} months on day {day}"
+      },
+      "unknown": "Custom schedule"
+    },
+    "occurrence": {
+      "title": "Pending occurrences",
+      "due": "Due {date}",
+      "state": {
+        "Pending": "Pending",
+        "Posted": "Posted",
+        "Confirmed": "Confirmed",
+        "Skipped": "Skipped",
+        "Paused": "Paused"
+      },
+      "skip": "Skip",
+      "pause": "Pause",
+      "resume": "Resume",
+      "skipped": "Occurrence skipped",
+      "paused": "Occurrence paused",
+      "resumed": "Occurrence resumed"
+    },
+    "card": {
+      "nextDue": "Next due {date}",
+      "account": "Account",
+      "category": "Category",
+      "uncategorized": "Uncategorized",
+      "noOccurrences": "No pending occurrences."
+    },
+    "inbox": {
+      "title": "Awaiting confirmation",
+      "description": "Estimated bills posted an amount — confirm the real amount to book them.",
+      "confirm": "Confirm",
+      "cancel": "Cancel",
+      "amountLabel": "Actual amount",
+      "occurredOnLabel": "Date",
+      "submit": "Confirm",
+      "submitting": "Confirming…",
+      "confirmed": "Bill confirmed"
+    },
+    "empty": {
+      "title": "No recurring bills",
+      "description": "Add a recurring bill to track fixed and estimated payments."
+    },
+    "form": {
+      "title": "Add recurring bill",
+      "description": "Set up a bill that repeats monthly.",
+      "name": {
+        "label": "Name",
+        "placeholder": "e.g. Electricity"
+      },
+      "amount": {
+        "label": "Amount"
+      },
+      "type": {
+        "label": "Type",
+        "fixedHint": "A fixed amount each period.",
+        "estimatedHint": "An estimate you confirm with the real amount each period."
+      },
+      "direction": {
+        "label": "Direction"
+      },
+      "account": {
+        "label": "Account",
+        "placeholder": "Select an account"
+      },
+      "category": {
+        "label": "Category",
+        "placeholder": "No category"
+      },
+      "cadence": {
+        "frequencyLabel": "Frequency",
+        "frequencyFixed": "Monthly",
+        "intervalLabel": "Every",
+        "intervalUnit": "{interval, plural, one {month} other {months}}",
+        "dayLabel": "Day of month",
+        "dayValue": "Day {day}"
+      },
+      "startsOn": {
+        "label": "Starts on"
+      },
+      "note": {
+        "label": "Note",
+        "placeholder": "Optional note"
+      },
+      "required": "Fill in the required fields.",
+      "submit": "Add bill",
+      "submitting": "Adding…",
+      "saved": "Recurring bill added"
     }
   }
 }
