@@ -223,8 +223,12 @@ decimal string via `normalizeMoneyAmount`), **not** a `MoneyRequest`;
 Possible`), `selectedCategoryId` (rules-applied), `suggestedCategoryId`,
 `rowFingerprint`, and `errors[]`. The duplicate chip folds `Exact`/`Possible`
 into "dup", `None` → "new" (`duplicateChip`). The preview defaults to
-**excluding** `Exact` duplicates (re-includable). Key preview rows by
-`rowFingerprint`, never the array index.
+**excluding** `Exact` duplicates (re-includable) **and** rows with
+`errors[]` — commit stays blocked while an included row has errors (the
+backend would fail the whole batch with no per-row guidance). Key preview
+rows by `rowNumber` (the stable 1-based source row) — **not**
+`rowFingerprint`, which is content-derived and collides on identical rows
+(the exact duplicate case this screen handles), and not the array index.
 
 ### 24. `previewFingerprint` is the double-commit guard — pass it through verbatim
 

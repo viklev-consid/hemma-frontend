@@ -138,15 +138,17 @@ export function ImportWizard({ slug }: { slug: string }) {
     setCommitted(null);
   };
 
-  const onParsed = (next: ParsedCsv) => {
-    // A fresh file invalidates everything downstream.
+  // A fresh file — or a failed re-parse (`null`) — invalidates everything
+  // downstream. Clearing on failure matters: a stale previous file must not
+  // stay importable behind an on-screen parse error.
+  const onParsed = (next: ParsedCsv | null) => {
     setPreview(null);
     setCommitted(null);
     setRowCategory({});
     setExcluded(new Set());
     setNormalizedRows([]);
     setParsed(next);
-    setMapping(guessMapping(next.headers));
+    setMapping(next ? guessMapping(next.headers) : {});
   };
 
   const onPreviewed = (response: PreviewImportResponse) => {
@@ -155,8 +157,15 @@ export function ImportWizard({ slug }: { slug: string }) {
     for (const row of response.rows) {
       const key = String(row.rowNumber);
       category[key] = row.selectedCategoryId ?? row.suggestedCategoryId;
-      // Default-exclude exact duplicates; the user can re-include them.
-      if (row.duplicateState === IMPORT_DUPLICATE_STATE.Exact) exclude.add(key);
+      // Default-exclude exact duplicates and rows with validation errors;
+      // the user can re-include duplicates, but commit stays blocked while an
+      // included row still has errors.
+      if (
+        row.duplicateState === IMPORT_DUPLICATE_STATE.Exact ||
+        row.errors.length > 0
+      ) {
+        exclude.add(key);
+      }
     }
     setRowCategory(category);
     setExcluded(exclude);
@@ -263,7 +272,7 @@ function UploadStep({
   onAccountChange: (value: string) => void;
   accounts: Array<{ accountId: string; name: string }>;
   parsed: ParsedCsv | null;
-  onParsed: (parsed: ParsedCsv) => void;
+  onParsed: (parsed: ParsedCsv | null) => void;
   canContinue: boolean;
   onContinue: () => void;
 }) {
@@ -278,6 +287,7 @@ function UploadStep({
     try {
       const result = await parseCsv(file);
       if (result.rows.length > IMPORT_MAX_ROWS) {
+        onParsed(null);
         setError(
           t("tooManyRows", { max: IMPORT_MAX_ROWS, count: result.rows.length }),
         );
@@ -285,8 +295,9 @@ function UploadStep({
       }
       onParsed(result);
     } catch (cause) {
+      onParsed(null);
       setError(
-        cause instanceof CsvParseError && cause.message === "empty"
+        cause instanceof CsvParseError && cause.code === "empty"
           ? t("emptyFile")
           : t("parseError"),
       );
@@ -473,7 +484,7 @@ function MapStep({
           disabled={!canContinue || previewMutation.isPending}
           onClick={() =>
             accountId &&
-            void previewMutation.mutateAsync({
+            previewMutation.mutate({
               body: { householdId, accountId, rows },
             })
           }
@@ -522,6 +533,12 @@ function PreviewStep({
   );
 
   const acceptedCount = preview.rows.length - excluded.size;
+  // Rows whose preview reported errors can't be committed — the whole commit
+  // would fail server-side with no per-row guidance. They're default-excluded
+  // (in `onPreviewed`); if the user re-includes one, block commit with a hint.
+  const includedHasErrors = preview.rows.some(
+    (row) => !excluded.has(String(row.rowNumber)) && row.errors.length > 0,
+  );
 
   const commitMutation = useMutation({
     ...commitEconomyImportMutation(),
@@ -556,7 +573,7 @@ function PreviewStep({
           categoryId: rowCategory[key] ?? null,
         };
       });
-    void commitMutation.mutateAsync({
+    commitMutation.mutate({
       body: {
         householdId,
         accountId,
@@ -576,9 +593,12 @@ function PreviewStep({
         <ImportPreviewSkeleton />
       ) : (
         <ul className="grid gap-2">
+          {/* Keyed by rowNumber (the stable 1-based source row), NOT
+              rowFingerprint — content-derived fingerprints collide on
+              identical rows, the exact duplicate case this screen handles. */}
           {preview.rows.map((row) => (
             <PreviewRow
-              key={row.rowFingerprint}
+              key={row.rowNumber}
               row={row}
               flatCategories={flatCategories}
               included={!excluded.has(String(row.rowNumber))}
@@ -597,13 +617,20 @@ function PreviewStep({
         </ul>
       )}
 
+      {includedHasErrors ? (
+        <p className="text-xs text-destructive">{t("includedErrorsHint")}</p>
+      ) : null}
+
       <div className="flex gap-2">
         <Button variant="ghost" onClick={onBack}>
           {t("back")}
         </Button>
         <Button
           disabled={
-            acceptedCount === 0 || commitMutation.isPending || !accountId
+            acceptedCount === 0 ||
+            includedHasErrors ||
+            commitMutation.isPending ||
+            !accountId
           }
           onClick={commit}
         >
@@ -756,7 +783,20 @@ function DoneStep({
 
   const createMutation = useMutation({
     ...createEconomyCategorizationRuleMutation(),
-    onSuccess: async () => {
+    // Mark the suggestion "Created" only after the backend says so — adding
+    // optimistically would leave a permanently disabled button on failure
+    // (e.g. a 422 at the rule cap) with no way to retry. The button is already
+    // disabled by `isPending` while the call is in flight.
+    onSuccess: async (created) => {
+      setCreatedKeys((prev) =>
+        new Set(prev).add(
+          suggestionKey(
+            created.match,
+            created.pattern,
+            created.targetCategoryId,
+          ),
+        ),
+      );
       await queryClient.invalidateQueries({
         queryKey: listEconomyCategorizationRulesQueryKey({
           query: { householdId },
@@ -768,13 +808,7 @@ function DoneStep({
   });
 
   const createRule = (suggestion: ImportRuleSuggestionResponse) => {
-    const key = suggestionKey(
-      suggestion.match,
-      suggestion.pattern,
-      suggestion.targetCategoryId,
-    );
-    setCreatedKeys((prev) => new Set(prev).add(key));
-    void createMutation.mutateAsync({
+    createMutation.mutate({
       body: {
         householdId,
         match: suggestion.match,

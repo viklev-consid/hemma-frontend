@@ -207,7 +207,7 @@ function RuleRow({
           checked={rule.enabled}
           disabled={toggleDisabled}
           onCheckedChange={(enabled) =>
-            void enabledMutation.mutateAsync({
+            enabledMutation.mutate({
               path: { ruleId: rule.categorizationRuleId },
               body: { householdId, enabled },
             })

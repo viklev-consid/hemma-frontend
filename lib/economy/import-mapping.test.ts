@@ -61,4 +61,11 @@ describe("guessMapping", () => {
     expect(m.amount).toBe(1);
     expect(Object.values(m)).not.toContain(0);
   });
+
+  it("maps 'Bokfört saldo' as balance even when it precedes the date column", () => {
+    const m = guessMapping(["Bokfört saldo", "Bokföringsdatum", "Belopp"]);
+    expect(m.balanceAfter).toBe(0);
+    expect(m.occurredOn).toBe(1);
+    expect(m.amount).toBe(2);
+  });
 });

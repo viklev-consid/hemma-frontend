@@ -99,11 +99,16 @@ export function guessMapping(headers: string[]): ColumnMapping {
   return mapping;
 }
 
-/** Header substrings that hint at each target field (first match wins). */
+/**
+ * Header substrings that hint at each target field (first match wins).
+ * `balanceAfter` is checked before `occurredOn` deliberately: "Bokfört saldo"
+ * contains the "bokför" date hint, so the balance patterns must get first
+ * claim on saldo/balance columns.
+ */
 const HEADER_HINTS: Array<[ImportTargetField, string[]]> = [
+  ["balanceAfter", ["saldo", "balance"]],
   ["occurredOn", ["datum", "date", "bokför", "transaktionsdag"]],
   ["amount", ["belopp", "amount", "summa"]],
-  ["balanceAfter", ["saldo", "balance"]],
   [
     "counterparty",
     ["motpart", "mottagare", "counterparty", "payee", "avsändare"],

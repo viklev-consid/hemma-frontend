@@ -421,6 +421,7 @@
       },
       "uncategorized": "Uncategorized",
       "subscriptionHint": "Matches subscription",
+      "includedErrorsHint": "Some selected rows have errors and can't be imported. Deselect them to continue.",
       "back": "Back",
       "committing": "Importing…",
       "commit": "Import {count, plural, one {# row} other {# rows}}"

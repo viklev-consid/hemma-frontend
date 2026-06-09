@@ -17,10 +17,16 @@ export type ParsedCsv = {
   rows: string[][];
 };
 
+export type CsvParseErrorCode = "empty" | "malformed";
+
 export class CsvParseError extends Error {
-  constructor(message: string) {
-    super(message);
+  /** Stable discriminator for callers — never branch on `message`. */
+  readonly code: CsvParseErrorCode;
+
+  constructor(code: CsvParseErrorCode, message?: string) {
+    super(message ?? code);
     this.name = "CsvParseError";
+    this.code = code;
   }
 }
 
@@ -42,7 +48,7 @@ export function parseCsv(file: File): Promise<ParsedCsv> {
       complete(results) {
         const fatal = results.errors.find((e) => e.type === "Quotes");
         if (fatal) {
-          reject(new CsvParseError(fatal.message));
+          reject(new CsvParseError("malformed", fatal.message));
           return;
         }
 
@@ -60,7 +66,7 @@ export function parseCsv(file: File): Promise<ParsedCsv> {
         resolve({ headers, rows });
       },
       error(error) {
-        reject(new CsvParseError(error.message));
+        reject(new CsvParseError("malformed", error.message));
       },
     });
   });

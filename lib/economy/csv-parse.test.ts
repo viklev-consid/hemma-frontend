@@ -34,7 +34,11 @@ describe("parseCsv", () => {
     expect(result.rows).toEqual([["1", "2"]]);
   });
 
-  it("rejects an empty file", async () => {
+  it("rejects an empty file with the 'empty' code", async () => {
+    await expect(parseCsv(blob("   \n  "))).rejects.toMatchObject({
+      name: "CsvParseError",
+      code: "empty",
+    });
     await expect(parseCsv(blob("   \n  "))).rejects.toBeInstanceOf(
       CsvParseError,
     );
