@@ -24,6 +24,7 @@ import { Money, MoneyInput } from "@/components/economy/money";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Empty, EmptyDescription, EmptyTitle } from "@/components/ui/empty";
+import { flattenCategories } from "@/lib/economy/category-tree";
 import {
   isValidMoneyAmount,
   normalizeMoneyAmount,
@@ -33,17 +34,10 @@ import { addDays, formatPeriodRange } from "@/lib/economy/period";
 import { parseAsAnchorDate, todayAnchorDate } from "@/lib/economy/nuqs-parsers";
 import { useHousehold } from "@/lib/household-context";
 
-type FlatCategory = { category: CategoryResponse; depth: number };
-
-function flattenCategories(
-  categories: CategoryResponse[],
-  depth = 0,
-): FlatCategory[] {
-  return categories.flatMap((category) => [
-    { category, depth },
-    ...flattenCategories(category.children, depth + 1),
-  ]);
-}
+// elapsed/pace come from the backend as ratios (e.g. 0.8 = 80%). Format to a
+// whole percent for display only — this is presentation, not a recomputed
+// aggregate. (Scale assumption: verify against real budget data.)
+const toPercent = (value: number | string) => Math.round(Number(value) * 100);
 
 /**
  * Budget editor + overview. The selected period lives in `?period=` (an
@@ -158,6 +152,12 @@ export function BudgetPage() {
           {copyMutation.isPending ? t("copying") : t("copyFromPrevious")}
         </Button>
       </div>
+
+      {summary ? (
+        <p className="text-xs text-muted-foreground">
+          {t("pace.elapsed", { elapsed: toPercent(summary.elapsedPercent) })}
+        </p>
+      ) : null}
 
       {flat.length === 0 ? (
         <Empty>
@@ -296,7 +296,25 @@ function BudgetLineRow({
         </div>
       </td>
       <td className="py-2 text-right">
-        {line ? <Money value={line.actual} /> : null}
+        {line ? (
+          <div className="grid justify-items-end gap-0.5">
+            <Money value={line.actual} />
+            <span className="flex items-center gap-1.5">
+              <span
+                className={
+                  line.isOverPace
+                    ? "text-xs font-medium text-destructive"
+                    : "text-xs text-muted-foreground"
+                }
+              >
+                {t("pace.spent", { spent: toPercent(line.pacePercent) })}
+              </span>
+              {line.isOverPace ? (
+                <Badge variant="destructive">{t("pace.overPace")}</Badge>
+              ) : null}
+            </span>
+          </div>
+        ) : null}
       </td>
     </tr>
   );

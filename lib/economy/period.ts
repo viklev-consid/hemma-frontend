@@ -51,6 +51,25 @@ export function formatPeriodRange(
 }
 
 /**
+ * Format a single ISO date (`YYYY-MM-DD`) for display, e.g. "9 juni 2026".
+ * Fixed locale + UTC so server and client render identically. Falls back to the
+ * raw string if it can't be parsed.
+ */
+export function formatEconomyDate(
+  isoDate: string,
+  locale: string = ECONOMY_LOCALE,
+): string {
+  const date = parseIsoDate(isoDate);
+  if (!date) return isoDate;
+  return new Intl.DateTimeFormat(locale, {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(date);
+}
+
+/**
  * Step an ISO date (`YYYY-MM-DD`) by whole days, returning a new ISO date.
  *
  * This is **not** period math: it's used only to derive an *anchor* that falls

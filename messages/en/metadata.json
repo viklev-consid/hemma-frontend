@@ -62,7 +62,10 @@
       "setup": "Set up economy | Hemma",
       "budget": "Budget | Hemma",
       "accounts": "Accounts | Hemma",
-      "categories": "Categories | Hemma"
+      "categories": "Categories | Hemma",
+      "transactions": "Transactions | Hemma",
+      "transactionNew": "Record transaction | Hemma",
+      "transfers": "Transfers | Hemma"
     }
   },
   "settings": {

@@ -2,6 +2,8 @@
   "shell": {
     "nav": {
       "label": "Economy sections",
+      "transactions": "Transactions",
+      "transfers": "Transfers",
       "budget": "Budget",
       "accounts": "Accounts",
       "categories": "Categories"
@@ -106,6 +108,101 @@
     "emptyPeriod": {
       "title": "Empty budget",
       "description": "No budget lines for this period yet. Set amounts below, or copy from the previous period."
+    },
+    "pace": {
+      "elapsed": "{elapsed}% through the period",
+      "spent": "{spent}% spent",
+      "overPace": "Over pace"
+    }
+  },
+  "transactions": {
+    "title": "Transactions",
+    "description": "Everything recorded in this household.",
+    "record": {
+      "trigger": "Record transaction",
+      "title": "Record transaction",
+      "amount": { "label": "Amount" },
+      "kind": { "label": "Type", "Expense": "Expense", "Income": "Income" },
+      "account": { "label": "Account", "placeholder": "Select an account" },
+      "category": {
+        "label": "Category",
+        "placeholder": "Select a category",
+        "none": "Uncategorized"
+      },
+      "occurredOn": { "label": "Date" },
+      "note": { "label": "Note", "placeholder": "Optional note" },
+      "payer": {
+        "label": "Paid by",
+        "placeholder": "Optional",
+        "none": "No one in particular"
+      },
+      "receipt": {
+        "label": "Receipt",
+        "hint": "PDF, PNG or JPEG, up to 10 MB.",
+        "remove": "Remove",
+        "errorType": "Unsupported file type. Use PDF, PNG or JPEG.",
+        "errorSize": "File is too large. Max 10 MB.",
+        "errorEmpty": "That file is empty."
+      },
+      "submit": "Save",
+      "submitting": "Saving…",
+      "cancel": "Cancel",
+      "saved": "Transaction saved",
+      "receiptAttached": "Receipt attached",
+      "receiptFailed": "Transaction saved, but the receipt didn't upload. Try attaching it again."
+    },
+    "list": {
+      "searchPlaceholder": "Search notes…",
+      "filters": {
+        "category": "Category",
+        "from": "From",
+        "to": "To",
+        "payer": "Paid by",
+        "hasReceipt": "With receipt only",
+        "minAmount": "Min",
+        "maxAmount": "Max",
+        "clear": "Clear filters",
+        "all": "All"
+      },
+      "receipt": { "has": "Receipt", "add": "Add receipt" },
+      "pending": "Pending",
+      "uncategorized": "Uncategorized",
+      "unknownPayer": "Unknown user",
+      "loadMore": "Load more",
+      "empty": {
+        "title": "No transactions",
+        "description": "Record a transaction to see it here."
+      },
+      "searchEmpty": {
+        "title": "No matches",
+        "description": "No transaction notes match your search."
+      }
+    },
+    "kind": { "Expense": "Expense", "Income": "Income", "Transfer": "Transfer" }
+  },
+  "transfers": {
+    "title": "Transfers",
+    "description": "Move money between accounts.",
+    "from": { "label": "From account", "placeholder": "Select an account" },
+    "to": { "label": "To account", "placeholder": "Select an account" },
+    "amount": { "label": "Amount" },
+    "occurredOn": { "label": "Date" },
+    "note": { "label": "Note", "placeholder": "Optional note" },
+    "savings": {
+      "label": "Record as savings",
+      "hint": "Books this as a savings allocation under Sparande instead of a neutral movement."
+    },
+    "category": {
+      "label": "Savings category",
+      "placeholder": "Default (Savings)"
+    },
+    "sameAccount": "Choose two different accounts.",
+    "submit": "Transfer",
+    "submitting": "Transferring…",
+    "saved": "Transfer recorded",
+    "empty": {
+      "title": "Not enough accounts",
+      "description": "Add at least two accounts to transfer between them."
     }
   }
 }
