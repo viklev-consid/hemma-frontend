@@ -2,10 +2,12 @@
 
 UI for the backend **Economy** module (Phase 1: setup, accounts, categories,
 budget; Phase 2: transactions, receipts, transfers, budget pace; Phase 3:
-recurring bills + confirmation inbox). Built per
+recurring bills + confirmation inbox; Phase 4: CSV import wizard +
+categorization rules). Built per
 `docs/workflows/phase-1-economy-core.md`,
-`docs/workflows/phase-2-transactions-receipts-transfers.md`, and
-`docs/workflows/phase-3-recurring-bills.md`. Records the non-obvious contract
+`docs/workflows/phase-2-transactions-receipts-transfers.md`,
+`docs/workflows/phase-3-recurring-bills.md`, and
+`docs/workflows/phase-4-csv-import-rules.md`. Records the non-obvious contract
 points so an agent walking in cold makes correct calls.
 
 ## Source-of-truth files in this repo
@@ -22,6 +24,12 @@ points so an agent walking in cold makes correct calls.
 | first-run gate + economy sub-nav                        | `components/economy/economy-shell.tsx` |
 | cadence label + interval/day options (1–12 / 1–28)      | `lib/economy/cadence.ts`               |
 | recurring enums + `confirmableOccurrences` (inbox src)  | `lib/economy/recurring-bill.ts`        |
+| CSV parse seam (PapaParse), browser-only                | `lib/economy/csv-parse.ts`             |
+| import field-length limits + `IMPORT_MAX_ROWS`          | `lib/economy/import-field-limits.ts`   |
+| column→field mapping (`applyMapping`, `guessMapping`)   | `lib/economy/import-mapping.ts`        |
+| rule/import enums, rule cap, `duplicateChip`            | `lib/economy/categorization-rule.ts`   |
+| `?step=` nuqs parser, **client-only**                   | `lib/economy/import-step.ts`           |
+| import-step names (server-safe, no nuqs)                | `lib/economy/import-step-constants.ts` |
 
 ## Contract points — get these right
 
@@ -195,14 +203,78 @@ list **plus** transactions, account balances, and every budget-summary period
 for the household (predicate match — same pattern as `transfer-form.tsx`), not
 just the bills list.
 
+## Phase 4 contract points
+
+### 22. Import is JSON, parsed in the browser — there is no upload endpoint
+
+The browser parses the CSV (`parseCsv` → PapaParse, isolated in
+`csv-parse.ts`) and submits **normalized rows** as JSON. `previewEconomyImport`
+and `commitEconomyImport` both carry `rows: NormalizedImportRowRequest[]` plus
+`householdId` + `accountId` in the **body**. The "field mapping" step is purely
+client-side (`applyMapping`): it maps CSV columns onto the row fields, stamps
+`currency: "SEK"` and a 1-based `rowNumber`, and leaves `categoryId: null`
+(rules auto-apply server-side). Row `amount` is a raw scalar (normalized to a
+decimal string via `normalizeMoneyAmount`), **not** a `MoneyRequest`;
+`balanceAfter` IS a `MoneyRequest`.
+
+### 23. The browser never computes duplicates, categories, or totals
+
+`previewEconomyImport` returns per-row `duplicateState` (`None | Exact |
+Possible`), `selectedCategoryId` (rules-applied), `suggestedCategoryId`,
+`rowFingerprint`, and `errors[]`. The duplicate chip folds `Exact`/`Possible`
+into "dup", `None` → "new" (`duplicateChip`). The preview defaults to
+**excluding** `Exact` duplicates (re-includable). Key preview rows by
+`rowFingerprint`, never the array index.
+
+### 24. `previewFingerprint` is the double-commit guard — pass it through verbatim
+
+Commit echoes the **exact** `previewFingerprint` from the preview it derives
+from. Never mint or mutate it client-side. There is **no** import-history /
+list-imports endpoint — import is a stateless preview→commit. A commit books
+real transactions, so it invalidates the transactions list, account balances,
+and every budget-summary period for the household (predicate match — same
+pattern as `transfer-form` / `recurring-bills-page`).
+
+### 25. The rule enabled-cap is client-derived; the backend is authoritative
+
+There is **no** server `enabledCount`/`cap` field. Compute
+`enabledRuleCount(rules)` / `isAtRuleCap(rules)` for the "X / 100 enabled" badge
+and to disable create + enable-toggle at the cap (toggling **off** stays
+allowed). `RULE_ENABLED_CAP = 100` is a UI constant; a mismatch must fail toward
+the backend's 422, not this number. ⚠️ The rule path param is `ruleId`, **not**
+`categorizationRuleId` (the response field).
+
+### 26. Match is `Contains | Regex`; Regex never runs in the browser
+
+`Contains` is the default; `Regex` sits behind an "Advanced" toggle. Regex
+compile/timeout failures come back as 422 keyed to `pattern` and map through
+`api/problems.ts` — there is **no** client-side regex evaluation or timeout
+logic. Commit's `suggestedRules` are offered as one-click "save as rule",
+filtered client-side against existing rules (match+pattern+target) so duplicates
+aren't suggested.
+
+### 27. Wizard step + account live in the URL; parsed rows + preview do not
+
+The import wizard is **one** route with internal `?step=` (`upload | map |
+preview | done`) + `?accountId=` panels, both `nuqs` (navigation-survival is an
+acceptance criterion — unlike the Phase 1 setup wizard's local `useState`). The
+parsed rows and preview response are too large for the URL → component state;
+the `preview`/`done` steps guard and bounce back to `upload` when that in-memory
+state is gone (e.g. hard refresh). Field-length limits
+(`validateImportRow`) and the `IMPORT_MAX_ROWS = 1000` cap are client-checked
+before preview; the backend 422 is the backstop (never silently drop rows).
+Subscription-match hints on preview rows are display-only — linking is Phase 5.
+
 ## Forms
 
 TanStack Forms + generated Zod (`zCreateEconomySettingsRequest`,
 `zCreateAccountRequest`, `zAddCategoryRequest`, `zUpsertBudgetLineRequest`,
-`zCreateRecurringBillRequest`, `zConfirmEstimatedBillRequest`) + the
-ProblemDetails mapper (`api/problems.ts`). No per-form error handling.
-After scope-changing mutations, invalidate the relevant economy query keys
-(and balances/accounts together on account create).
+`zCreateRecurringBillRequest`, `zConfirmEstimatedBillRequest`,
+`zCategorizationRuleRequest`, `zPreviewImportRequest`, `zCommitImportRequest`)
+
+- the ProblemDetails mapper (`api/problems.ts`). No per-form error handling.
+  After scope-changing mutations, invalidate the relevant economy query keys
+  (and balances/accounts together on account create).
 
 ## When you change anything here
 

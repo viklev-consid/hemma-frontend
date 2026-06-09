@@ -105,3 +105,49 @@ export function RecurringInboxSkeleton() {
     </div>
   );
 }
+
+/** Categorization-rule rows — match badge + pattern, target, switch + actions. */
+export function RulesListSkeleton() {
+  return (
+    <div className="grid gap-2">
+      {FOUR_ROWS.map((id) => (
+        <div
+          key={id}
+          className="flex items-center justify-between gap-4 border px-3 py-2.5"
+        >
+          <div className="grid gap-1.5">
+            <Skeleton className="h-4 w-40" />
+            <Skeleton className="h-3 w-24" />
+          </div>
+          <div className="flex items-center gap-2">
+            <Skeleton className="h-5 w-9 rounded-full" />
+            <Skeleton className="h-8 w-16" />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/** Import-preview rows — date/description left, amount + chip right. */
+export function ImportPreviewSkeleton() {
+  return (
+    <div className="grid gap-2">
+      {SIX_ROWS.map((id) => (
+        <div
+          key={id}
+          className="flex items-center justify-between gap-4 border px-3 py-2.5"
+        >
+          <div className="grid gap-1.5">
+            <Skeleton className="h-4 w-36" />
+            <Skeleton className="h-3 w-24" />
+          </div>
+          <div className="flex items-center gap-2">
+            <Skeleton className="h-4 w-16" />
+            <Skeleton className="h-5 w-10 rounded-full" />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
