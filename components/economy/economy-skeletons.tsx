@@ -67,3 +67,41 @@ export function TransactionListSkeleton() {
     </div>
   );
 }
+
+/** Recurring-bill cards — header (name + badges) + cadence/amount + a row. */
+export function RecurringBillListSkeleton() {
+  return (
+    <div className="grid gap-3">
+      {THREE_ROWS.map((id) => (
+        <div key={id} className="grid gap-3 border p-4">
+          <div className="flex items-center justify-between gap-4">
+            <Skeleton className="h-5 w-40" />
+            <Skeleton className="h-5 w-16" />
+          </div>
+          <Skeleton className="h-4 w-56" />
+          <Skeleton className="h-9 w-full" />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/** Confirmation-inbox rows — left: bill/due, right: amount + confirm action. */
+export function RecurringInboxSkeleton() {
+  return (
+    <div className="grid gap-2">
+      {THREE_ROWS.map((id) => (
+        <div
+          key={id}
+          className="flex items-center justify-between gap-4 border px-3 py-2.5"
+        >
+          <div className="grid gap-1.5">
+            <Skeleton className="h-4 w-32" />
+            <Skeleton className="h-3 w-20" />
+          </div>
+          <Skeleton className="h-8 w-24" />
+        </div>
+      ))}
+    </div>
+  );
+}
