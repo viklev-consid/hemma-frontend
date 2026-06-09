@@ -1,7 +1,9 @@
 # Economy module — frontend contract crib sheet
 
 UI for the backend **Economy** module (Phase 1: setup, accounts, categories,
-budget). Built per `docs/workflows/phase-1-economy-core.md`. Records the
+budget; Phase 2: transactions, receipts, transfers, budget pace). Built per
+`docs/workflows/phase-1-economy-core.md` and
+`docs/workflows/phase-2-transactions-receipts-transfers.md`. Records the
 non-obvious contract points so an agent walking in cold makes correct calls.
 
 ## Source-of-truth files in this repo
@@ -82,6 +84,59 @@ valid editable state, not an error.
 **any** export from it into a server component evaluates `createParser` on the
 server and **fails the build**. Server components (page prefetch) must use
 `lib/economy/anchor-date.ts` instead.
+
+## Phase 2 contract points
+
+### 10. Receipt upload is multipart via the generated hook
+
+`attachEconomyTransactionReceiptMutation({ path: { transactionId }, body: {
+householdId, file } })` — the generated SDK already spreads
+`formDataBodySerializer` and sets `Content-Type: null`, and the BFF proxy
+forwards `content-type` + streams the body. So **no manual FormData**. The FE
+owns only client-side validation (`lib/economy/receipt.ts`: PDF/PNG/JPEG,
+≤10 MB). `TransactionResponse.hasReceipt` is the indicator; there's no receipt
+viewer. Record→attach is sequenced in `record-transaction-form.tsx`; a failed
+attach keeps the saved transaction (retry from the list row via
+`AttachReceiptButton`).
+
+### 11. The record form is Expense/Income only; money movement is a transfer
+
+`recordEconomyTransaction` takes `kind` — set `Expense`/`Income` only. Never
+POST `kind: 'Transfer'`; use `createEconomyTransfer` (it materializes the paired
+Transfer transactions). `TransferMode` is `'Neutral' | 'Savings'` (PascalCase);
+the "record as savings" toggle defaults from the destination account type
+(`defaultTransferMode`) and is overridable. A neutral transfer reads as
+movement, never spending.
+
+### 12. Note search is a separate endpoint from the list
+
+`searchEconomyTransactionNotes` (`/transactions/search`) ≠
+`listEconomyTransactions`. A non-empty `?search=` swaps the list source; the
+structured filters drive the list. The list is infinite
+(`listEconomyTransactionsInfiniteOptions`) and manages pages internally — only
+the **filters** live in the URL (`lib/economy/transaction-filters.ts`,
+client-only), not the scroll position. There is no single `getEconomyTransaction`.
+
+### 13. Payer is a member userId
+
+`payerId` is a household-member `userId` (no payer DTO). Options come from
+`listHouseholdMembers` via `lib/economy/payer.ts` (excludes anonymized; resolves
+historical ids to a tombstone).
+
+### 14. Two more server/client split modules (same rule as #9)
+
+`lib/economy/transaction-filters.ts` is **client-only** (nuqs); server prefetch
+imports `DEFAULT_TRANSACTION_PAGE_SIZE` from
+`lib/economy/transaction-constants.ts` instead. `lib/economy/category-tree.ts`
+(`flattenCategories`) and `lib/economy/transfer.ts` / `payer.ts` / `receipt.ts`
+are pure and server-safe.
+
+### 15. Budget pace percentages are ratios (display-only)
+
+`elapsedPercent` / `pacePercent` are read as **ratios** (e.g. `0.8` → 80%) and
+formatted ×100 for display in `budget-page.tsx`. ⚠️ This scale is an assumption
+— verify against real backend data; if the backend already sends whole percents,
+drop the ×100.
 
 ## Forms
 

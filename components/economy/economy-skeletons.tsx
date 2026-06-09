@@ -45,3 +45,25 @@ export function EconomyBudgetSkeleton() {
     </div>
   );
 }
+
+const SIX_ROWS = ["a", "b", "c", "d", "e", "f"] as const;
+
+/** Mobile-first transaction rows — left: category/date, right: amount. */
+export function TransactionListSkeleton() {
+  return (
+    <div className="grid gap-2">
+      {SIX_ROWS.map((id) => (
+        <div
+          key={id}
+          className="flex items-center justify-between gap-4 border px-3 py-2.5"
+        >
+          <div className="grid gap-1.5">
+            <Skeleton className="h-4 w-32" />
+            <Skeleton className="h-3 w-20" />
+          </div>
+          <Skeleton className="h-4 w-16" />
+        </div>
+      ))}
+    </div>
+  );
+}

@@ -47,6 +47,8 @@ export function EconomyShell({ slug, children }: EconomyShellProps) {
 
   const setupHref = `/app/h/${slug}/economy/setup`;
   const budgetHref = `/app/h/${slug}/economy/budget`;
+  // The daily-driver landing: where initialized users go after setup.
+  const homeHref = `/app/h/${slug}/economy/transactions`;
   const isSetupRoute = pathname === setupHref;
 
   const errorStatus = (settingsQuery.error as unknown as ProblemDetails | null)
@@ -60,7 +62,7 @@ export function EconomyShell({ slug, children }: EconomyShellProps) {
     if (isUninitialized && !isSetupRoute) {
       replace(setupHref);
     } else if (isInitialized && isSetupRoute) {
-      replace(budgetHref);
+      replace(homeHref);
     }
   }, [
     isUninitialized,
@@ -68,7 +70,7 @@ export function EconomyShell({ slug, children }: EconomyShellProps) {
     isSetupRoute,
     replace,
     setupHref,
-    budgetHref,
+    homeHref,
   ]);
 
   if (settingsQuery.isLoading) {
@@ -107,6 +109,11 @@ export function EconomyShell({ slug, children }: EconomyShellProps) {
   }
 
   const tabs = [
+    {
+      href: `/app/h/${slug}/economy/transactions`,
+      key: "transactions" as const,
+    },
+    { href: `/app/h/${slug}/economy/transfers`, key: "transfers" as const },
     { href: budgetHref, key: "budget" as const },
     { href: `/app/h/${slug}/economy/accounts`, key: "accounts" as const },
     { href: `/app/h/${slug}/economy/categories`, key: "categories" as const },
