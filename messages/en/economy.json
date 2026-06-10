@@ -577,6 +577,21 @@
       "submitting": "Adding…",
       "saved": "Subscription added",
       "cancel": "Cancel"
+    },
+    "schedule": {
+      "title": "Payment schedule",
+      "description": "The months each subscription is expected to charge this year. Predictions only — cancelled subscriptions are not shown.",
+      "previousYear": "Previous year",
+      "nextYear": "Next year",
+      "nameColumn": "Subscription",
+      "cell": {
+        "expected": "Expected charge in {month}",
+        "none": "No expected charge in {month}"
+      },
+      "empty": {
+        "title": "Nothing scheduled",
+        "description": "Add a subscription to see its expected charge months here."
+      }
     }
   }
 }
