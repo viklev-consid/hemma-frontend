@@ -91,16 +91,20 @@ function LinkTransactionBody({
   const queryClient = useQueryClient();
   const { householdId } = useHousehold();
 
-  const candidatesQuery = useQuery(
+  const {
+    data: candidatesData,
+    isLoading: candidatesLoading,
+    isSuccess: candidatesLoaded,
+  } = useQuery(
     getEconomySubscriptionLinkCandidatesOptions({
       path: { subscriptionId: subscription.subscriptionId },
       query: { householdId },
     }),
   );
-  const candidates = candidatesQuery.data?.candidates ?? [];
-  const showPicker = candidatesQuery.isSuccess && candidates.length === 0;
+  const candidates = candidatesData?.candidates ?? [];
+  const showPicker = candidatesLoaded && candidates.length === 0;
 
-  const recentQuery = useQuery({
+  const { data: recentData, isLoading: recentLoading } = useQuery({
     ...listEconomyTransactionsOptions({
       query: { householdId, pageSize: PICKER_PAGE_SIZE },
     }),
@@ -142,7 +146,7 @@ function LinkTransactionBody({
     });
   };
 
-  if (candidatesQuery.isLoading) {
+  if (candidatesLoading) {
     return <LinkCandidatesSkeleton />;
   }
 
@@ -185,7 +189,7 @@ function LinkTransactionBody({
   }
 
   // Manual picker fallback — no heuristic matches.
-  const transactions = (recentQuery.data?.transactions ?? []).filter(
+  const transactions = (recentData?.transactions ?? []).filter(
     (transaction) =>
       subscription.accountId === null ||
       transaction.accountId === subscription.accountId,
@@ -194,7 +198,7 @@ function LinkTransactionBody({
   return (
     <div className="grid gap-2">
       <p className="text-xs text-muted-foreground">{t("pickerHint")}</p>
-      {recentQuery.isLoading ? (
+      {recentLoading ? (
         <LinkCandidatesSkeleton />
       ) : transactions.length === 0 ? (
         <p className="text-sm text-muted-foreground">{t("pickerEmpty")}</p>

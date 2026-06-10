@@ -82,10 +82,10 @@ export function SubscriptionForm({
   const { householdId } = useHousehold();
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
-  const accountsQuery = useQuery(
+  const { data: accountsData } = useQuery(
     listEconomyAccountsOptions({ query: { householdId } }),
   );
-  const accounts = accountsQuery.data?.accounts ?? [];
+  const accounts = accountsData?.accounts ?? [];
 
   const mutation = useMutation({
     ...createEconomySubscriptionMutation(),

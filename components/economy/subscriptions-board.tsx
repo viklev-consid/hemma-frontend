@@ -81,20 +81,18 @@ export function SubscriptionsBoard() {
     });
   };
 
-  const subscriptionsQuery = useQuery(
+  const { data: subscriptionsData, isLoading } = useQuery(
     listEconomySubscriptionsOptions({ query: { householdId } }),
   );
-  const accountsQuery = useQuery(
+  const { data: accountsData } = useQuery(
     listEconomyAccountsOptions({ query: { householdId } }),
   );
 
-  const subscriptions = subscriptionsQuery.data?.subscriptions ?? [];
+  const subscriptions = subscriptionsData?.subscriptions ?? [];
   const accountName = useMemo(
     () =>
-      new Map(
-        (accountsQuery.data?.accounts ?? []).map((a) => [a.accountId, a.name]),
-      ),
-    [accountsQuery.data],
+      new Map((accountsData?.accounts ?? []).map((a) => [a.accountId, a.name])),
+    [accountsData],
   );
 
   const current = subscriptions.filter((s) => !isTerminal(s.lifecycleState));
@@ -126,7 +124,7 @@ export function SubscriptionsBoard() {
         </DialogContent>
       </Dialog>
 
-      {subscriptionsQuery.isLoading ? (
+      {isLoading ? (
         <SubscriptionBoardSkeleton />
       ) : subscriptions.length === 0 ? (
         <Empty>

@@ -46,13 +46,12 @@ export function ChargeHistoryPanel({
     subscriptionBoardParsers,
   );
 
-  const historyQuery = useQuery(
+  const { data: history, isLoading } = useQuery(
     getEconomySubscriptionChargeHistoryOptions({
       path: { subscriptionId: subscription.subscriptionId },
       query: { householdId, page: chargePage, pageSize: chargePageSize },
     }),
   );
-  const history = historyQuery.data;
 
   const unlinkMutation = useMutation({
     ...unlinkEconomySubscriptionTransactionMutation(),
@@ -106,7 +105,7 @@ export function ChargeHistoryPanel({
         onClose={() => setLinkOpen(false)}
       />
 
-      {historyQuery.isLoading ? (
+      {isLoading ? (
         <LinkCandidatesSkeleton />
       ) : !history ? null : (
         <>

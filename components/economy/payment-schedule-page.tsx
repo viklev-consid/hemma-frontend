@@ -35,12 +35,12 @@ export function PaymentSchedulePage() {
     parseAsScheduleYear.withDefault(currentYear()),
   );
 
-  const scheduleQuery = useQuery(
+  const { data: scheduleData, isLoading } = useQuery(
     getEconomySubscriptionPaymentScheduleOptions({
       query: { householdId, year },
     }),
   );
-  const rows = scheduleQuery.data?.subscriptions ?? [];
+  const rows = scheduleData?.subscriptions ?? [];
 
   return (
     <div className="grid gap-4">
@@ -74,7 +74,7 @@ export function PaymentSchedulePage() {
         </div>
       </header>
 
-      {scheduleQuery.isLoading ? (
+      {isLoading ? (
         <PaymentScheduleSkeleton />
       ) : rows.length === 0 ? (
         <Empty>
@@ -115,16 +115,7 @@ export function PaymentSchedulePage() {
                       return (
                         <td key={month} className="px-1.5 py-1.5">
                           <div
-                            role="img"
-                            aria-label={
-                              charged
-                                ? t("cell.expected", {
-                                    month: formatMonthNumber(month),
-                                  })
-                                : t("cell.none", {
-                                    month: formatMonthNumber(month),
-                                  })
-                            }
+                            aria-hidden
                             className={cn(
                               "mx-auto size-6 rounded-sm border",
                               charged
@@ -132,6 +123,15 @@ export function PaymentSchedulePage() {
                                 : "border-border bg-muted/40",
                             )}
                           />
+                          <span className="sr-only">
+                            {charged
+                              ? t("cell.expected", {
+                                  month: formatMonthNumber(month),
+                                })
+                              : t("cell.none", {
+                                  month: formatMonthNumber(month),
+                                })}
+                          </span>
                         </td>
                       );
                     })}

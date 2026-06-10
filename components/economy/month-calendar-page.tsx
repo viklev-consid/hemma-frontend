@@ -39,12 +39,11 @@ export function MonthCalendarPage() {
     parseAsAnchorDate.withDefault(todayAnchorDate()),
   );
 
-  const calendarQuery = useQuery(
+  const { data: calendar, isLoading } = useQuery(
     getEconomySubscriptionMonthCalendarOptions({
       query: { householdId, month },
     }),
   );
-  const calendar = calendarQuery.data;
   const days = calendar?.days ?? [];
 
   return (
@@ -77,7 +76,7 @@ export function MonthCalendarPage() {
         </div>
       </header>
 
-      {calendarQuery.isLoading || !calendar ? (
+      {isLoading || !calendar ? (
         <MonthCalendarSkeleton />
       ) : (
         <>
