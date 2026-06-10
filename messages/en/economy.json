@@ -6,6 +6,7 @@
       "transfers": "Transfers",
       "budget": "Budget",
       "recurring": "Recurring",
+      "subscriptions": "Subscriptions",
       "accounts": "Accounts",
       "categories": "Categories",
       "rules": "Rules",
@@ -213,7 +214,8 @@
       "searchEmpty": {
         "title": "No matches",
         "description": "No transaction notes match your search."
-      }
+      },
+      "subscriptionLinked": "Subscription"
     },
     "kind": {
       "Expense": "Expense",
@@ -634,6 +636,12 @@
       "pickerEmpty": "No recent transactions to pick from.",
       "linkedHere": "Linked here",
       "linkedElsewhere": "Linked"
+    },
+    "nav": {
+      "label": "Subscription views",
+      "board": "Board",
+      "year": "Year schedule",
+      "month": "Month calendar"
     }
   }
 }

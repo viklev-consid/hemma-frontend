@@ -345,6 +345,9 @@ function TransactionRow({
           {tx.isPending ? (
             <Badge variant="secondary">{t("list.pending")}</Badge>
           ) : null}
+          {tx.subscriptionId !== null ? (
+            <Badge variant="outline">{t("list.subscriptionLinked")}</Badge>
+          ) : null}
         </div>
         <span className="text-xs text-muted-foreground">
           {formatEconomyDate(tx.occurredOn)}

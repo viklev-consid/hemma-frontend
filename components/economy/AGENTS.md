@@ -269,12 +269,87 @@ state is gone (e.g. hard refresh). Field-length limits
 before preview; the backend 422 is the backstop (never silently drop rows).
 Subscription-match hints on preview rows are display-only — linking is Phase 5.
 
+## Phase 5 contract points
+
+### 28. The match-state enum is lowercase; lifecycle is PascalCase
+
+`SubscriptionMatchState = 'actual' | 'predicted' | 'suggested'` — lowercase,
+unlike every other backend enum. Don't pattern-match the PascalCase habit;
+branch via `SUBSCRIPTION_MATCH_STATE` from `lib/economy/subscription.ts`.
+Semantics are pinned: charge history is **`actual` only**, `predicted` exists
+only in the month calendar, `suggested` only on import-preview rows
+(post-import suggestions come from the link-candidates endpoint instead).
+
+### 29. Subscription intervals are 1–24 — do NOT reuse the bills' helper
+
+`cadenceIntervalOptions()` (bills) is 1–12; subscriptions use
+`subscriptionIntervalOptions()` (1–24) from `lib/economy/subscription.ts`.
+`chargeDay` shares the 1–28 bound (`subscriptionChargeDayOptions` delegates to
+`cadenceDayOptions`).
+
+### 30. `Cancelled` is terminal, kept, and date-stamped only post-deploy
+
+No DELETE exists — cancelled subscriptions persist by design (linked actuals
+and old calendar months reference them) and the list endpoint is the only read
+surface that returns them (payment-schedule and month-calendar exclude them
+from _predictions_; their actuals still render). State controls are hidden
+entirely on cancelled cards; the create form never offers `Cancelled` (422).
+`cancelledOn` is `null` for pre-deploy cancellations → bare "Cancelled" badge,
+dated badge otherwise. `trialEndsOn` is a **required nullable key** in both
+create and change-state bodies: required date when targeting `Trial`, send
+`null` otherwise (the server nulls it unconditionally on non-Trial states).
+
+### 31. Month-calendar day placement is the backend's, verbatim
+
+Actuals appear on the transaction's **real date** (`days[].date`), not the
+scheduled `chargeDay`; a linked actual replaces that month's predicted entry
+(no double counting); multiple actuals all render; cancelled/off-cycle actuals
+still appear. Render only what `days[]` says — no client-side day math, gap
+filling, or projecting cadence into months (the year schedule's `months[]` is
+also backend-computed). `actualTotal`/`predictedTotal` are backend-summed and
+never combined client-side. The `?month=` param is a full ISO **anchor date**
+(`parseAsAnchorDate`), not `YYYY-MM`.
+
+### 32. Linking is candidates-first; the 409 has a dedicated branch
+
+Link flow opens with the link-candidates endpoint (same heuristic as import
+suggestions; unlinked only, ≤10, 12-month lookback); empty → manual picker
+over recent transactions with non-null-`subscriptionId` rows greyed.
+Same-subscription relink is an idempotent 200 (double-click safe).
+Cross-subscription link → `409 Economy.Transaction.AlreadyLinked`
+(`ECONOMY_ERRORS.TransactionAlreadyLinked` in `lib/economy/economy-errors.ts`)
+→ dedicated "unlink it first" toast **before** the `handleProblem` fallback;
+moving a charge = unlink, then relink. Charge-history pagination renders from
+the **echoed** `page`/`pageSize`/`total` (the server clamps silently;
+`Number()`-coerce for display only).
+
+### 33. Subscription invalidation is narrow — the inverse of #21
+
+Subscriptions never post money: **never** invalidate balances or budget
+summaries. Create/change-state → subscriptions list + payment schedule + month
+calendar. Link/unlink → that subscription's charge history + link candidates +
+month calendar **+ the transactions list** (rows render a linked badge from
+`TransactionResponse.subscriptionId`). Helpers live in
+`subscription-invalidation.ts`. Copy throughout is observe-only: "expected" /
+"predicted", and no UI path may imply a subscription charges an account.
+
+### 34. Subscription URL state splits server-safe vs client-only (same rule as #9)
+
+`subscription-calendar.ts` (defaults: `currentYear()`, paging constants,
+month labels) is server-safe and feeds page prefetches;
+`subscription-filters.ts` (nuqs parsers for `?year=`, `?month=`,
+`?subscription=`, `?chargePage=`, `?chargePageSize=`) is client-only. Year /
+month defaults are applied at the call site with `.withDefault(...)` so they
+reflect render time.
+
 ## Forms
 
 TanStack Forms + generated Zod (`zCreateEconomySettingsRequest`,
 `zCreateAccountRequest`, `zAddCategoryRequest`, `zUpsertBudgetLineRequest`,
 `zCreateRecurringBillRequest`, `zConfirmEstimatedBillRequest`,
-`zCategorizationRuleRequest`, `zPreviewImportRequest`, `zCommitImportRequest`)
+`zCategorizationRuleRequest`, `zPreviewImportRequest`, `zCommitImportRequest`,
+`zCreateSubscriptionRequest`, `zChangeLifecycleStateRequest`,
+`zLinkTransactionRequest`)
 
 - the ProblemDetails mapper (`api/problems.ts`). No per-form error handling.
   After scope-changing mutations, invalidate the relevant economy query keys
