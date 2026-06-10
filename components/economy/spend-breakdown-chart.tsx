@@ -64,7 +64,7 @@ export function SpendBreakdownChart({
       <div className="grid gap-4 sm:grid-cols-[1fr_auto] sm:items-center">
         <ChartContainer
           config={config}
-          className="mx-auto aspect-square max-h-56"
+          className="mx-auto aspect-square w-full max-w-56"
         >
           <PieChart accessibilityLayer>
             <ChartTooltip
