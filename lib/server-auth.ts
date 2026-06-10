@@ -1,6 +1,7 @@
 import "server-only";
 
 import { cache } from "react";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 import type { GetCurrentUserResponse } from "@/api/generated";
@@ -10,7 +11,10 @@ import {
   hasRefreshableSession,
   hasUsableSession,
   shouldRefreshSession,
+  unsealSessionCookie,
+  type SessionData,
 } from "@/lib/session";
+import { SESSION_COOKIE_NAME } from "@/lib/constants";
 
 export const getUsableServerSession = cache(async () => {
   const session = await getSession();
@@ -34,8 +38,23 @@ export const getUsableServerSession = cache(async () => {
   return session;
 });
 
+export const getReadonlyServerSession = cache(
+  async (): Promise<SessionData | null> => {
+    const cookieStore = await cookies();
+    const session = await unsealSessionCookie(
+      cookieStore.get(SESSION_COOKIE_NAME)?.value,
+    );
+
+    if (!session || !hasUsableSession(session)) {
+      return null;
+    }
+
+    return session;
+  },
+);
+
 export async function getServerSessionUser() {
-  const session = await getUsableServerSession();
+  const session = await getReadonlyServerSession();
 
   if (!session?.user) {
     return null;
@@ -45,7 +64,7 @@ export async function getServerSessionUser() {
 }
 
 export async function getServerCurrentUser() {
-  const session = await getUsableServerSession();
+  const session = await getReadonlyServerSession();
 
   if (!session) {
     return null;

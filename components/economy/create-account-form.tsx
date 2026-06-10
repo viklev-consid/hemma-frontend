@@ -41,7 +41,15 @@ import { useHousehold } from "@/lib/household-context";
 
 const ACCOUNT_TYPES: AccountType[] = ["Spending", "Savings"];
 
-export function CreateAccountForm() {
+type CreateAccountFormProps = {
+  onCancel?: () => void;
+  onSuccess?: () => void;
+};
+
+export function CreateAccountForm({
+  onCancel,
+  onSuccess,
+}: CreateAccountFormProps) {
   const t = useTranslations("economy.accounts.add");
   const queryClient = useQueryClient();
   const { householdId } = useHousehold();
@@ -62,6 +70,7 @@ export function CreateAccountForm() {
       ]);
       toast.success(t("title"));
       form.reset();
+      onSuccess?.();
     },
     onError: (error) => {
       const problem = error as unknown as ProblemDetails;
@@ -194,7 +203,7 @@ export function CreateAccountForm() {
         </form.Field>
       </FieldGroup>
 
-      <div>
+      <div className="flex gap-2">
         <form.Subscribe selector={(state) => state.isSubmitting}>
           {(isSubmitting) => (
             <Button type="submit" disabled={isSubmitting || mutation.isPending}>
@@ -204,6 +213,9 @@ export function CreateAccountForm() {
             </Button>
           )}
         </form.Subscribe>
+        <Button type="button" variant="ghost" onClick={onCancel}>
+          {t("cancel")}
+        </Button>
       </div>
     </form>
   );

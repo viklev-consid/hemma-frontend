@@ -1,6 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { PlusIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { getEconomyAccountBalancesOptions } from "@/api/generated/@tanstack/react-query.gen";
@@ -8,13 +10,14 @@ import { CreateAccountForm } from "@/components/economy/create-account-form";
 import { EconomyListSkeleton } from "@/components/economy/economy-skeletons";
 import { Money } from "@/components/economy/money";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Empty, EmptyDescription, EmptyTitle } from "@/components/ui/empty";
 import { useHousehold } from "@/lib/household-context";
 
@@ -28,6 +31,7 @@ import { useHousehold } from "@/lib/household-context";
 export function AccountsPage() {
   const t = useTranslations("economy.accounts");
   const { householdId } = useHousehold();
+  const [createOpen, setCreateOpen] = useState(false);
 
   const balancesQuery = useQuery(
     getEconomyAccountBalancesOptions({ query: { householdId } }),
@@ -36,20 +40,29 @@ export function AccountsPage() {
 
   return (
     <div className="grid gap-6">
-      <header className="grid gap-1">
-        <h2 className="text-base font-semibold">{t("title")}</h2>
-        <p className="text-xs text-muted-foreground">{t("description")}</p>
+      <header className="flex flex-wrap items-start justify-between gap-3">
+        <div className="grid gap-1">
+          <h2 className="text-base font-semibold">{t("title")}</h2>
+          <p className="text-xs text-muted-foreground">{t("description")}</p>
+        </div>
+        <Button size="sm" onClick={() => setCreateOpen(true)}>
+          <PlusIcon />
+          {t("add.trigger")}
+        </Button>
       </header>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>{t("add.title")}</CardTitle>
-          <CardDescription>{t("description")}</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <CreateAccountForm />
-        </CardContent>
-      </Card>
+      <Dialog open={createOpen} onOpenChange={setCreateOpen}>
+        <DialogContent className="max-h-[min(90vh,48rem)] overflow-y-auto sm:max-w-xl">
+          <DialogHeader>
+            <DialogTitle>{t("add.title")}</DialogTitle>
+            <DialogDescription>{t("description")}</DialogDescription>
+          </DialogHeader>
+          <CreateAccountForm
+            onCancel={() => setCreateOpen(false)}
+            onSuccess={() => setCreateOpen(false)}
+          />
+        </DialogContent>
+      </Dialog>
 
       {balancesQuery.isLoading ? (
         <EconomyListSkeleton />

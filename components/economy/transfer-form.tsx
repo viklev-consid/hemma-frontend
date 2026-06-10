@@ -47,7 +47,12 @@ import { useHousehold } from "@/lib/household-context";
 
 const NONE = "__none__";
 
-export function TransferForm() {
+type TransferFormProps = {
+  onCancel?: () => void;
+  onSuccess?: () => void;
+};
+
+export function TransferForm({ onCancel, onSuccess }: TransferFormProps) {
   const t = useTranslations("economy.transfers");
   const queryClient = useQueryClient();
   const { householdId } = useHousehold();
@@ -98,6 +103,7 @@ export function TransferForm() {
       toast.success(t("saved"));
       modeTouched.current = false;
       form.reset();
+      onSuccess?.();
     },
     onError: (error) => {
       const problem = error as unknown as ProblemDetails;
@@ -371,7 +377,7 @@ export function TransferForm() {
         </form.Subscribe>
       </FieldGroup>
 
-      <div>
+      <div className="flex gap-2">
         <form.Subscribe selector={(state) => state.isSubmitting}>
           {(isSubmitting) => (
             <Button type="submit" disabled={isSubmitting || mutation.isPending}>
@@ -381,6 +387,9 @@ export function TransferForm() {
             </Button>
           )}
         </form.Subscribe>
+        <Button type="button" variant="ghost" onClick={onCancel}>
+          {t("cancel")}
+        </Button>
       </div>
     </form>
   );

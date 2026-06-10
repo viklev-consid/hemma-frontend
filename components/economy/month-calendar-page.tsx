@@ -13,6 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Empty, EmptyDescription, EmptyTitle } from "@/components/ui/empty";
 import { todayAnchorDate } from "@/lib/economy/anchor-date";
+import { ECONOMY_CURRENCY } from "@/lib/economy/money";
 import { parseAsAnchorDate } from "@/lib/economy/nuqs-parsers";
 import { formatEconomyDate } from "@/lib/economy/period";
 import { SUBSCRIPTION_MATCH_STATE } from "@/lib/economy/subscription";
@@ -45,6 +46,14 @@ export function MonthCalendarPage() {
     }),
   );
   const days = calendar?.days ?? [];
+  const actualTotal = calendar?.actualTotal ?? {
+    amount: "0",
+    currency: ECONOMY_CURRENCY,
+  };
+  const predictedTotal = calendar?.predictedTotal ?? {
+    amount: "0",
+    currency: ECONOMY_CURRENCY,
+  };
 
   return (
     <div className="grid gap-4">
@@ -76,7 +85,7 @@ export function MonthCalendarPage() {
         </div>
       </header>
 
-      {isLoading || !calendar ? (
+      {isLoading ? (
         <MonthCalendarSkeleton />
       ) : (
         <>
@@ -85,17 +94,14 @@ export function MonthCalendarPage() {
               <span className="text-xs text-muted-foreground">
                 {t("totals.actual")}
               </span>
-              <Money
-                value={calendar.actualTotal}
-                className="text-sm font-semibold"
-              />
+              <Money value={actualTotal} className="text-sm font-semibold" />
             </div>
             <div className="grid gap-0.5">
               <span className="text-xs text-muted-foreground">
                 {t("totals.predicted")}
               </span>
               <Money
-                value={calendar.predictedTotal}
+                value={predictedTotal}
                 className="text-sm font-semibold text-muted-foreground"
               />
             </div>

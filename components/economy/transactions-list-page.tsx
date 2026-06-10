@@ -1,7 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
-import Link from "next/link";
+import { useMemo, useState } from "react";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { PlusIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -17,8 +16,16 @@ import type { TransactionResponse } from "@/api/generated";
 import { AttachReceiptButton } from "@/components/economy/attach-receipt-button";
 import { TransactionListSkeleton } from "@/components/economy/economy-skeletons";
 import { Money } from "@/components/economy/money";
+import { RecordTransactionForm } from "@/components/economy/record-transaction-form";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Empty, EmptyDescription, EmptyTitle } from "@/components/ui/empty";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -51,6 +58,7 @@ const ALL = "__all__";
 export function TransactionsListPage({ slug }: { slug: string }) {
   const t = useTranslations("economy.transactions");
   const { householdId } = useHousehold();
+  const [recordOpen, setRecordOpen] = useState(false);
 
   const [search, setSearch] = useQueryState(
     "search",
@@ -77,7 +85,18 @@ export function TransactionsListPage({ slug }: { slug: string }) {
       ),
     [flatCategories],
   );
-  const members = membersQuery.data?.members ?? [];
+  const members = useMemo(
+    () => membersQuery.data?.members ?? [],
+    [membersQuery.data],
+  );
+  const payerName = useMemo(() => {
+    const names = new Map<string, string>();
+    for (const member of members) {
+      if (member.isAnonymized || !member.userId) continue;
+      names.set(member.userId, member.displayName ?? member.userId);
+    }
+    return names;
+  }, [members]);
 
   const listQuery = {
     householdId,
@@ -128,14 +147,25 @@ export function TransactionsListPage({ slug }: { slug: string }) {
           <h2 className="text-base font-semibold">{t("title")}</h2>
           <p className="text-xs text-muted-foreground">{t("description")}</p>
         </div>
-        <Button
-          size="sm"
-          render={<Link href={`/app/h/${slug}/economy/transactions/new`} />}
-        >
+        <Button size="sm" onClick={() => setRecordOpen(true)}>
           <PlusIcon />
           {t("record.trigger")}
         </Button>
       </header>
+
+      <Dialog open={recordOpen} onOpenChange={setRecordOpen}>
+        <DialogContent className="max-h-[min(90vh,48rem)] overflow-y-auto sm:max-w-xl">
+          <DialogHeader>
+            <DialogTitle>{t("record.title")}</DialogTitle>
+            <DialogDescription>{t("description")}</DialogDescription>
+          </DialogHeader>
+          <RecordTransactionForm
+            slug={slug}
+            onCancel={() => setRecordOpen(false)}
+            onSuccess={() => setRecordOpen(false)}
+          />
+        </DialogContent>
+      </Dialog>
 
       <Input
         type="search"
@@ -155,7 +185,13 @@ export function TransactionsListPage({ slug }: { slug: string }) {
               }
             >
               <SelectTrigger className="w-full">
-                <SelectValue />
+                <SelectValue>
+                  {(value) =>
+                    value === ALL
+                      ? t("list.filters.all")
+                      : (categoryName.get(value as string) ?? (value as string))
+                  }
+                </SelectValue>
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value={ALL}>{t("list.filters.all")}</SelectItem>
@@ -179,7 +215,13 @@ export function TransactionsListPage({ slug }: { slug: string }) {
               }
             >
               <SelectTrigger className="w-full">
-                <SelectValue />
+                <SelectValue>
+                  {(value) =>
+                    value === ALL
+                      ? t("list.filters.all")
+                      : (payerName.get(value as string) ?? (value as string))
+                  }
+                </SelectValue>
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value={ALL}>{t("list.filters.all")}</SelectItem>

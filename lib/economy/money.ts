@@ -16,6 +16,7 @@ export const ECONOMY_LOCALE = "sv-SE";
 // "12.5", "12.50". The backend models money as a decimal string; the browser
 // never does arithmetic on it (see "No money math in the browser").
 const MONEY_AMOUNT_PATTERN = /^\d+(\.\d{1,2})?$/;
+type MoneyAmountInput = number | string;
 
 /**
  * Format a `MoneyResponse` for display. Parses the decimal string to a number
@@ -29,7 +30,7 @@ export function formatMoney(
 ): string {
   const numeric = Number(money.amount);
   if (!Number.isFinite(numeric)) {
-    return money.amount;
+    return String(money.amount);
   }
   return new Intl.NumberFormat(locale, {
     style: "currency",
@@ -41,12 +42,12 @@ export function formatMoney(
  * Normalize raw money input to the decimal-string shape the backend expects:
  * trim whitespace and accept a Swedish comma as the decimal separator.
  */
-export function normalizeMoneyAmount(value: string): string {
-  return value.trim().replace(/\s/g, "").replace(",", ".");
+export function normalizeMoneyAmount(value: MoneyAmountInput): string {
+  return String(value).trim().replace(/\s/g, "").replace(",", ".");
 }
 
 /** True when `value` is a non-negative decimal string with ≤2 fraction digits. */
-export function isValidMoneyAmount(value: string): boolean {
+export function isValidMoneyAmount(value: MoneyAmountInput): boolean {
   return MONEY_AMOUNT_PATTERN.test(normalizeMoneyAmount(value));
 }
 
@@ -54,6 +55,6 @@ export function isValidMoneyAmount(value: string): boolean {
  * Build a `MoneyRequest` from raw input. Always stamps `currency: "SEK"` — the
  * UI never submits a currency literal or a picked value.
  */
-export function toMoneyRequest(amount: string): MoneyRequest {
+export function toMoneyRequest(amount: MoneyAmountInput): MoneyRequest {
   return { amount: normalizeMoneyAmount(amount), currency: ECONOMY_CURRENCY };
 }

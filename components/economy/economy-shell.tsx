@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
@@ -17,14 +16,14 @@ type EconomyShellProps = {
 };
 
 /**
- * Economy sub-shell: the first-run gate plus the economy sub-nav.
+ * Economy shell: the first-run gate for standalone economy pages.
  *
  * First-run gate — `GET /v1/economy/settings` is the discriminator (NOT
  * `/accounts`, which is empty independently of setup state):
  * - `404` → economy is uninitialized. Redirect to the setup wizard. The wizard
  *   route itself renders bare (no sub-nav) so the user can complete setup.
- * - `200` → initialized. Render the sub-nav + page. If the user is sitting on
- *   the setup route, bounce them to the budget (setup is already done).
+ * - `200` → initialized. Render the page. If the user is sitting on the setup
+ *   route, bounce them to the daily-driver transactions page.
  *
  * The 404 is a valid "uninitialized" state, not an error — we never toast it.
  * `householdId` comes from the household shell context (members and owners both
@@ -46,7 +45,6 @@ export function EconomyShell({ slug, children }: EconomyShellProps) {
   });
 
   const setupHref = `/app/h/${slug}/economy/setup`;
-  const budgetHref = `/app/h/${slug}/economy/budget`;
   // The daily-driver landing: where initialized users go after setup.
   const homeHref = `/app/h/${slug}/economy/transactions`;
   const isSetupRoute = pathname === setupHref;
@@ -108,53 +106,5 @@ export function EconomyShell({ slug, children }: EconomyShellProps) {
     return null;
   }
 
-  const tabs = [
-    {
-      href: `/app/h/${slug}/economy/transactions`,
-      key: "transactions" as const,
-    },
-    { href: `/app/h/${slug}/economy/transfers`, key: "transfers" as const },
-    { href: budgetHref, key: "budget" as const },
-    { href: `/app/h/${slug}/economy/recurring`, key: "recurring" as const },
-    {
-      href: `/app/h/${slug}/economy/subscriptions`,
-      key: "subscriptions" as const,
-    },
-    { href: `/app/h/${slug}/economy/accounts`, key: "accounts" as const },
-    { href: `/app/h/${slug}/economy/categories`, key: "categories" as const },
-    { href: `/app/h/${slug}/economy/rules`, key: "rules" as const },
-    { href: `/app/h/${slug}/economy/import`, key: "import" as const },
-  ];
-
-  const isActive = (href: string) =>
-    pathname === href || pathname.startsWith(`${href}/`);
-
-  return (
-    <section className="grid gap-4">
-      <nav
-        aria-label={t("nav.label")}
-        className="flex flex-wrap gap-1 border-b text-sm"
-      >
-        {tabs.map((tab) => {
-          const active = isActive(tab.href);
-          return (
-            <Link
-              key={tab.key}
-              href={tab.href}
-              aria-current={active ? "page" : undefined}
-              className={
-                "border-b-2 px-3 py-2 -mb-px transition-colors " +
-                (active
-                  ? "border-foreground text-foreground"
-                  : "border-transparent text-muted-foreground hover:text-foreground")
-              }
-            >
-              {t(`nav.${tab.key}`)}
-            </Link>
-          );
-        })}
-      </nav>
-      <div>{children}</div>
-    </section>
-  );
+  return <>{children}</>;
 }

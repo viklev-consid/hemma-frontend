@@ -255,6 +255,7 @@
     "sameAccount": "Choose two different accounts.",
     "submit": "Transfer",
     "submitting": "Transferring…",
+    "cancel": "Cancel",
     "saved": "Transfer recorded",
     "empty": {
       "title": "Not enough accounts",
@@ -396,6 +397,8 @@
     "form": {
       "createTitle": "New rule",
       "editTitle": "Edit rule",
+      "createDescription": "Choose the text to match and the category to apply.",
+      "editDescription": "Update the match text or target category for this rule.",
       "advanced": {
         "label": "Advanced (regex)",
         "hint": "Match with a regular expression instead of a simple text contains."
