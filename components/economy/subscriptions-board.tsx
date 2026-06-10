@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ChevronDownIcon, PlusIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useQueryStates } from "nuqs";
 import { toast } from "sonner";
 
 import type {
@@ -17,6 +18,7 @@ import {
 } from "@/api/generated/@tanstack/react-query.gen";
 import { zChangeLifecycleStateRequest } from "@/api/generated/zod.gen";
 import { handleProblem, type ProblemDetails } from "@/api/problems";
+import { ChargeHistoryPanel } from "@/components/economy/charge-history-panel";
 import { SubscriptionBoardSkeleton } from "@/components/economy/economy-skeletons";
 import { Money } from "@/components/economy/money";
 import { SubscriptionForm } from "@/components/economy/subscription-form";
@@ -51,6 +53,7 @@ import {
   isTerminal,
   SUBSCRIPTION_LIFECYCLE_STATE,
 } from "@/lib/economy/subscription";
+import { subscriptionBoardParsers } from "@/lib/economy/subscription-filters";
 import { useHousehold } from "@/lib/household-context";
 import { cn } from "@/lib/utils";
 
@@ -65,6 +68,18 @@ export function SubscriptionsBoard() {
   const { householdId } = useHousehold();
   const [createOpen, setCreateOpen] = useState(false);
   const [cancelledOpen, setCancelledOpen] = useState(false);
+  // `?subscription=` is the expanded charge-history target (deep-linkable).
+  // Collapsing or switching cards clears the page params back to defaults.
+  const [{ subscription: expandedId }, setBoardState] = useQueryStates(
+    subscriptionBoardParsers,
+  );
+  const toggleExpanded = (subscriptionId: string) => {
+    void setBoardState({
+      subscription: expandedId === subscriptionId ? null : subscriptionId,
+      chargePage: null,
+      chargePageSize: null,
+    });
+  };
 
   const subscriptionsQuery = useQuery(
     listEconomySubscriptionsOptions({ query: { householdId } }),
@@ -130,6 +145,8 @@ export function SubscriptionsBoard() {
                     ? accountName.get(subscription.accountId)
                     : undefined
                 }
+                expanded={expandedId === subscription.subscriptionId}
+                onToggle={() => toggleExpanded(subscription.subscriptionId)}
               />
             ))}
           </ul>
@@ -162,6 +179,10 @@ export function SubscriptionsBoard() {
                           ? accountName.get(subscription.accountId)
                           : undefined
                       }
+                      expanded={expandedId === subscription.subscriptionId}
+                      onToggle={() =>
+                        toggleExpanded(subscription.subscriptionId)
+                      }
                     />
                   ))}
                 </ul>
@@ -177,9 +198,13 @@ export function SubscriptionsBoard() {
 function SubscriptionCard({
   subscription,
   accountLabel,
+  expanded,
+  onToggle,
 }: {
   subscription: SubscriptionResponse;
   accountLabel?: string;
+  expanded: boolean;
+  onToggle: () => void;
 }) {
   const t = useTranslations("economy.subscriptions");
   const terminal = isTerminal(subscription.lifecycleState);
@@ -215,8 +240,24 @@ function SubscriptionCard({
             className="text-sm font-medium"
           />
           {terminal ? null : <StateMenu subscription={subscription} />}
+          <Button
+            size="sm"
+            variant="ghost"
+            aria-expanded={expanded}
+            onClick={onToggle}
+          >
+            {t("card.charges")}
+            <ChevronDownIcon
+              className={cn(
+                "size-4 transition-transform",
+                expanded ? "" : "-rotate-90",
+              )}
+            />
+          </Button>
         </div>
       </div>
+
+      {expanded ? <ChargeHistoryPanel subscription={subscription} /> : null}
     </li>
   );
 }

@@ -520,7 +520,8 @@
     },
     "card": {
       "startsOn": "Started {date}",
-      "account": "Account"
+      "account": "Account",
+      "charges": "Charges"
     },
     "stateMenu": {
       "trigger": "Change state",
@@ -610,6 +611,29 @@
         "title": "No charges this month",
         "description": "No linked charges or forecasts fall in this month."
       }
+    },
+    "history": {
+      "title": "Charge history",
+      "linkCharge": "Link a charge",
+      "priceChange": "Price change:",
+      "unlink": "Unlink",
+      "unlinked": "Charge unlinked",
+      "empty": "No linked charges yet. Link a transaction to start the history.",
+      "previousPage": "Previous page",
+      "nextPage": "Next page",
+      "pageOf": "Page {page} of {pageCount}"
+    },
+    "link": {
+      "title": "Link a charge to {name}",
+      "description": "Mark an existing transaction as a charge for this subscription. Nothing is created or moved.",
+      "candidatesHint": "Suggested matches — found by name, date, and amount.",
+      "linkAction": "Link",
+      "linked": "Charge linked",
+      "alreadyLinked": "That transaction is already linked to another subscription — unlink it there first.",
+      "pickerHint": "No suggested matches. Pick from recent transactions instead.",
+      "pickerEmpty": "No recent transactions to pick from.",
+      "linkedHere": "Linked here",
+      "linkedElsewhere": "Linked"
     }
   }
 }
