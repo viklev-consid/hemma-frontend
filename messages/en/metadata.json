@@ -69,7 +69,10 @@
       "recurring": "Recurring bills | Hemma",
       "recurringNew": "Add recurring bill | Hemma",
       "rules": "Categorization rules | Hemma",
-      "import": "Import transactions | Hemma"
+      "import": "Import transactions | Hemma",
+      "subscriptions": "Subscriptions | Hemma",
+      "subscriptionsYear": "Payment schedule | Hemma",
+      "subscriptionsMonth": "Charge calendar | Hemma"
     }
   },
   "settings": {

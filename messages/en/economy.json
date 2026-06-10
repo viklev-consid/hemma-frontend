@@ -47,8 +47,15 @@
     "add": {
       "trigger": "Add account",
       "title": "Add account",
-      "name": { "label": "Name", "placeholder": "e.g. Everyday account" },
-      "type": { "label": "Type", "Spending": "Spending", "Savings": "Savings" },
+      "name": {
+        "label": "Name",
+        "placeholder": "e.g. Everyday account"
+      },
+      "type": {
+        "label": "Type",
+        "Spending": "Spending",
+        "Savings": "Savings"
+      },
       "openingBalance": {
         "label": "Opening balance",
         "hint": "Starting balance for this account."
@@ -57,8 +64,15 @@
       "submitting": "Adding…",
       "cancel": "Cancel"
     },
-    "columns": { "name": "Account", "type": "Type", "balance": "Balance" },
-    "type": { "Spending": "Spending", "Savings": "Savings" },
+    "columns": {
+      "name": "Account",
+      "type": "Type",
+      "balance": "Balance"
+    },
+    "type": {
+      "Spending": "Spending",
+      "Savings": "Savings"
+    },
     "empty": {
       "title": "No accounts yet",
       "description": "Add a spending or savings account to start tracking balances."
@@ -76,7 +90,10 @@
     "add": {
       "title": "Add category",
       "childTitle": "Add subcategory to {parent}",
-      "name": { "label": "Name", "placeholder": "e.g. Groceries" },
+      "name": {
+        "label": "Name",
+        "placeholder": "e.g. Groceries"
+      },
       "budgetable": {
         "label": "Budgeted",
         "hint": "Budgeted categories get a budget line. Turn off for tracked-only categories."
@@ -124,16 +141,30 @@
     "record": {
       "trigger": "Record transaction",
       "title": "Record transaction",
-      "amount": { "label": "Amount" },
-      "kind": { "label": "Type", "Expense": "Expense", "Income": "Income" },
-      "account": { "label": "Account", "placeholder": "Select an account" },
+      "amount": {
+        "label": "Amount"
+      },
+      "kind": {
+        "label": "Type",
+        "Expense": "Expense",
+        "Income": "Income"
+      },
+      "account": {
+        "label": "Account",
+        "placeholder": "Select an account"
+      },
       "category": {
         "label": "Category",
         "placeholder": "Select a category",
         "none": "Uncategorized"
       },
-      "occurredOn": { "label": "Date" },
-      "note": { "label": "Note", "placeholder": "Optional note" },
+      "occurredOn": {
+        "label": "Date"
+      },
+      "note": {
+        "label": "Note",
+        "placeholder": "Optional note"
+      },
       "payer": {
         "label": "Paid by",
         "placeholder": "Optional",
@@ -167,7 +198,10 @@
         "clear": "Clear filters",
         "all": "All"
       },
-      "receipt": { "has": "Receipt", "add": "Add receipt" },
+      "receipt": {
+        "has": "Receipt",
+        "add": "Add receipt"
+      },
       "pending": "Pending",
       "uncategorized": "Uncategorized",
       "unknownPayer": "Unknown user",
@@ -181,16 +215,33 @@
         "description": "No transaction notes match your search."
       }
     },
-    "kind": { "Expense": "Expense", "Income": "Income", "Transfer": "Transfer" }
+    "kind": {
+      "Expense": "Expense",
+      "Income": "Income",
+      "Transfer": "Transfer"
+    }
   },
   "transfers": {
     "title": "Transfers",
     "description": "Move money between accounts.",
-    "from": { "label": "From account", "placeholder": "Select an account" },
-    "to": { "label": "To account", "placeholder": "Select an account" },
-    "amount": { "label": "Amount" },
-    "occurredOn": { "label": "Date" },
-    "note": { "label": "Note", "placeholder": "Optional note" },
+    "from": {
+      "label": "From account",
+      "placeholder": "Select an account"
+    },
+    "to": {
+      "label": "To account",
+      "placeholder": "Select an account"
+    },
+    "amount": {
+      "label": "Amount"
+    },
+    "occurredOn": {
+      "label": "Date"
+    },
+    "note": {
+      "label": "Note",
+      "placeholder": "Optional note"
+    },
     "savings": {
       "label": "Record as savings",
       "hint": "Books this as a savings allocation under Sparande instead of a neutral movement."
@@ -445,6 +496,87 @@
       },
       "importAnother": "Import another file",
       "viewTransactions": "View transactions"
+    }
+  },
+  "subscriptions": {
+    "title": "Subscriptions",
+    "description": "Keep track of subscriptions and the charges you expect. Nothing here charges your account — link real transactions as they appear.",
+    "add": "Add subscription",
+    "cancelledSection": "Cancelled ({count})",
+    "cadence": {
+      "monthly": {
+        "one": "Every month on day {day}",
+        "many": "Every {interval} months on day {day}"
+      },
+      "unknown": "Custom schedule"
+    },
+    "state": {
+      "Trial": "Trial",
+      "Active": "Active",
+      "Paused": "Paused",
+      "Cancelled": "Cancelled",
+      "cancelledOn": "Cancelled {date}",
+      "trialEnds": "Trial · ends {date}"
+    },
+    "card": {
+      "startsOn": "Started {date}",
+      "account": "Account"
+    },
+    "stateMenu": {
+      "trigger": "Change state",
+      "Trial": "Move to trial",
+      "Active": "Mark active",
+      "Paused": "Pause",
+      "Cancelled": "Cancel subscription",
+      "changed": "Subscription state updated",
+      "trialDialogTitle": "Set a trial end date",
+      "trialDialogDescription": "Moving {name} to trial — when does the trial end?",
+      "trialDateRequired": "Pick a trial end date.",
+      "trialConfirm": "Move to trial"
+    },
+    "empty": {
+      "title": "No subscriptions",
+      "description": "Add a subscription to see its expected charges on the board and calendars."
+    },
+    "form": {
+      "title": "Add subscription",
+      "description": "Track expected charges for a subscription. This never books or moves money.",
+      "name": {
+        "label": "Name",
+        "placeholder": "e.g. Netflix"
+      },
+      "expectedAmount": {
+        "label": "Expected amount",
+        "hint": "The amount you expect each charge to be — used for predictions only."
+      },
+      "cadence": {
+        "intervalLabel": "Every",
+        "intervalUnit": "{interval, plural, one {month} other {months}}",
+        "dayLabel": "Charge day",
+        "dayValue": "Day {day}"
+      },
+      "state": {
+        "label": "State",
+        "Trial": "Trial",
+        "Active": "Active",
+        "Paused": "Paused"
+      },
+      "trialEndsOn": {
+        "label": "Trial ends on"
+      },
+      "account": {
+        "label": "Account",
+        "placeholder": "No account",
+        "hint": "Optional — helps match transactions to this subscription."
+      },
+      "startsOn": {
+        "label": "Starts on"
+      },
+      "required": "Fill in the required fields.",
+      "submit": "Add subscription",
+      "submitting": "Adding…",
+      "saved": "Subscription added",
+      "cancel": "Cancel"
     }
   }
 }
