@@ -763,7 +763,10 @@ function DoneStep({
     [categoriesQuery.data],
   );
 
-  const existingRules = rulesQuery.data?.rules ?? [];
+  const existingRules = useMemo(
+    () => rulesQuery.data?.rules ?? [],
+    [rulesQuery.data],
+  );
   const atCap = isAtRuleCap(existingRules);
   const [createdKeys, setCreatedKeys] = useState<Set<string>>(new Set());
 
@@ -898,6 +901,7 @@ function DoneStep({
         <Button onClick={onImportAnother}>{t("importAnother")}</Button>
         <Button
           variant="outline"
+          nativeButton={false}
           render={<Link href={`/app/h/${slug}/economy/transactions`} />}
         >
           {t("viewTransactions")}

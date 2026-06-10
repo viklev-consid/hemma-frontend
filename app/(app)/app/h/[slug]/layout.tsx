@@ -6,7 +6,7 @@ import {
   listMyHouseholdsOptions,
 } from "@/api/generated/@tanstack/react-query.gen";
 import { serverClient } from "@/api/server-client";
-import { HouseholdShell } from "@/components/households/household-shell";
+import { HouseholdProvider } from "@/components/households/household-provider";
 import { createQueryClient } from "@/lib/query-client";
 
 type LayoutProps = {
@@ -14,7 +14,10 @@ type LayoutProps = {
   params: Promise<{ slug: string }>;
 };
 
-export default async function HouseholdLayout({ children, params }: LayoutProps) {
+export default async function HouseholdLayout({
+  children,
+  params,
+}: LayoutProps) {
   const { slug } = await params;
   const queryClient = createQueryClient();
 
@@ -40,7 +43,7 @@ export default async function HouseholdLayout({ children, params }: LayoutProps)
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <HouseholdShell slug={slug}>{children}</HouseholdShell>
+      <HouseholdProvider slug={slug}>{children}</HouseholdProvider>
     </HydrationBoundary>
   );
 }

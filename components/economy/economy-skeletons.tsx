@@ -129,6 +129,103 @@ export function RulesListSkeleton() {
   );
 }
 
+/** Subscription board cards — name + badge header, cadence line, amount. */
+export function SubscriptionBoardSkeleton() {
+  return (
+    <div className="grid gap-3">
+      {THREE_ROWS.map((id) => (
+        <div key={id} className="grid gap-3 border p-4">
+          <div className="flex items-center justify-between gap-4">
+            <Skeleton className="h-5 w-40" />
+            <Skeleton className="h-5 w-16" />
+          </div>
+          <Skeleton className="h-4 w-56" />
+          <Skeleton className="h-4 w-24" />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+const TWELVE_CELLS = [
+  "jan",
+  "feb",
+  "mar",
+  "apr",
+  "may",
+  "jun",
+  "jul",
+  "aug",
+  "sep",
+  "oct",
+  "nov",
+  "dec",
+] as const;
+
+/** Year payment schedule — one name + 12 month cells per subscription row. */
+export function PaymentScheduleSkeleton() {
+  return (
+    <div className="grid gap-2">
+      {THREE_ROWS.map((id) => (
+        <div key={id} className="flex items-center gap-2">
+          <Skeleton className="h-4 w-28 shrink-0" />
+          <div className="flex gap-1">
+            {TWELVE_CELLS.map((cell) => (
+              <Skeleton key={cell} className="size-6" />
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/** Month charge calendar — totals header + a stack of day rows. */
+export function MonthCalendarSkeleton() {
+  return (
+    <div className="grid gap-3">
+      <div className="flex items-center gap-4">
+        <Skeleton className="h-5 w-28" />
+        <Skeleton className="h-5 w-28" />
+      </div>
+      <div className="grid gap-2">
+        {SIX_ROWS.map((id) => (
+          <div
+            key={id}
+            className="flex items-center justify-between gap-4 border px-3 py-2.5"
+          >
+            <Skeleton className="h-4 w-24" />
+            <Skeleton className="h-4 w-16" />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/** Link-candidate rows — date/note left, amount + link action right. */
+export function LinkCandidatesSkeleton() {
+  return (
+    <div className="grid gap-2">
+      {THREE_ROWS.map((id) => (
+        <div
+          key={id}
+          className="flex items-center justify-between gap-4 border px-3 py-2.5"
+        >
+          <div className="grid gap-1.5">
+            <Skeleton className="h-4 w-32" />
+            <Skeleton className="h-3 w-20" />
+          </div>
+          <div className="flex items-center gap-2">
+            <Skeleton className="h-4 w-16" />
+            <Skeleton className="h-8 w-14" />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 /** Import-preview rows — date/description left, amount + chip right. */
 export function ImportPreviewSkeleton() {
   return (

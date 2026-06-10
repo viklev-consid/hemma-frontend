@@ -7,7 +7,7 @@ import {
   listEconomyCategoriesOptions,
 } from "@/api/generated/@tanstack/react-query.gen";
 import { serverClient } from "@/api/server-client";
-import { TransferForm } from "@/components/economy/transfer-form";
+import { TransfersPage } from "@/components/economy/transfers-page";
 import { resolveHouseholdId } from "@/lib/economy/resolve-household-id";
 import { createQueryClient } from "@/lib/query-client";
 
@@ -48,7 +48,7 @@ export default async function EconomyTransfersPage({
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <TransferForm />
+      <TransfersPage />
     </HydrationBoundary>
   );
 }

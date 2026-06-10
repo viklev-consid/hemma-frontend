@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Link from "next/link";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { PlusIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -34,8 +33,16 @@ import {
   RecurringInboxSkeleton,
 } from "@/components/economy/economy-skeletons";
 import { Money, MoneyInput } from "@/components/economy/money";
+import { RecurringBillForm } from "@/components/economy/recurring-bill-form";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Empty, EmptyDescription, EmptyTitle } from "@/components/ui/empty";
 import {
   Field,
@@ -62,9 +69,10 @@ import { useHousehold } from "@/lib/household-context";
  * estimated bills render here; estimated bills are visually distinct via a
  * badge. Membership-gated — both owner and member manage bills and confirm.
  */
-export function RecurringBillsPage({ slug }: { slug: string }) {
+export function RecurringBillsPage() {
   const t = useTranslations("economy.recurring");
   const { householdId } = useHousehold();
+  const [createOpen, setCreateOpen] = useState(false);
 
   const billsQuery = useQuery(
     listEconomyRecurringBillsOptions({ query: { householdId } }),
@@ -76,7 +84,10 @@ export function RecurringBillsPage({ slug }: { slug: string }) {
     listEconomyCategoriesOptions({ query: { householdId } }),
   );
 
-  const bills = billsQuery.data?.recurringBills ?? [];
+  const bills = useMemo(
+    () => billsQuery.data?.recurringBills ?? [],
+    [billsQuery.data],
+  );
 
   const accountName = useMemo(
     () =>
@@ -105,14 +116,24 @@ export function RecurringBillsPage({ slug }: { slug: string }) {
           <h2 className="text-base font-semibold">{t("title")}</h2>
           <p className="text-xs text-muted-foreground">{t("description")}</p>
         </div>
-        <Button
-          size="sm"
-          render={<Link href={`/app/h/${slug}/economy/recurring/new`} />}
-        >
+        <Button size="sm" onClick={() => setCreateOpen(true)}>
           <PlusIcon />
           {t("add")}
         </Button>
       </header>
+
+      <Dialog open={createOpen} onOpenChange={setCreateOpen}>
+        <DialogContent className="max-h-[min(90vh,48rem)] overflow-y-auto sm:max-w-xl">
+          <DialogHeader>
+            <DialogTitle>{t("form.title")}</DialogTitle>
+            <DialogDescription>{t("form.description")}</DialogDescription>
+          </DialogHeader>
+          <RecurringBillForm
+            onCancel={() => setCreateOpen(false)}
+            onSuccess={() => setCreateOpen(false)}
+          />
+        </DialogContent>
+      </Dialog>
 
       {billsQuery.isLoading ? (
         <div className="grid gap-6">

@@ -64,7 +64,17 @@ const TRANSACTION_KINDS = [
   "Income",
 ] as const satisfies readonly TransactionKind[];
 
-export function RecordTransactionForm({ slug }: { slug: string }) {
+type RecordTransactionFormProps = {
+  slug: string;
+  onCancel?: () => void;
+  onSuccess?: () => void;
+};
+
+export function RecordTransactionForm({
+  slug,
+  onCancel,
+  onSuccess,
+}: RecordTransactionFormProps) {
   const t = useTranslations("economy.transactions.record");
   const { push } = useRouter();
   const queryClient = useQueryClient();
@@ -188,7 +198,11 @@ export function RecordTransactionForm({ slug }: { slug: string }) {
         }),
       ]);
       toast.success(receiptAttached ? t("receiptAttached") : t("saved"));
-      push(`/app/h/${slug}/economy/transactions`);
+      if (onSuccess) {
+        onSuccess();
+      } else {
+        push(`/app/h/${slug}/economy/transactions`);
+      }
     },
   });
 
@@ -420,7 +434,9 @@ export function RecordTransactionForm({ slug }: { slug: string }) {
         <Button
           type="button"
           variant="ghost"
-          onClick={() => push(`/app/h/${slug}/economy/transactions`)}
+          onClick={() =>
+            onCancel ? onCancel() : push(`/app/h/${slug}/economy/transactions`)
+          }
         >
           {t("cancel")}
         </Button>

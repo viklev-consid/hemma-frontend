@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
-import { RecordTransactionForm } from "@/components/economy/record-transaction-form";
+import { RecordTransactionDialogPage } from "@/components/economy/record-transaction-dialog-page";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("metadata.app.economy");
@@ -14,5 +14,5 @@ export default async function RecordTransactionPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  return <RecordTransactionForm slug={slug} />;
+  return <RecordTransactionDialogPage slug={slug} />;
 }

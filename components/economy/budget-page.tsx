@@ -14,7 +14,9 @@ import {
   listEconomyCategoriesOptions,
   upsertEconomyBudgetLineMutation,
 } from "@/api/generated/@tanstack/react-query.gen";
+import { createEconomyBudget } from "@/api/generated";
 import type {
+  BudgetResponse,
   BudgetSummaryLineResponse,
   CategoryResponse,
 } from "@/api/generated";
@@ -24,6 +26,7 @@ import { Money, MoneyInput } from "@/components/economy/money";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Empty, EmptyDescription, EmptyTitle } from "@/components/ui/empty";
+import { formatBudgetPercent } from "@/lib/economy/budget-percent";
 import { flattenCategories } from "@/lib/economy/category-tree";
 import {
   isValidMoneyAmount,
@@ -33,11 +36,6 @@ import {
 import { addDays, formatPeriodRange } from "@/lib/economy/period";
 import { parseAsAnchorDate, todayAnchorDate } from "@/lib/economy/nuqs-parsers";
 import { useHousehold } from "@/lib/household-context";
-
-// elapsed/pace come from the backend as ratios (e.g. 0.8 = 80%). Format to a
-// whole percent for display only — this is presentation, not a recomputed
-// aggregate. (Scale assumption: verify against real budget data.)
-const toPercent = (value: number | string) => Math.round(Number(value) * 100);
 
 /**
  * Budget editor + overview. The selected period lives in `?period=` (an
@@ -60,10 +58,35 @@ export function BudgetPage() {
     parseAsAnchorDate.withDefault(todayAnchorDate()),
   );
 
-  const summaryQuery = useQuery(
-    getEconomyBudgetSummaryOptions({ query: { householdId, anchorDate } }),
-  );
-  const categoriesQuery = useQuery(
+  const {
+    data: ensuredBudget,
+    isError: isEnsureBudgetError,
+    isPending: isEnsuringBudget,
+    isSuccess: hasEnsuredBudget,
+  } = useQuery({
+    queryKey: ["economy-budget", "ensure", householdId, anchorDate],
+    queryFn: async (): Promise<BudgetResponse> => {
+      const { data } = await createEconomyBudget({
+        body: { householdId, anchorDate },
+        throwOnError: true,
+      });
+
+      if (!data) {
+        throw new Error("Budget ensure returned no data");
+      }
+
+      return data;
+    },
+  });
+  const {
+    data: summary,
+    isError: isSummaryError,
+    isPending: isSummaryPending,
+  } = useQuery({
+    ...getEconomyBudgetSummaryOptions({ query: { householdId, anchorDate } }),
+    enabled: hasEnsuredBudget,
+  });
+  const { data: categoriesData, isPending: isCategoriesPending } = useQuery(
     listEconomyCategoriesOptions({ query: { householdId } }),
   );
 
@@ -79,11 +102,11 @@ export function BudgetPage() {
     onError: (error) => handleProblem(error as unknown as ProblemDetails),
   });
 
-  if (summaryQuery.isLoading || categoriesQuery.isLoading) {
+  if (isEnsuringBudget || isSummaryPending || isCategoriesPending) {
     return <EconomyBudgetSkeleton />;
   }
 
-  if (summaryQuery.isError) {
+  if (isEnsureBudgetError || isSummaryError || !ensuredBudget) {
     return (
       <div className="grid min-h-[30vh] place-items-center text-center">
         <div className="grid gap-1">
@@ -96,11 +119,11 @@ export function BudgetPage() {
     );
   }
 
-  const summary = summaryQuery.data;
+  const budgetId = summary?.budgetId ?? ensuredBudget.budgetId;
   const lineByCategory = new Map<string, BudgetSummaryLineResponse>(
-    summary?.lines.map((line) => [line.categoryId, line]),
+    (summary?.lines ?? []).map((line) => [line.categoryId, line]),
   );
-  const flat = flattenCategories(categoriesQuery.data?.categories ?? []);
+  const flat = flattenCategories(categoriesData?.categories ?? []);
   const hasNoLines = (summary?.lines.length ?? 0) === 0;
 
   return (
@@ -143,7 +166,7 @@ export function BudgetPage() {
         <Button
           size="sm"
           variant="outline"
-          disabled={copyMutation.isPending}
+          disabled={!budgetId || copyMutation.isPending}
           onClick={() =>
             copyMutation.mutate({ body: { householdId, anchorDate } })
           }
@@ -155,7 +178,9 @@ export function BudgetPage() {
 
       {summary ? (
         <p className="text-xs text-muted-foreground">
-          {t("pace.elapsed", { elapsed: toPercent(summary.elapsedPercent) })}
+          {t("pace.elapsed", {
+            elapsed: formatBudgetPercent(summary.elapsedPercent),
+          })}
         </p>
       ) : null}
 
@@ -185,10 +210,10 @@ export function BudgetPage() {
             </thead>
             <tbody>
               {flat.map(({ category, depth }) =>
-                category.budgetable && summary ? (
+                category.budgetable && budgetId ? (
                   <BudgetLineRow
                     key={category.categoryId}
-                    budgetId={summary.budgetId}
+                    budgetId={budgetId}
                     anchorDate={anchorDate}
                     category={category}
                     depth={depth}
@@ -307,7 +332,9 @@ function BudgetLineRow({
                     : "text-xs text-muted-foreground"
                 }
               >
-                {t("pace.spent", { spent: toPercent(line.pacePercent) })}
+                {t("pace.spent", {
+                  spent: formatBudgetPercent(line.pacePercent),
+                })}
               </span>
               {line.isOverPace ? (
                 <Badge variant="destructive">{t("pace.overPace")}</Badge>

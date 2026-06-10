@@ -5,14 +5,14 @@ import { getTranslations } from "next-intl/server";
 
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { getUsableServerSession } from "@/lib/server-auth";
+import { getReadonlyServerSession } from "@/lib/server-auth";
 
 export default async function MarketingLayout({
   children,
 }: {
   children: ReactNode;
 }) {
-  const session = await getUsableServerSession();
+  const session = await getReadonlyServerSession();
 
   if (session && session.hasCompletedOnboarding !== true) {
     redirect("/onboarding");

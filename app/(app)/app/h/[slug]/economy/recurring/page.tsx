@@ -57,7 +57,7 @@ export default async function EconomyRecurringPage({
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <RecurringBillsPage slug={slug} />
+      <RecurringBillsPage />
     </HydrationBoundary>
   );
 }

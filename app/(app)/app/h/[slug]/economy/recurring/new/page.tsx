@@ -7,7 +7,7 @@ import {
   listEconomyCategoriesOptions,
 } from "@/api/generated/@tanstack/react-query.gen";
 import { serverClient } from "@/api/server-client";
-import { RecurringBillForm } from "@/components/economy/recurring-bill-form";
+import { RecurringBillDialogPage } from "@/components/economy/recurring-bill-dialog-page";
 import { resolveHouseholdId } from "@/lib/economy/resolve-household-id";
 import { createQueryClient } from "@/lib/query-client";
 
@@ -48,7 +48,7 @@ export default async function EconomyRecurringNewPage({
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <RecurringBillForm />
+      <RecurringBillDialogPage />
     </HydrationBoundary>
   );
 }

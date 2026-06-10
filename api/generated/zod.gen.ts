@@ -639,6 +639,18 @@ export const zGetIncomeVsExpenseResponse = z.object({
     series: z.array(zIncomeVsExpensePointResponse)
 });
 
+export const zLinkCandidateResponse = z.object({
+    transactionId: z.uuid(),
+    occurredOn: z.iso.date(),
+    amount: zMoneyResponse,
+    note: z.string().nullable()
+});
+
+export const zLinkCandidatesResponse = z.object({
+    subscriptionId: z.uuid(),
+    candidates: z.array(zLinkCandidateResponse)
+});
+
 export const zListAccountsResponse = z.object({
     accounts: z.array(zAccountResponse)
 });
@@ -1083,7 +1095,9 @@ export const zMonthChargeDayResponse = z.object({
 
 export const zMonthChargeCalendarResponse = z.object({
     month: z.iso.date(),
-    days: z.array(zMonthChargeDayResponse)
+    days: z.array(zMonthChargeDayResponse),
+    actualTotal: zMoneyResponse,
+    predictedTotal: zMoneyResponse
 });
 
 export const zSubscriptionMatchSuggestionResponse = z.object({
@@ -1152,7 +1166,12 @@ export const zSubscriptionResponse = z.object({
     lifecycleState: zSubscriptionLifecycleState,
     trialEndsOn: z.iso.date().nullable(),
     accountId: z.uuid().nullable(),
-    startsOn: z.iso.date()
+    startsOn: z.iso.date(),
+    cancelledOn: z.iso.date().nullable()
+});
+
+export const zListSubscriptionsResponse = z.object({
+    subscriptions: z.array(zSubscriptionResponse)
 });
 
 export const zTimeRange = z.object({
@@ -1220,7 +1239,8 @@ export const zTransactionResponse = z.object({
     kind: zTransactionKind,
     isPending: z.boolean(),
     hasReceipt: z.boolean(),
-    payerId: z.uuid().nullable()
+    payerId: z.uuid().nullable(),
+    subscriptionId: z.uuid().nullable()
 });
 
 export const zCommitImportResponse = z.object({
@@ -1682,12 +1702,34 @@ export const zCommitEconomyImportBody = zCommitImportRequest;
  */
 export const zCommitEconomyImportResponse = zCommitImportResponse;
 
+export const zListEconomySubscriptionsQuery = z.object({
+    householdId: z.uuid()
+});
+
+/**
+ * OK
+ */
+export const zListEconomySubscriptionsResponse = zListSubscriptionsResponse;
+
 export const zCreateEconomySubscriptionBody = zCreateSubscriptionRequest;
 
 /**
  * Created
  */
 export const zCreateEconomySubscriptionResponse = zSubscriptionResponse;
+
+export const zGetEconomySubscriptionPath = z.object({
+    subscriptionId: z.uuid()
+});
+
+export const zGetEconomySubscriptionQuery = z.object({
+    householdId: z.uuid()
+});
+
+/**
+ * OK
+ */
+export const zGetEconomySubscriptionResponse = zSubscriptionResponse;
 
 export const zChangeEconomySubscriptionLifecycleStateBody = zChangeLifecycleStateRequest;
 
@@ -1720,6 +1762,19 @@ export const zGetEconomySubscriptionChargeHistoryQuery = z.object({
  * OK
  */
 export const zGetEconomySubscriptionChargeHistoryResponse = zChargeHistoryResponse;
+
+export const zGetEconomySubscriptionLinkCandidatesPath = z.object({
+    subscriptionId: z.uuid()
+});
+
+export const zGetEconomySubscriptionLinkCandidatesQuery = z.object({
+    householdId: z.uuid()
+});
+
+/**
+ * OK
+ */
+export const zGetEconomySubscriptionLinkCandidatesResponse = zLinkCandidatesResponse;
 
 export const zLinkEconomySubscriptionTransactionBody = zLinkTransactionRequest;
 

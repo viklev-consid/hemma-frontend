@@ -1669,6 +1669,87 @@
             "Bearer": [ ]
           }
         ]
+      },
+      "get": {
+        "tags": [
+          "Hemma.Api"
+        ],
+        "summary": "List economy subscriptions for a household.",
+        "operationId": "ListEconomySubscriptions",
+        "parameters": [
+          {
+            "name": "householdId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListSubscriptionsResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/v1/economy/subscriptions/{subscriptionId}": {
+      "get": {
+        "tags": [
+          "Hemma.Api"
+        ],
+        "summary": "Get a single economy subscription.",
+        "operationId": "GetEconomySubscription",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "householdId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubscriptionResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
       }
     },
     "/v1/economy/subscriptions/{subscriptionId}/state": {
@@ -1786,6 +1867,52 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ChargeHistoryResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/v1/economy/subscriptions/{subscriptionId}/link-candidates": {
+      "get": {
+        "tags": [
+          "Hemma.Api"
+        ],
+        "summary": "Get unlinked transactions that likely belong to an economy subscription.",
+        "operationId": "GetEconomySubscriptionLinkCandidates",
+        "parameters": [
+          {
+            "name": "subscriptionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "householdId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LinkCandidatesResponse"
                 }
               }
             }
@@ -7679,6 +7806,53 @@
           }
         }
       },
+      "LinkCandidateResponse": {
+        "required": [
+          "transactionId",
+          "occurredOn",
+          "amount",
+          "note"
+        ],
+        "type": "object",
+        "properties": {
+          "transactionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "occurredOn": {
+            "type": "string",
+            "format": "date"
+          },
+          "amount": {
+            "$ref": "#/components/schemas/MoneyResponse"
+          },
+          "note": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "LinkCandidatesResponse": {
+        "required": [
+          "subscriptionId",
+          "candidates"
+        ],
+        "type": "object",
+        "properties": {
+          "subscriptionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "candidates": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LinkCandidateResponse"
+            }
+          }
+        }
+      },
       "LinkTransactionRequest": {
         "required": [
           "householdId",
@@ -7961,6 +8135,20 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/RecurringBillResponse"
+            }
+          }
+        }
+      },
+      "ListSubscriptionsResponse": {
+        "required": [
+          "subscriptions"
+        ],
+        "type": "object",
+        "properties": {
+          "subscriptions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SubscriptionResponse"
             }
           }
         }
@@ -8297,7 +8485,9 @@
       "MonthChargeCalendarResponse": {
         "required": [
           "month",
-          "days"
+          "days",
+          "actualTotal",
+          "predictedTotal"
         ],
         "type": "object",
         "properties": {
@@ -8310,6 +8500,12 @@
             "items": {
               "$ref": "#/components/schemas/MonthChargeDayResponse"
             }
+          },
+          "actualTotal": {
+            "$ref": "#/components/schemas/MoneyResponse"
+          },
+          "predictedTotal": {
+            "$ref": "#/components/schemas/MoneyResponse"
           }
         }
       },
@@ -9393,7 +9589,8 @@
           "lifecycleState",
           "trialEndsOn",
           "accountId",
-          "startsOn"
+          "startsOn",
+          "cancelledOn"
         ],
         "type": "object",
         "properties": {
@@ -9445,6 +9642,13 @@
           },
           "startsOn": {
             "type": "string",
+            "format": "date"
+          },
+          "cancelledOn": {
+            "type": [
+              "null",
+              "string"
+            ],
             "format": "date"
           }
         }
@@ -9539,7 +9743,8 @@
           "kind",
           "isPending",
           "hasReceipt",
-          "payerId"
+          "payerId",
+          "subscriptionId"
         ],
         "type": "object",
         "properties": {
@@ -9585,6 +9790,13 @@
             "type": "boolean"
           },
           "payerId": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "uuid"
+          },
+          "subscriptionId": {
             "type": [
               "null",
               "string"

@@ -32,6 +32,7 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -100,9 +101,12 @@ export function RulesPage() {
                 </Button>
               }
             />
-            <DialogContent>
+            <DialogContent className="max-h-[min(90vh,48rem)] overflow-y-auto sm:max-w-xl">
               <DialogHeader>
                 <DialogTitle>{t("form.createTitle")}</DialogTitle>
+                <DialogDescription>
+                  {t("form.createDescription")}
+                </DialogDescription>
               </DialogHeader>
               <CategorizationRuleForm
                 onSuccess={() => setCreateOpen(false)}
@@ -222,9 +226,10 @@ function RuleRow({
               </Button>
             }
           />
-          <DialogContent>
+          <DialogContent className="max-h-[min(90vh,48rem)] overflow-y-auto sm:max-w-xl">
             <DialogHeader>
               <DialogTitle>{t("form.editTitle")}</DialogTitle>
+              <DialogDescription>{t("form.editDescription")}</DialogDescription>
             </DialogHeader>
             <CategorizationRuleForm
               rule={rule}

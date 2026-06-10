@@ -33,6 +33,10 @@ describe("normalizeMoneyAmount", () => {
   it("trims, strips inner whitespace, and converts a comma decimal", () => {
     expect(normalizeMoneyAmount(" 1 234,50 ")).toBe("1234.50");
   });
+
+  it("accepts numeric wire values", () => {
+    expect(normalizeMoneyAmount(1234.5)).toBe("1234.5");
+  });
 });
 
 describe("isValidMoneyAmount", () => {
@@ -42,6 +46,7 @@ describe("isValidMoneyAmount", () => {
     expect(isValidMoneyAmount("12.5")).toBe(true);
     expect(isValidMoneyAmount("12.50")).toBe(true);
     expect(isValidMoneyAmount("12,50")).toBe(true);
+    expect(isValidMoneyAmount(12.5)).toBe(true);
   });
 
   it("rejects negatives, too many fraction digits, and non-numerics", () => {
@@ -55,6 +60,13 @@ describe("isValidMoneyAmount", () => {
 describe("toMoneyRequest", () => {
   it("normalizes the amount and always stamps SEK", () => {
     expect(toMoneyRequest("1 000,25")).toEqual({
+      amount: "1000.25",
+      currency: ECONOMY_CURRENCY,
+    });
+  });
+
+  it("converts numeric amounts to decimal strings", () => {
+    expect(toMoneyRequest(1000.25)).toEqual({
       amount: "1000.25",
       currency: ECONOMY_CURRENCY,
     });
