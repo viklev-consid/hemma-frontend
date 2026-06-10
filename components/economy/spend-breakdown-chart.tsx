@@ -11,10 +11,14 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart";
-import { formatPlotMoney, toPlotValue } from "@/lib/economy/analytics";
+import {
+  chartColor,
+  formatPlotMoney,
+  toPlotValue,
+} from "@/lib/economy/analytics";
 import { useHousehold } from "@/lib/household-context";
 
-import { ChartCard, chartColor } from "./analytics-card";
+import { ChartCard } from "./analytics-card";
 import { Money } from "./money";
 
 /**

@@ -19,26 +19,6 @@ import {
 } from "@/components/ui/empty";
 import { Skeleton } from "@/components/ui/skeleton";
 
-/**
- * The themed 5-color chart palette (`--chart-1`…`--chart-5`, `app/globals.css`),
- * cycled by series/slice index. Applied directly as a `stroke`/`fill` rather
- * than through `ChartConfig`, so backend-provided keys (category ids/names)
- * never reach the raw-CSS template `ChartStyle` injects — see the warning in
- * `components/ui/chart.tsx`.
- */
-export const CHART_PALETTE = [
-  "var(--chart-1)",
-  "var(--chart-2)",
-  "var(--chart-3)",
-  "var(--chart-4)",
-  "var(--chart-5)",
-] as const;
-
-/** Palette color for the entry at `index`, cycling the 5-color palette. */
-export function chartColor(index: number): string {
-  return CHART_PALETTE[index % CHART_PALETTE.length];
-}
-
 type ChartCardProps = {
   title: string;
   description: string;

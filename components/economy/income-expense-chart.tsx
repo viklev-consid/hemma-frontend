@@ -43,8 +43,8 @@ export function IncomeExpenseChart({ from, to }: { from: string; to: string }) {
     net: { label: t("net"), color: "var(--chart-3)" },
   } satisfies ChartConfig;
 
-  const rows = [...(data?.series ?? [])]
-    .sort((a, b) => a.label.localeCompare(b.label))
+  const rows = (data?.series ?? [])
+    .toSorted((a, b) => a.label.localeCompare(b.label))
     .map((point) => ({
       label: point.label,
       income: toPlotValue(point.income),

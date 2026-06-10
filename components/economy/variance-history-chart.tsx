@@ -47,8 +47,8 @@ export function VarianceHistoryChart({
     actual: { label: t("actual"), color: "var(--chart-2)" },
   } satisfies ChartConfig;
 
-  const rows = [...(data?.series ?? [])]
-    .sort((a, b) => a.label.localeCompare(b.label))
+  const rows = (data?.series ?? [])
+    .toSorted((a, b) => a.label.localeCompare(b.label))
     .map((point) => ({
       label: point.label,
       planned: toPlotValue(point.planned),

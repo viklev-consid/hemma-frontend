@@ -14,13 +14,14 @@ import {
   type ChartConfig,
 } from "@/components/ui/chart";
 import {
+  chartColor,
   formatPlotMoney,
   formatSeriesMonthLabel,
 } from "@/lib/economy/analytics";
 import { pivotTrendSeries } from "@/lib/economy/series";
 import { useHousehold } from "@/lib/household-context";
 
-import { ChartCard, chartColor } from "./analytics-card";
+import { ChartCard } from "./analytics-card";
 
 /**
  * Category trend — one line per category over a shared month axis. The trend
