@@ -592,6 +592,24 @@
         "title": "Nothing scheduled",
         "description": "Add a subscription to see its expected charge months here."
       }
+    },
+    "month": {
+      "title": "Month calendar",
+      "description": "Real charges and forecasts for the month. Linked charges show on the date they actually happened.",
+      "previousMonth": "Previous month",
+      "nextMonth": "Next month",
+      "totals": {
+        "actual": "Spent",
+        "predicted": "Expected"
+      },
+      "chip": {
+        "actual": "Linked",
+        "predicted": "Forecast"
+      },
+      "empty": {
+        "title": "No charges this month",
+        "description": "No linked charges or forecasts fall in this month."
+      }
     }
   }
 }
