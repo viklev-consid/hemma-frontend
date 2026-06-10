@@ -29,6 +29,7 @@ const ECONOMY_NAV_ITEMS = [
   { key: "budget", path: "budget" },
   { key: "recurring", path: "recurring" },
   { key: "subscriptions", path: "subscriptions" },
+  { key: "analytics", path: "analytics" },
   { key: "accounts", path: "accounts" },
   { key: "categories", path: "categories" },
   { key: "rules", path: "rules" },

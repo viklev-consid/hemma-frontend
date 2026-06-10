@@ -1,6 +1,6 @@
 import type { MoneyResponse } from "@/api/generated";
 
-import { ECONOMY_LOCALE } from "./money";
+import { ECONOMY_CURRENCY, ECONOMY_LOCALE, formatMoney } from "./money";
 
 /**
  * Server-safe analytics helpers (no `nuqs` dependency) — the Phase 6 (Insights)
@@ -82,6 +82,15 @@ export function analyticsRangeForMonths(
 export function toPlotValue(money: Pick<MoneyResponse, "amount">): number {
   const numeric = Number(money.amount);
   return Number.isFinite(numeric) ? numeric : 0;
+}
+
+/**
+ * Format a numeric plot value (or its string form) back to a SEK string for
+ * tooltips/axis ticks. Economy is SEK-only, so the currency is fixed — this is
+ * the display inverse of `toPlotValue`, never a re-derivation.
+ */
+export function formatPlotMoney(value: number | string): string {
+  return formatMoney({ amount: String(value), currency: ECONOMY_CURRENCY });
 }
 
 /**

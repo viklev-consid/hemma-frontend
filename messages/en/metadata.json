@@ -72,7 +72,8 @@
       "import": "Import transactions | Hemma",
       "subscriptions": "Subscriptions | Hemma",
       "subscriptionsYear": "Payment schedule | Hemma",
-      "subscriptionsMonth": "Charge calendar | Hemma"
+      "subscriptionsMonth": "Charge calendar | Hemma",
+      "analytics": "Insights | Hemma"
     }
   },
   "settings": {
