@@ -650,6 +650,18 @@ export type LegalComplianceDocumentResponse = {
     markdown: string;
 };
 
+export type LinkCandidateResponse = {
+    transactionId: string;
+    occurredOn: string;
+    amount: MoneyResponse;
+    note: null | string;
+};
+
+export type LinkCandidatesResponse = {
+    subscriptionId: string;
+    candidates: Array<LinkCandidateResponse>;
+};
+
 export type LinkTransactionRequest = {
     householdId: string;
     transactionId: string;
@@ -710,6 +722,10 @@ export type ListMyNotificationsResponse = {
 
 export type ListRecurringBillsResponse = {
     recurringBills: Array<RecurringBillResponse>;
+};
+
+export type ListSubscriptionsResponse = {
+    subscriptions: Array<SubscriptionResponse>;
 };
 
 export type ListTransactionsResponse = {
@@ -804,6 +820,8 @@ export type MoneySeriesPointResponse = {
 export type MonthChargeCalendarResponse = {
     month: string;
     days: Array<MonthChargeDayResponse>;
+    actualTotal: MoneyResponse;
+    predictedTotal: MoneyResponse;
 };
 
 export type MonthChargeDayResponse = {
@@ -1093,6 +1111,7 @@ export type SubscriptionResponse = {
     trialEndsOn: null | string;
     accountId: null | string;
     startsOn: string;
+    cancelledOn: null | string;
 };
 
 export type TimeRange = {
@@ -1124,6 +1143,7 @@ export type TransactionResponse = {
     isPending: boolean;
     hasReceipt: boolean;
     payerId: null | string;
+    subscriptionId: null | string;
 };
 
 export type TransferMode = 'Neutral' | 'Savings';
@@ -1961,6 +1981,24 @@ export type CommitEconomyImportResponses = {
 
 export type CommitEconomyImportResponse = CommitEconomyImportResponses[keyof CommitEconomyImportResponses];
 
+export type ListEconomySubscriptionsData = {
+    body?: never;
+    path?: never;
+    query: {
+        householdId: string;
+    };
+    url: '/v1/economy/subscriptions';
+};
+
+export type ListEconomySubscriptionsResponses = {
+    /**
+     * OK
+     */
+    200: ListSubscriptionsResponse;
+};
+
+export type ListEconomySubscriptionsResponse = ListEconomySubscriptionsResponses[keyof ListEconomySubscriptionsResponses];
+
 export type CreateEconomySubscriptionData = {
     body: CreateSubscriptionRequest;
     path?: never;
@@ -1985,6 +2023,26 @@ export type CreateEconomySubscriptionResponses = {
 };
 
 export type CreateEconomySubscriptionResponse = CreateEconomySubscriptionResponses[keyof CreateEconomySubscriptionResponses];
+
+export type GetEconomySubscriptionData = {
+    body?: never;
+    path: {
+        subscriptionId: string;
+    };
+    query: {
+        householdId: string;
+    };
+    url: '/v1/economy/subscriptions/{subscriptionId}';
+};
+
+export type GetEconomySubscriptionResponses = {
+    /**
+     * OK
+     */
+    200: SubscriptionResponse;
+};
+
+export type GetEconomySubscriptionResponse = GetEconomySubscriptionResponses[keyof GetEconomySubscriptionResponses];
 
 export type ChangeEconomySubscriptionLifecycleStateData = {
     body: ChangeLifecycleStateRequest;
@@ -2034,6 +2092,26 @@ export type GetEconomySubscriptionChargeHistoryResponses = {
 };
 
 export type GetEconomySubscriptionChargeHistoryResponse = GetEconomySubscriptionChargeHistoryResponses[keyof GetEconomySubscriptionChargeHistoryResponses];
+
+export type GetEconomySubscriptionLinkCandidatesData = {
+    body?: never;
+    path: {
+        subscriptionId: string;
+    };
+    query: {
+        householdId: string;
+    };
+    url: '/v1/economy/subscriptions/{subscriptionId}/link-candidates';
+};
+
+export type GetEconomySubscriptionLinkCandidatesResponses = {
+    /**
+     * OK
+     */
+    200: LinkCandidatesResponse;
+};
+
+export type GetEconomySubscriptionLinkCandidatesResponse = GetEconomySubscriptionLinkCandidatesResponses[keyof GetEconomySubscriptionLinkCandidatesResponses];
 
 export type LinkEconomySubscriptionTransactionData = {
     body: LinkTransactionRequest;
