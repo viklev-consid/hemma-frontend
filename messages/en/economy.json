@@ -7,7 +7,9 @@
       "budget": "Budget",
       "recurring": "Recurring",
       "accounts": "Accounts",
-      "categories": "Categories"
+      "categories": "Categories",
+      "rules": "Rules",
+      "import": "Import"
     },
     "error": {
       "title": "Couldn't load economy",
@@ -309,6 +311,140 @@
       "submit": "Add bill",
       "submitting": "Adding…",
       "saved": "Recurring bill added"
+    }
+  },
+  "rules": {
+    "title": "Categorization rules",
+    "description": "Automatically categorize imported transactions by matching their text.",
+    "add": "New rule",
+    "cap": "{count} / {max} enabled",
+    "capHint": "You've reached the enabled-rule limit. Disable a rule to enable another.",
+    "unknownCategory": "Unknown category",
+    "targetCategory": "Category",
+    "toggleEnabled": "Enabled",
+    "edit": "Edit",
+    "delete": "Delete",
+    "deleted": "Rule deleted",
+    "match": {
+      "Contains": "Contains",
+      "Regex": "Regex"
+    },
+    "empty": {
+      "title": "No rules yet",
+      "description": "Add a rule to auto-categorize transactions as you import them."
+    },
+    "deleteConfirm": {
+      "title": "Delete this rule?",
+      "description": "The rule matching “{pattern}” will be removed. Existing transactions keep their categories.",
+      "cancel": "Cancel",
+      "deleting": "Deleting…",
+      "confirm": "Delete rule"
+    },
+    "form": {
+      "createTitle": "New rule",
+      "editTitle": "Edit rule",
+      "advanced": {
+        "label": "Advanced (regex)",
+        "hint": "Match with a regular expression instead of a simple text contains."
+      },
+      "pattern": {
+        "containsLabel": "Text to match",
+        "regexLabel": "Pattern",
+        "containsPlaceholder": "e.g. ICA",
+        "regexPlaceholder": "e.g. ^ICA.*",
+        "containsHint": "Transactions whose text contains this value get the category below.",
+        "regexHint": "A regular expression evaluated by the backend."
+      },
+      "category": {
+        "label": "Category",
+        "placeholder": "Select a category"
+      },
+      "required": "Fill in the required fields.",
+      "submit": "Save rule",
+      "submitting": "Saving…",
+      "cancel": "Cancel",
+      "created": "Rule created",
+      "updated": "Rule updated"
+    }
+  },
+  "import": {
+    "title": "Import transactions",
+    "description": "Upload a CSV from your bank, map its columns, review, and import.",
+    "steps": {
+      "upload": "Upload",
+      "map": "Map columns",
+      "preview": "Review",
+      "done": "Done"
+    },
+    "upload": {
+      "account": {
+        "label": "Account",
+        "placeholder": "Select an account",
+        "hint": "All imported transactions go to this account."
+      },
+      "file": {
+        "label": "CSV file",
+        "hint": "A comma- or semicolon-separated file exported from your bank."
+      },
+      "parseError": "Couldn't read that file. Make sure it's a valid CSV export.",
+      "emptyFile": "That file has no rows.",
+      "tooManyRows": "That file has {count} rows — the limit is {max} per import. Split it and import in batches.",
+      "parsed": "{rows, plural, one {# row} other {# rows}} · {columns, plural, one {# column} other {# columns}}",
+      "parsing": "Reading…",
+      "continue": "Continue"
+    },
+    "map": {
+      "description": "Match each CSV column to a transaction field. Date and amount are required.",
+      "fields": {
+        "occurredOn": "Date",
+        "amount": "Amount",
+        "description": "Description",
+        "counterparty": "Counterparty",
+        "reference": "Reference",
+        "balanceAfter": "Balance after",
+        "rawDescription": "Raw description"
+      },
+      "noColumn": "— Not mapped —",
+      "unnamedColumn": "Column {index}",
+      "requiredHint": "Map a Date and an Amount column to continue.",
+      "violations": "{count, plural, one {# row exceeds a field-length limit} other {# rows exceed a field-length limit}}. Fix the source file and re-upload.",
+      "back": "Back",
+      "previewing": "Checking…",
+      "continue": "Continue"
+    },
+    "preview": {
+      "summary": "{accepted} of {total} rows selected for import.",
+      "include": "Include row",
+      "chip": {
+        "new": "New",
+        "dup": "Duplicate"
+      },
+      "uncategorized": "Uncategorized",
+      "subscriptionHint": "Matches subscription",
+      "includedErrorsHint": "Some selected rows have errors and can't be imported. Deselect them to continue.",
+      "back": "Back",
+      "committing": "Importing…",
+      "commit": "Import {count, plural, one {# row} other {# rows}}"
+    },
+    "done": {
+      "title": "Import complete",
+      "imported": "{count, plural, one {# transaction imported} other {# transactions imported}}",
+      "duplicates": "{count, plural, one {# duplicate skipped} other {# duplicates skipped}}",
+      "match": {
+        "Contains": "Contains",
+        "Regex": "Regex"
+      },
+      "unknownCategory": "Unknown category",
+      "ruleCreated": "Rule created",
+      "suggestions": {
+        "title": "Save as rules?",
+        "description": "Create rules from this import to auto-categorize next time.",
+        "create": "Create rule",
+        "created": "Created",
+        "capHint": "You've reached the enabled-rule limit. Disable a rule to add more."
+      },
+      "importAnother": "Import another file",
+      "viewTransactions": "View transactions"
     }
   }
 }

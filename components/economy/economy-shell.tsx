@@ -118,6 +118,8 @@ export function EconomyShell({ slug, children }: EconomyShellProps) {
     { href: `/app/h/${slug}/economy/recurring`, key: "recurring" as const },
     { href: `/app/h/${slug}/economy/accounts`, key: "accounts" as const },
     { href: `/app/h/${slug}/economy/categories`, key: "categories" as const },
+    { href: `/app/h/${slug}/economy/rules`, key: "rules" as const },
+    { href: `/app/h/${slug}/economy/import`, key: "import" as const },
   ];
 
   const isActive = (href: string) =>
