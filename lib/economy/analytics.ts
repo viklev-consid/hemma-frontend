@@ -1,4 +1,4 @@
-import type { MoneyResponse } from "@/api/generated";
+import type { MoneyDto } from "@/api/generated";
 
 import { ECONOMY_CURRENCY, ECONOMY_LOCALE, formatMoney } from "./money";
 
@@ -99,7 +99,7 @@ export function analyticsRangeForMonths(
  * a non-finite amount to `0` so a malformed value plots at the baseline rather
  * than crashing the chart; the raw string is preserved for the tooltip/legend.
  */
-export function toPlotValue(money: Pick<MoneyResponse, "amount">): number {
+export function toPlotValue(money: Pick<MoneyDto, "amount">): number {
   const numeric = Number(money.amount);
   return Number.isFinite(numeric) ? numeric : 0;
 }

@@ -1,17 +1,17 @@
 "use client";
 
-import type { MoneyResponse } from "@/api/generated";
+import type { MoneyDto } from "@/api/generated";
 import { Input } from "@/components/ui/input";
 import { formatMoney } from "@/lib/economy/money";
 import { cn } from "@/lib/utils";
 
 type MoneyProps = {
-  value: Pick<MoneyResponse, "amount" | "currency">;
+  value: Pick<MoneyDto, "amount" | "currency">;
   className?: string;
 };
 
 /**
- * Display a `MoneyResponse` amount, formatted as SEK. Read-only — the browser
+ * Display a `MoneyDto` amount, formatted as SEK. Read-only — the browser
  * never computes on the value. Use anywhere a backend money value is shown.
  */
 export function Money({ value, className }: MoneyProps) {

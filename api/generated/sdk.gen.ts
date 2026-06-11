@@ -2,7 +2,7 @@
 
 import { type Client, formDataBodySerializer, type Options as Options2, type TDataShape } from './client';
 import { client } from './client.gen';
-import type { AcceptHouseholdInvitationData, AcceptHouseholdInvitationResponses, AcceptLegalDocumentsData, AcceptLegalDocumentsErrors, AcceptLegalDocumentsResponses, AddEconomyCategoryData, AddEconomyCategoryErrors, AddEconomyCategoryResponses, ArchiveNotificationData, ArchiveNotificationErrors, ArchiveNotificationResponses, AttachEconomyTransactionReceiptData, AttachEconomyTransactionReceiptErrors, AttachEconomyTransactionReceiptResponses, ChangeEconomySubscriptionLifecycleStateData, ChangeEconomySubscriptionLifecycleStateErrors, ChangeEconomySubscriptionLifecycleStateResponses, ChangeHouseholdMemberRoleData, ChangeHouseholdMemberRoleResponses, ChangePasswordData, ChangePasswordErrors, ChangePasswordResponses, ChangeUserRoleData, ChangeUserRoleErrors, ChangeUserRoleResponses, CommitEconomyImportData, CommitEconomyImportErrors, CommitEconomyImportResponses, CompleteOnboardingData, CompleteOnboardingErrors, CompleteOnboardingResponses, ConfirmEconomyEstimatedBillData, ConfirmEconomyEstimatedBillErrors, ConfirmEconomyEstimatedBillResponses, ConfirmEmailChangeData, ConfirmEmailChangeErrors, ConfirmEmailChangeResponses, ConfirmEmailData, ConfirmEmailErrors, ConfirmEmailResponses, ConfirmTotpData, ConfirmTotpErrors, ConfirmTotpResponses, CopyEconomyBudgetFromPreviousPeriodData, CopyEconomyBudgetFromPreviousPeriodErrors, CopyEconomyBudgetFromPreviousPeriodResponses, CreateEconomyAccountData, CreateEconomyAccountErrors, CreateEconomyAccountResponses, CreateEconomyBudgetData, CreateEconomyBudgetErrors, CreateEconomyBudgetResponses, CreateEconomyCategorizationRuleData, CreateEconomyCategorizationRuleErrors, CreateEconomyCategorizationRuleResponses, CreateEconomyRecurringBillData, CreateEconomyRecurringBillErrors, CreateEconomyRecurringBillResponses, CreateEconomySettingsData, CreateEconomySettingsErrors, CreateEconomySettingsResponses, CreateEconomySubscriptionData, CreateEconomySubscriptionErrors, CreateEconomySubscriptionResponses, CreateEconomyTransferData, CreateEconomyTransferErrors, CreateEconomyTransferResponses, CreateHouseholdData, CreateHouseholdErrors, CreateHouseholdInvitationData, CreateHouseholdInvitationResponses, CreateHouseholdResponses, CreateInvitationData, CreateInvitationErrors, CreateInvitationResponses, DeleteAccountData, DeleteAccountErrors, DeleteAccountResponses, DeleteAvatarData, DeleteAvatarErrors, DeleteAvatarResponses, DeleteEconomyCategorizationRuleData, DeleteEconomyCategorizationRuleResponses, DeleteHouseholdData, DeleteHouseholdResponses, DisableTwoFactorData, DisableTwoFactorErrors, DisableTwoFactorResponses, ExportEconomyGdprData, ExportEconomyGdprResponses, ExportPersonalDataData, ExportPersonalDataErrors, ExportPersonalDataResponses, ForgotPasswordData, ForgotPasswordResponses, GetAuditTrailData, GetAuditTrailErrors, GetAuditTrailResponses, GetCurrentUserData, GetCurrentUserErrors, GetCurrentUserResponses, GetEconomyAccountBalancesData, GetEconomyAccountBalancesResponses, GetEconomyBudgetSummaryData, GetEconomyBudgetSummaryResponses, GetEconomyCategoryTrendData, GetEconomyCategoryTrendResponses, GetEconomyIncomeVsExpenseData, GetEconomyIncomeVsExpenseResponses, GetEconomyNotificationPreferencesData, GetEconomyNotificationPreferencesResponses, GetEconomyPeriodComparisonData, GetEconomyPeriodComparisonErrors, GetEconomyPeriodComparisonResponses, GetEconomySettingsData, GetEconomySettingsErrors, GetEconomySettingsResponses, GetEconomySpendBreakdownData, GetEconomySpendBreakdownResponses, GetEconomySubscriptionChargeHistoryData, GetEconomySubscriptionChargeHistoryResponses, GetEconomySubscriptionData, GetEconomySubscriptionLinkCandidatesData, GetEconomySubscriptionLinkCandidatesResponses, GetEconomySubscriptionMonthCalendarData, GetEconomySubscriptionMonthCalendarResponses, GetEconomySubscriptionPaymentScheduleData, GetEconomySubscriptionPaymentScheduleResponses, GetEconomySubscriptionResponses, GetEconomyTopTransactionsData, GetEconomyTopTransactionsResponses, GetEconomyVarianceHistoryData, GetEconomyVarianceHistoryResponses, GetHouseholdAuditData, GetHouseholdAuditResponses, GetHouseholdData, GetHouseholdResponses, GetLegalComplianceData, GetLegalComplianceErrors, GetLegalComplianceResponses, GetLegalDocumentData, GetLegalDocumentErrors, GetLegalDocumentResponses, GetMyNotificationPreferencesData, GetMyNotificationPreferencesErrors, GetMyNotificationPreferencesResponses, GetOnboardingLegalRequirementsData, GetOnboardingLegalRequirementsErrors, GetOnboardingLegalRequirementsResponses, GetUnreadNotificationCountData, GetUnreadNotificationCountErrors, GetUnreadNotificationCountResponses, GetUserAvatarData, GetUserAvatarErrors, GetUserAvatarResponses, GetUserByIdData, GetUserByIdErrors, GetUserByIdResponses, LinkEconomySubscriptionTransactionData, LinkEconomySubscriptionTransactionErrors, LinkEconomySubscriptionTransactionResponses, ListEconomyAccountsData, ListEconomyAccountsResponses, ListEconomyCategoriesData, ListEconomyCategoriesResponses, ListEconomyCategorizationRulesData, ListEconomyCategorizationRulesResponses, ListEconomyRecurringBillsData, ListEconomyRecurringBillsResponses, ListEconomySubscriptionsData, ListEconomySubscriptionsResponses, ListEconomyTransactionsData, ListEconomyTransactionsResponses, ListHouseholdInvitationsData, ListHouseholdInvitationsResponses, ListHouseholdMembersData, ListHouseholdMembersResponses, ListInvitationsData, ListInvitationsErrors, ListInvitationsResponses, ListMyHouseholdsData, ListMyHouseholdsResponses, ListMyNotificationsData, ListMyNotificationsErrors, ListMyNotificationsResponses, ListUsersData, ListUsersErrors, ListUsersResponses, LoginData, LoginErrors, LoginResponses, LoginTwoFactorData, LoginTwoFactorErrors, LoginTwoFactorResponses, LogoutAllData, LogoutAllErrors, LogoutAllResponses, LogoutData, LogoutErrors, LogoutResponses, MarkAllNotificationsAsReadData, MarkAllNotificationsAsReadErrors, MarkAllNotificationsAsReadResponses, MarkNotificationAsReadData, MarkNotificationAsReadErrors, MarkNotificationAsReadResponses, PauseEconomyRecurringBillOccurrenceData, PauseEconomyRecurringBillOccurrenceErrors, PauseEconomyRecurringBillOccurrenceResponses, PreviewEconomyImportData, PreviewEconomyImportErrors, PreviewEconomyImportResponses, RecordEconomyTransactionData, RecordEconomyTransactionErrors, RecordEconomyTransactionResponses, RefreshTokenData, RefreshTokenErrors, RefreshTokenResponses, RegenerateRecoveryCodesData, RegenerateRecoveryCodesErrors, RegenerateRecoveryCodesResponses, RegisterData, RegisterErrors, RegisterResponses, RemoveHouseholdMemberData, RemoveHouseholdMemberResponses, RequestEmailChangeData, RequestEmailChangeErrors, RequestEmailChangeResponses, ResendEmailConfirmationData, ResendEmailConfirmationResponses, ResetPasswordData, ResetPasswordErrors, ResetPasswordResponses, ResumeEconomyRecurringBillOccurrenceData, ResumeEconomyRecurringBillOccurrenceErrors, ResumeEconomyRecurringBillOccurrenceResponses, RevokeHouseholdInvitationData, RevokeHouseholdInvitationResponses, RevokeInvitationData, RevokeInvitationErrors, RevokeInvitationResponses, SearchEconomyTransactionNotesData, SearchEconomyTransactionNotesErrors, SearchEconomyTransactionNotesResponses, SetEconomyCategorizationRuleEnabledData, SetEconomyCategorizationRuleEnabledErrors, SetEconomyCategorizationRuleEnabledResponses, SetupTotpData, SetupTotpErrors, SetupTotpResponses, SkipEconomyRecurringBillOccurrenceData, SkipEconomyRecurringBillOccurrenceErrors, SkipEconomyRecurringBillOccurrenceResponses, StreamMyNotificationsData, StreamMyNotificationsErrors, StreamMyNotificationsResponses, UnlinkEconomySubscriptionTransactionData, UnlinkEconomySubscriptionTransactionErrors, UnlinkEconomySubscriptionTransactionResponses, UpdateAvatarData, UpdateAvatarErrors, UpdateAvatarResponses, UpdateEconomyCategorizationRuleData, UpdateEconomyCategorizationRuleErrors, UpdateEconomyCategorizationRuleResponses, UpdateEconomyCycleStartDayData, UpdateEconomyCycleStartDayErrors, UpdateEconomyCycleStartDayResponses, UpdateEconomyNotificationPreferencesData, UpdateEconomyNotificationPreferencesResponses, UpdateHouseholdData, UpdateHouseholdResponses, UpdateMyNotificationPreferencesData, UpdateMyNotificationPreferencesErrors, UpdateMyNotificationPreferencesResponses, UpdateProfileData, UpdateProfileErrors, UpdateProfileResponses, UpsertEconomyBudgetLineData, UpsertEconomyBudgetLineErrors, UpsertEconomyBudgetLineResponses } from './types.gen';
+import type { AcceptHouseholdInvitationData, AcceptHouseholdInvitationResponses, AcceptLegalDocumentsData, AcceptLegalDocumentsErrors, AcceptLegalDocumentsResponses, AddEconomyCategoryData, AddEconomyCategoryErrors, AddEconomyCategoryResponses, AddPropertyProjectAttachmentData, AddPropertyProjectAttachmentResponses, AddPropertyProjectLinkData, AddPropertyProjectLinkResponses, AddPropertyProjectTaskData, AddPropertyProjectTaskResponses, ArchiveNotificationData, ArchiveNotificationErrors, ArchiveNotificationResponses, AssignEconomyTransactionToProjectData, AssignEconomyTransactionToProjectErrors, AssignEconomyTransactionToProjectResponses, AttachEconomyTransactionReceiptData, AttachEconomyTransactionReceiptErrors, AttachEconomyTransactionReceiptResponses, ChangeEconomySubscriptionLifecycleStateData, ChangeEconomySubscriptionLifecycleStateErrors, ChangeEconomySubscriptionLifecycleStateResponses, ChangeHouseholdMemberRoleData, ChangeHouseholdMemberRoleResponses, ChangePasswordData, ChangePasswordErrors, ChangePasswordResponses, ChangePropertyProjectStatusData, ChangePropertyProjectStatusErrors, ChangePropertyProjectStatusResponses, ChangeUserRoleData, ChangeUserRoleErrors, ChangeUserRoleResponses, CommitEconomyImportData, CommitEconomyImportErrors, CommitEconomyImportResponses, CompleteOnboardingData, CompleteOnboardingErrors, CompleteOnboardingResponses, CompletePropertyMaintenanceOccurrenceData, CompletePropertyMaintenanceOccurrenceErrors, CompletePropertyMaintenanceOccurrenceResponses, ConfirmEconomyEstimatedBillData, ConfirmEconomyEstimatedBillErrors, ConfirmEconomyEstimatedBillResponses, ConfirmEmailChangeData, ConfirmEmailChangeErrors, ConfirmEmailChangeResponses, ConfirmEmailData, ConfirmEmailErrors, ConfirmEmailResponses, ConfirmTotpData, ConfirmTotpErrors, ConfirmTotpResponses, CopyEconomyBudgetFromPreviousPeriodData, CopyEconomyBudgetFromPreviousPeriodErrors, CopyEconomyBudgetFromPreviousPeriodResponses, CreateEconomyAccountData, CreateEconomyAccountErrors, CreateEconomyAccountResponses, CreateEconomyBudgetData, CreateEconomyBudgetErrors, CreateEconomyBudgetResponses, CreateEconomyCategorizationRuleData, CreateEconomyCategorizationRuleErrors, CreateEconomyCategorizationRuleResponses, CreateEconomyRecurringBillData, CreateEconomyRecurringBillErrors, CreateEconomyRecurringBillResponses, CreateEconomySettingsData, CreateEconomySettingsErrors, CreateEconomySettingsResponses, CreateEconomySubscriptionData, CreateEconomySubscriptionErrors, CreateEconomySubscriptionResponses, CreateEconomyTransferData, CreateEconomyTransferErrors, CreateEconomyTransferResponses, CreateHouseholdData, CreateHouseholdErrors, CreateHouseholdInvitationData, CreateHouseholdInvitationResponses, CreateHouseholdResponses, CreateInvitationData, CreateInvitationErrors, CreateInvitationResponses, CreatePropertyHistoryEntryData, CreatePropertyHistoryEntryErrors, CreatePropertyHistoryEntryResponses, CreatePropertyMaintenancePlanData, CreatePropertyMaintenancePlanErrors, CreatePropertyMaintenancePlanResponses, CreatePropertyProjectData, CreatePropertyProjectErrors, CreatePropertyProjectResponses, DeactivatePropertyMaintenancePlanData, DeactivatePropertyMaintenancePlanResponses, DeleteAccountData, DeleteAccountErrors, DeleteAccountResponses, DeleteAvatarData, DeleteAvatarErrors, DeleteAvatarResponses, DeleteEconomyCategorizationRuleData, DeleteEconomyCategorizationRuleResponses, DeleteHouseholdData, DeleteHouseholdResponses, DeletePropertyHistoryEntryData, DeletePropertyHistoryEntryResponses, DeletePropertyMaintenancePlanData, DeletePropertyMaintenancePlanResponses, DeletePropertyProjectData, DeletePropertyProjectResponses, DeletePropertyProjectTaskData, DeletePropertyProjectTaskResponses, DisableTwoFactorData, DisableTwoFactorErrors, DisableTwoFactorResponses, ExportEconomyGdprData, ExportEconomyGdprResponses, ExportPersonalDataData, ExportPersonalDataErrors, ExportPersonalDataResponses, ForgotPasswordData, ForgotPasswordResponses, GetAuditTrailData, GetAuditTrailErrors, GetAuditTrailResponses, GetCurrentUserData, GetCurrentUserErrors, GetCurrentUserResponses, GetEconomyAccountBalancesData, GetEconomyAccountBalancesResponses, GetEconomyBudgetSummaryData, GetEconomyBudgetSummaryResponses, GetEconomyCategoryTrendData, GetEconomyCategoryTrendResponses, GetEconomyIncomeVsExpenseData, GetEconomyIncomeVsExpenseResponses, GetEconomyNotificationPreferencesData, GetEconomyNotificationPreferencesResponses, GetEconomyPeriodComparisonData, GetEconomyPeriodComparisonErrors, GetEconomyPeriodComparisonResponses, GetEconomySettingsData, GetEconomySettingsErrors, GetEconomySettingsResponses, GetEconomySpendBreakdownData, GetEconomySpendBreakdownResponses, GetEconomySubscriptionChargeHistoryData, GetEconomySubscriptionChargeHistoryResponses, GetEconomySubscriptionData, GetEconomySubscriptionLinkCandidatesData, GetEconomySubscriptionLinkCandidatesResponses, GetEconomySubscriptionMonthCalendarData, GetEconomySubscriptionMonthCalendarResponses, GetEconomySubscriptionPaymentScheduleData, GetEconomySubscriptionPaymentScheduleResponses, GetEconomySubscriptionResponses, GetEconomyTopTransactionsData, GetEconomyTopTransactionsResponses, GetEconomyVarianceHistoryData, GetEconomyVarianceHistoryResponses, GetHouseholdAuditData, GetHouseholdAuditResponses, GetHouseholdData, GetHouseholdResponses, GetLegalComplianceData, GetLegalComplianceErrors, GetLegalComplianceResponses, GetLegalDocumentData, GetLegalDocumentErrors, GetLegalDocumentResponses, GetMyNotificationPreferencesData, GetMyNotificationPreferencesErrors, GetMyNotificationPreferencesResponses, GetOnboardingLegalRequirementsData, GetOnboardingLegalRequirementsErrors, GetOnboardingLegalRequirementsResponses, GetPropertyHistoryPhotoContentData, GetPropertyHistoryPhotoContentResponses, GetPropertyMaintenancePlanData, GetPropertyMaintenancePlanResponses, GetPropertyProjectAttachmentContentData, GetPropertyProjectAttachmentContentResponses, GetPropertyProjectBudgetData, GetPropertyProjectBudgetResponses, GetPropertyProjectData, GetPropertyProjectResponses, GetPropertyProjectTasksData, GetPropertyProjectTasksResponses, GetUnreadNotificationCountData, GetUnreadNotificationCountErrors, GetUnreadNotificationCountResponses, GetUserAvatarData, GetUserAvatarErrors, GetUserAvatarResponses, GetUserByIdData, GetUserByIdErrors, GetUserByIdResponses, LinkEconomySubscriptionTransactionData, LinkEconomySubscriptionTransactionErrors, LinkEconomySubscriptionTransactionResponses, ListEconomyAccountsData, ListEconomyAccountsResponses, ListEconomyCategoriesData, ListEconomyCategoriesResponses, ListEconomyCategorizationRulesData, ListEconomyCategorizationRulesResponses, ListEconomyRecurringBillsData, ListEconomyRecurringBillsResponses, ListEconomySubscriptionsData, ListEconomySubscriptionsResponses, ListEconomyTransactionsData, ListEconomyTransactionsForProjectData, ListEconomyTransactionsForProjectResponses, ListEconomyTransactionsResponses, ListHouseholdInvitationsData, ListHouseholdInvitationsResponses, ListHouseholdMembersData, ListHouseholdMembersResponses, ListInvitationsData, ListInvitationsErrors, ListInvitationsResponses, ListMyHouseholdsData, ListMyHouseholdsResponses, ListMyNotificationsData, ListMyNotificationsErrors, ListMyNotificationsResponses, ListPropertyHistoryData, ListPropertyHistoryResponses, ListPropertyMaintenancePlansData, ListPropertyMaintenancePlansResponses, ListPropertyProjectsData, ListPropertyProjectsResponses, ListPropertyUpcomingMaintenanceOccurrencesData, ListPropertyUpcomingMaintenanceOccurrencesResponses, ListUsersData, ListUsersErrors, ListUsersResponses, LoginData, LoginErrors, LoginResponses, LoginTwoFactorData, LoginTwoFactorErrors, LoginTwoFactorResponses, LogoutAllData, LogoutAllErrors, LogoutAllResponses, LogoutData, LogoutErrors, LogoutResponses, MarkAllNotificationsAsReadData, MarkAllNotificationsAsReadErrors, MarkAllNotificationsAsReadResponses, MarkNotificationAsReadData, MarkNotificationAsReadErrors, MarkNotificationAsReadResponses, PauseEconomyRecurringBillOccurrenceData, PauseEconomyRecurringBillOccurrenceErrors, PauseEconomyRecurringBillOccurrenceResponses, PreviewEconomyImportData, PreviewEconomyImportErrors, PreviewEconomyImportResponses, PromotePropertyMaintenanceOccurrenceData, PromotePropertyMaintenanceOccurrenceErrors, PromotePropertyMaintenanceOccurrenceResponses, RecordEconomyTransactionData, RecordEconomyTransactionErrors, RecordEconomyTransactionResponses, RefreshTokenData, RefreshTokenErrors, RefreshTokenResponses, RegenerateRecoveryCodesData, RegenerateRecoveryCodesErrors, RegenerateRecoveryCodesResponses, RegisterData, RegisterErrors, RegisterResponses, RemoveHouseholdMemberData, RemoveHouseholdMemberResponses, RemovePropertyProjectAttachmentData, RemovePropertyProjectAttachmentResponses, RemovePropertyProjectLinkData, RemovePropertyProjectLinkResponses, ReorderPropertyProjectTasksData, ReorderPropertyProjectTasksResponses, RequestEmailChangeData, RequestEmailChangeErrors, RequestEmailChangeResponses, ResendEmailConfirmationData, ResendEmailConfirmationResponses, ResetPasswordData, ResetPasswordErrors, ResetPasswordResponses, ResumeEconomyRecurringBillOccurrenceData, ResumeEconomyRecurringBillOccurrenceErrors, ResumeEconomyRecurringBillOccurrenceResponses, RevokeHouseholdInvitationData, RevokeHouseholdInvitationResponses, RevokeInvitationData, RevokeInvitationErrors, RevokeInvitationResponses, SearchEconomyTransactionNotesData, SearchEconomyTransactionNotesErrors, SearchEconomyTransactionNotesResponses, SetEconomyCategorizationRuleEnabledData, SetEconomyCategorizationRuleEnabledErrors, SetEconomyCategorizationRuleEnabledResponses, SetupTotpData, SetupTotpErrors, SetupTotpResponses, SkipEconomyRecurringBillOccurrenceData, SkipEconomyRecurringBillOccurrenceErrors, SkipEconomyRecurringBillOccurrenceResponses, SkipPropertyMaintenanceOccurrenceData, SkipPropertyMaintenanceOccurrenceErrors, SkipPropertyMaintenanceOccurrenceResponses, StreamMyNotificationsData, StreamMyNotificationsErrors, StreamMyNotificationsResponses, UnlinkEconomySubscriptionTransactionData, UnlinkEconomySubscriptionTransactionErrors, UnlinkEconomySubscriptionTransactionResponses, UpdateAvatarData, UpdateAvatarErrors, UpdateAvatarResponses, UpdateEconomyCategorizationRuleData, UpdateEconomyCategorizationRuleErrors, UpdateEconomyCategorizationRuleResponses, UpdateEconomyCycleStartDayData, UpdateEconomyCycleStartDayErrors, UpdateEconomyCycleStartDayResponses, UpdateEconomyNotificationPreferencesData, UpdateEconomyNotificationPreferencesResponses, UpdateHouseholdData, UpdateHouseholdResponses, UpdateMyNotificationPreferencesData, UpdateMyNotificationPreferencesErrors, UpdateMyNotificationPreferencesResponses, UpdateProfileData, UpdateProfileErrors, UpdateProfileResponses, UpdatePropertyHistoryEntryData, UpdatePropertyHistoryEntryErrors, UpdatePropertyHistoryEntryResponses, UpdatePropertyMaintenancePlanData, UpdatePropertyMaintenancePlanErrors, UpdatePropertyMaintenancePlanResponses, UpdatePropertyProjectData, UpdatePropertyProjectErrors, UpdatePropertyProjectResponses, UpdatePropertyProjectTaskData, UpdatePropertyProjectTaskResponses, UpsertEconomyBudgetLineData, UpsertEconomyBudgetLineErrors, UpsertEconomyBudgetLineResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -179,6 +179,28 @@ export const attachEconomyTransactionReceipt = <ThrowOnError extends boolean = f
         'Content-Type': null,
         ...options.headers
     }
+});
+
+/**
+ * Link or unlink an economy transaction to a property project.
+ */
+export const assignEconomyTransactionToProject = <ThrowOnError extends boolean = false>(options: Options<AssignEconomyTransactionToProjectData, ThrowOnError>) => (options.client ?? client).post<AssignEconomyTransactionToProjectResponses, AssignEconomyTransactionToProjectErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/v1/economy/transactions/{transactionId}/project',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * List economy transactions linked to a property project.
+ */
+export const listEconomyTransactionsForProject = <ThrowOnError extends boolean = false>(options: Options<ListEconomyTransactionsForProjectData, ThrowOnError>) => (options.client ?? client).get<ListEconomyTransactionsForProjectResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/v1/economy/projects/{projectId}/transactions',
+    ...options
 });
 
 /**
@@ -780,6 +802,259 @@ export const updateMyNotificationPreferences = <ThrowOnError extends boolean = f
         'Content-Type': 'application/json',
         ...options.headers
     }
+});
+
+export const listPropertyProjects = <ThrowOnError extends boolean = false>(options: Options<ListPropertyProjectsData, ThrowOnError>) => (options.client ?? client).get<ListPropertyProjectsResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/v1/property/projects',
+    ...options
+});
+
+export const createPropertyProject = <ThrowOnError extends boolean = false>(options: Options<CreatePropertyProjectData, ThrowOnError>) => (options.client ?? client).post<CreatePropertyProjectResponses, CreatePropertyProjectErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/v1/property/projects',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const deletePropertyProject = <ThrowOnError extends boolean = false>(options: Options<DeletePropertyProjectData, ThrowOnError>) => (options.client ?? client).delete<DeletePropertyProjectResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/v1/property/projects/{projectId}',
+    ...options
+});
+
+export const getPropertyProject = <ThrowOnError extends boolean = false>(options: Options<GetPropertyProjectData, ThrowOnError>) => (options.client ?? client).get<GetPropertyProjectResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/v1/property/projects/{projectId}',
+    ...options
+});
+
+export const updatePropertyProject = <ThrowOnError extends boolean = false>(options: Options<UpdatePropertyProjectData, ThrowOnError>) => (options.client ?? client).put<UpdatePropertyProjectResponses, UpdatePropertyProjectErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/v1/property/projects/{projectId}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const getPropertyProjectBudget = <ThrowOnError extends boolean = false>(options: Options<GetPropertyProjectBudgetData, ThrowOnError>) => (options.client ?? client).get<GetPropertyProjectBudgetResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/v1/property/projects/{projectId}/budget',
+    ...options
+});
+
+export const changePropertyProjectStatus = <ThrowOnError extends boolean = false>(options: Options<ChangePropertyProjectStatusData, ThrowOnError>) => (options.client ?? client).post<ChangePropertyProjectStatusResponses, ChangePropertyProjectStatusErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/v1/property/projects/{projectId}/status',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const getPropertyProjectTasks = <ThrowOnError extends boolean = false>(options: Options<GetPropertyProjectTasksData, ThrowOnError>) => (options.client ?? client).get<GetPropertyProjectTasksResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/v1/property/projects/{projectId}/tasks',
+    ...options
+});
+
+export const addPropertyProjectTask = <ThrowOnError extends boolean = false>(options: Options<AddPropertyProjectTaskData, ThrowOnError>) => (options.client ?? client).post<AddPropertyProjectTaskResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/v1/property/projects/{projectId}/tasks',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const deletePropertyProjectTask = <ThrowOnError extends boolean = false>(options: Options<DeletePropertyProjectTaskData, ThrowOnError>) => (options.client ?? client).delete<DeletePropertyProjectTaskResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/v1/property/projects/{projectId}/tasks/{taskId}',
+    ...options
+});
+
+export const updatePropertyProjectTask = <ThrowOnError extends boolean = false>(options: Options<UpdatePropertyProjectTaskData, ThrowOnError>) => (options.client ?? client).put<UpdatePropertyProjectTaskResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/v1/property/projects/{projectId}/tasks/{taskId}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const reorderPropertyProjectTasks = <ThrowOnError extends boolean = false>(options: Options<ReorderPropertyProjectTasksData, ThrowOnError>) => (options.client ?? client).post<ReorderPropertyProjectTasksResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/v1/property/projects/{projectId}/tasks/reorder',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const addPropertyProjectLink = <ThrowOnError extends boolean = false>(options: Options<AddPropertyProjectLinkData, ThrowOnError>) => (options.client ?? client).post<AddPropertyProjectLinkResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/v1/property/projects/{projectId}/links',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const removePropertyProjectLink = <ThrowOnError extends boolean = false>(options: Options<RemovePropertyProjectLinkData, ThrowOnError>) => (options.client ?? client).delete<RemovePropertyProjectLinkResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/v1/property/projects/{projectId}/links/{linkId}',
+    ...options
+});
+
+export const addPropertyProjectAttachment = <ThrowOnError extends boolean = false>(options: Options<AddPropertyProjectAttachmentData, ThrowOnError>) => (options.client ?? client).post<AddPropertyProjectAttachmentResponses, unknown, ThrowOnError>({
+    ...formDataBodySerializer,
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/v1/property/projects/{projectId}/attachments',
+    ...options,
+    headers: {
+        'Content-Type': null,
+        ...options.headers
+    }
+});
+
+export const getPropertyProjectAttachmentContent = <ThrowOnError extends boolean = false>(options: Options<GetPropertyProjectAttachmentContentData, ThrowOnError>) => (options.client ?? client).get<GetPropertyProjectAttachmentContentResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/v1/property/projects/{projectId}/attachments/{attachmentId}/content',
+    ...options
+});
+
+export const removePropertyProjectAttachment = <ThrowOnError extends boolean = false>(options: Options<RemovePropertyProjectAttachmentData, ThrowOnError>) => (options.client ?? client).delete<RemovePropertyProjectAttachmentResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/v1/property/projects/{projectId}/attachments/{attachmentId}',
+    ...options
+});
+
+export const listPropertyMaintenancePlans = <ThrowOnError extends boolean = false>(options: Options<ListPropertyMaintenancePlansData, ThrowOnError>) => (options.client ?? client).get<ListPropertyMaintenancePlansResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/v1/property/maintenance/plans',
+    ...options
+});
+
+export const createPropertyMaintenancePlan = <ThrowOnError extends boolean = false>(options: Options<CreatePropertyMaintenancePlanData, ThrowOnError>) => (options.client ?? client).post<CreatePropertyMaintenancePlanResponses, CreatePropertyMaintenancePlanErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/v1/property/maintenance/plans',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const deletePropertyMaintenancePlan = <ThrowOnError extends boolean = false>(options: Options<DeletePropertyMaintenancePlanData, ThrowOnError>) => (options.client ?? client).delete<DeletePropertyMaintenancePlanResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/v1/property/maintenance/plans/{planId}',
+    ...options
+});
+
+export const getPropertyMaintenancePlan = <ThrowOnError extends boolean = false>(options: Options<GetPropertyMaintenancePlanData, ThrowOnError>) => (options.client ?? client).get<GetPropertyMaintenancePlanResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/v1/property/maintenance/plans/{planId}',
+    ...options
+});
+
+export const updatePropertyMaintenancePlan = <ThrowOnError extends boolean = false>(options: Options<UpdatePropertyMaintenancePlanData, ThrowOnError>) => (options.client ?? client).put<UpdatePropertyMaintenancePlanResponses, UpdatePropertyMaintenancePlanErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/v1/property/maintenance/plans/{planId}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const deactivatePropertyMaintenancePlan = <ThrowOnError extends boolean = false>(options: Options<DeactivatePropertyMaintenancePlanData, ThrowOnError>) => (options.client ?? client).post<DeactivatePropertyMaintenancePlanResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/v1/property/maintenance/plans/{planId}/deactivate',
+    ...options
+});
+
+export const listPropertyUpcomingMaintenanceOccurrences = <ThrowOnError extends boolean = false>(options: Options<ListPropertyUpcomingMaintenanceOccurrencesData, ThrowOnError>) => (options.client ?? client).get<ListPropertyUpcomingMaintenanceOccurrencesResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/v1/property/maintenance/occurrences',
+    ...options
+});
+
+export const completePropertyMaintenanceOccurrence = <ThrowOnError extends boolean = false>(options: Options<CompletePropertyMaintenanceOccurrenceData, ThrowOnError>) => (options.client ?? client).post<CompletePropertyMaintenanceOccurrenceResponses, CompletePropertyMaintenanceOccurrenceErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/v1/property/maintenance/occurrences/{occurrenceId}/complete',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const skipPropertyMaintenanceOccurrence = <ThrowOnError extends boolean = false>(options: Options<SkipPropertyMaintenanceOccurrenceData, ThrowOnError>) => (options.client ?? client).post<SkipPropertyMaintenanceOccurrenceResponses, SkipPropertyMaintenanceOccurrenceErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/v1/property/maintenance/occurrences/{occurrenceId}/skip',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const promotePropertyMaintenanceOccurrence = <ThrowOnError extends boolean = false>(options: Options<PromotePropertyMaintenanceOccurrenceData, ThrowOnError>) => (options.client ?? client).post<PromotePropertyMaintenanceOccurrenceResponses, PromotePropertyMaintenanceOccurrenceErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/v1/property/maintenance/occurrences/{occurrenceId}/promote',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const listPropertyHistory = <ThrowOnError extends boolean = false>(options: Options<ListPropertyHistoryData, ThrowOnError>) => (options.client ?? client).get<ListPropertyHistoryResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/v1/property/history',
+    ...options
+});
+
+export const createPropertyHistoryEntry = <ThrowOnError extends boolean = false>(options: Options<CreatePropertyHistoryEntryData, ThrowOnError>) => (options.client ?? client).post<CreatePropertyHistoryEntryResponses, CreatePropertyHistoryEntryErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/v1/property/history',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const deletePropertyHistoryEntry = <ThrowOnError extends boolean = false>(options: Options<DeletePropertyHistoryEntryData, ThrowOnError>) => (options.client ?? client).delete<DeletePropertyHistoryEntryResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/v1/property/history/{historyEntryId}',
+    ...options
+});
+
+export const updatePropertyHistoryEntry = <ThrowOnError extends boolean = false>(options: Options<UpdatePropertyHistoryEntryData, ThrowOnError>) => (options.client ?? client).put<UpdatePropertyHistoryEntryResponses, UpdatePropertyHistoryEntryErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/v1/property/history/{historyEntryId}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+export const getPropertyHistoryPhotoContent = <ThrowOnError extends boolean = false>(options: Options<GetPropertyHistoryPhotoContentData, ThrowOnError>) => (options.client ?? client).get<GetPropertyHistoryPhotoContentResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/v1/property/history/{historyEntryId}/photos/{blobKey}/content',
+    ...options
 });
 
 /**

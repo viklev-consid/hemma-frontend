@@ -1,4 +1,4 @@
-import type { Currency, MoneyRequest, MoneyResponse } from "@/api/generated";
+import type { Currency, MoneyDto } from "@/api/generated";
 
 /**
  * Economy is SEK-only (see `docs/workflows/phase-1-economy-core.md`). The
@@ -19,13 +19,13 @@ const MONEY_AMOUNT_PATTERN = /^\d+(\.\d{1,2})?$/;
 type MoneyAmountInput = number | string;
 
 /**
- * Format a `MoneyResponse` for display. Parses the decimal string to a number
+ * Format a `MoneyDto` for display. Parses the decimal string to a number
  * for `Intl.NumberFormat` only — this is presentation, not arithmetic, and the
  * raw string is never mutated. Falls back to the raw amount if it isn't a
  * finite number so a malformed value is visible rather than rendered as "NaN".
  */
 export function formatMoney(
-  money: Pick<MoneyResponse, "amount" | "currency">,
+  money: Pick<MoneyDto, "amount" | "currency">,
   locale: string = ECONOMY_LOCALE,
 ): string {
   const numeric = Number(money.amount);
@@ -52,9 +52,9 @@ export function isValidMoneyAmount(value: MoneyAmountInput): boolean {
 }
 
 /**
- * Build a `MoneyRequest` from raw input. Always stamps `currency: "SEK"` — the
+ * Build a `MoneyDto` from raw input. Always stamps `currency: "SEK"` — the
  * UI never submits a currency literal or a picked value.
  */
-export function toMoneyRequest(amount: MoneyAmountInput): MoneyRequest {
+export function toMoneyRequest(amount: MoneyAmountInput): MoneyDto {
   return { amount: normalizeMoneyAmount(amount), currency: ECONOMY_CURRENCY };
 }
