@@ -7,8 +7,6 @@ import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 import { getEconomyCategoryTrendOptions } from "@/api/generated/@tanstack/react-query.gen";
 import {
   ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
   type ChartConfig,
@@ -22,6 +20,7 @@ import { pivotTrendSeries } from "@/lib/economy/series";
 import { useHousehold } from "@/lib/household-context";
 
 import { ChartCard } from "./analytics-card";
+import type { SelectedCategory } from "./category-detail-dialog";
 
 /**
  * Category trend — one line per category over a shared month axis. The trend
@@ -29,8 +28,19 @@ import { ChartCard } from "./analytics-card";
  * no zero-fill); `connectNulls={false}` so a month a category didn't spend in
  * reads as a gap, never interpolated spending. Colors come from the palette by
  * index (not via `ChartConfig`, so category ids/names never reach raw CSS).
+ *
+ * The legend renders below the chart as clickable chips — picking one drills
+ * into that category's detail dialog (`onSelectCategory`).
  */
-export function CategoryTrendChart({ from, to }: { from: string; to: string }) {
+export function CategoryTrendChart({
+  from,
+  to,
+  onSelectCategory,
+}: {
+  from: string;
+  to: string;
+  onSelectCategory: (category: SelectedCategory) => void;
+}) {
   const t = useTranslations("economy.analytics.categoryTrend");
   const { householdId } = useHousehold();
 
@@ -95,9 +105,32 @@ export function CategoryTrendChart({ from, to }: { from: string; to: string }) {
               connectNulls={false}
             />
           ))}
-          <ChartLegend content={<ChartLegendContent />} />
         </LineChart>
       </ChartContainer>
+
+      <ul className="mt-3 flex flex-wrap justify-center gap-x-4 gap-y-1.5">
+        {series.map((entry, index) => (
+          <li key={entry.categoryId}>
+            <button
+              type="button"
+              className="flex items-center gap-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground"
+              onClick={() =>
+                onSelectCategory({
+                  categoryId: entry.categoryId,
+                  categoryName: entry.categoryName,
+                })
+              }
+            >
+              <span
+                aria-hidden
+                className="size-2 shrink-0 rounded-[2px]"
+                style={{ backgroundColor: chartColor(index) }}
+              />
+              {entry.categoryName}
+            </button>
+          </li>
+        ))}
+      </ul>
     </ChartCard>
   );
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useQueryStates } from "nuqs";
 
@@ -12,6 +13,10 @@ import {
 } from "@/lib/economy/analytics";
 import { analyticsRangeParsers } from "@/lib/economy/analytics-filters";
 
+import {
+  CategoryDetailDialog,
+  type SelectedCategory,
+} from "./category-detail-dialog";
 import { CategoryTrendChart } from "./category-trend-chart";
 import { IncomeExpenseChart } from "./income-expense-chart";
 import { PeriodComparisonCard } from "./period-comparison-card";
@@ -45,6 +50,12 @@ export function AnalyticsPage() {
     const preset = analyticsRangeForMonths(months);
     return preset.from === from && preset.to === to;
   });
+
+  // Click-to-drill target: a category picked from the trend/breakdown opens a
+  // transient detail dialog. Not URL-persisted (it's a drill-down, not a view).
+  const [detailCategory, setDetailCategory] = useState<SelectedCategory | null>(
+    null,
+  );
 
   return (
     <div className="grid gap-6">
@@ -106,13 +117,30 @@ export function AnalyticsPage() {
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2">
-        <CategoryTrendChart from={from} to={to} />
-        <SpendBreakdownChart from={from} to={to} />
+        <CategoryTrendChart
+          from={from}
+          to={to}
+          onSelectCategory={setDetailCategory}
+        />
+        <SpendBreakdownChart
+          from={from}
+          to={to}
+          onSelectCategory={setDetailCategory}
+        />
         <IncomeExpenseChart from={from} to={to} />
         <VarianceHistoryChart from={from} to={to} />
         <PeriodComparisonCard />
         <TopTransactionsCard from={from} to={to} />
       </div>
+
+      <CategoryDetailDialog
+        category={detailCategory}
+        from={from}
+        to={to}
+        onOpenChange={(open) => {
+          if (!open) setDetailCategory(null);
+        }}
+      />
     </div>
   );
 }

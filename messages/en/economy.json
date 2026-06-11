@@ -725,6 +725,23 @@
         "Income": "Income",
         "Transfer": "Transfer"
       }
+    },
+    "categoryDetail": {
+      "title": "{category} over time",
+      "budgetVsActual": "Planned vs. actual spending for this category.",
+      "planned": "Planned",
+      "actual": "Actual",
+      "variance": "Variance",
+      "overBudget": "over budget",
+      "underBudget": "under budget",
+      "varianceHint": "Positive variance means under budget.",
+      "actualOnly": "No budget set for this category in this range — showing actual spend only.",
+      "budgetPeriodNote": "Buckets follow this household's budget periods.",
+      "empty": {
+        "title": "Not enough data yet",
+        "description": "Once this category has spending or a budget in this range, its history appears here."
+      },
+      "hint": "Click a category to see its history."
     }
   }
 }

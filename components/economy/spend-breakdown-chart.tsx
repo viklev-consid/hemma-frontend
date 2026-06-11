@@ -19,6 +19,7 @@ import {
 import { useHousehold } from "@/lib/household-context";
 
 import { ChartCard } from "./analytics-card";
+import type { SelectedCategory } from "./category-detail-dialog";
 import { Money } from "./money";
 
 /**
@@ -28,13 +29,18 @@ import { Money } from "./money";
  * recomputed). Uncategorized spend is absent by contract (resolved-Q #3) and we
  * add no client "other" slice; a Savings allocation renders like any other
  * slice (resolved-Q #4). Slices arrive sorted by value desc.
+ *
+ * Slices and legend rows are clickable — picking one drills into that
+ * category's detail dialog (`onSelectCategory`).
  */
 export function SpendBreakdownChart({
   from,
   to,
+  onSelectCategory,
 }: {
   from: string;
   to: string;
+  onSelectCategory: (category: SelectedCategory) => void;
 }) {
   const t = useTranslations("economy.analytics.spendBreakdown");
   const { householdId } = useHousehold();
@@ -89,6 +95,19 @@ export function SpendBreakdownChart({
               nameKey="label"
               innerRadius="55%"
               strokeWidth={2}
+              className="cursor-pointer focus:outline-none"
+              onClick={(entry) => {
+                // Recharts hands the sector; the original slice is on `.payload`.
+                const slice = (
+                  entry as unknown as {
+                    payload: { categoryId: string; categoryName: string };
+                  }
+                ).payload;
+                onSelectCategory({
+                  categoryId: slice.categoryId,
+                  categoryName: slice.categoryName,
+                });
+              }}
             >
               {slices.map((slice, index) => (
                 <Cell key={slice.categoryId} fill={chartColor(index)} />
@@ -99,24 +118,32 @@ export function SpendBreakdownChart({
 
         <ul className="grid gap-1.5 text-xs">
           {slices.map((slice, index) => (
-            <li
-              key={slice.categoryId}
-              className="flex items-center justify-between gap-3"
-            >
-              <span className="flex items-center gap-1.5">
-                <span
-                  aria-hidden
-                  className="size-2 shrink-0 rounded-[2px]"
-                  style={{ backgroundColor: chartColor(index) }}
-                />
-                <span className="text-muted-foreground">{slice.label}</span>
-              </span>
-              <span className="flex items-center gap-2">
-                <Money value={slice.value} className="font-medium" />
-                <span className="text-muted-foreground tabular-nums">
-                  {t("share", { percent: Number(slice.sharePercent) })}
+            <li key={slice.categoryId}>
+              <button
+                type="button"
+                className="flex w-full items-center justify-between gap-3 rounded-sm px-1 py-0.5 text-left transition-colors hover:bg-muted"
+                onClick={() =>
+                  onSelectCategory({
+                    categoryId: slice.categoryId,
+                    categoryName: slice.categoryName,
+                  })
+                }
+              >
+                <span className="flex items-center gap-1.5">
+                  <span
+                    aria-hidden
+                    className="size-2 shrink-0 rounded-[2px]"
+                    style={{ backgroundColor: chartColor(index) }}
+                  />
+                  <span className="text-muted-foreground">{slice.label}</span>
                 </span>
-              </span>
+                <span className="flex items-center gap-2">
+                  <Money value={slice.value} className="font-medium" />
+                  <span className="text-muted-foreground tabular-nums">
+                    {t("share", { percent: Number(slice.sharePercent) })}
+                  </span>
+                </span>
+              </button>
             </li>
           ))}
         </ul>

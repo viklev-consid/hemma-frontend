@@ -362,12 +362,22 @@ against the local backend 2026-06-10.
 /`?category=`) is **client-only** — never import it from the server page.
 `lib/economy/series.ts` (`unionLabels`, `pivotTrendSeries`) is pure.
 
-### 36. Calendar-month buckets vs. cycle-aware comparison — don't conflate
+### 36. Calendar-month buckets vs. period-aware surfaces — don't conflate
 
-Trend / income-vs-expense / variance series are labeled `"YYYY-MM"` **calendar**
-months regardless of `cycleStartDay`; render via `formatSeriesMonthLabel`.
-**Period-comparison is the only cycle-aware surface** — it takes `?anchor=` and
-the backend resolves the containing period from `cycleStartDay`; render its own
+**Trend** and **income-vs-expense** are labeled `"YYYY-MM"` **calendar** months
+regardless of `cycleStartDay`; render via `formatSeriesMonthLabel`.
+
+**Variance-history is NOT strict calendar-month.** It labels by the **budget-
+period start month** (`"YYYY-MM"`), so for a `cycleStartDay ≠ 1` household it's
+_budget-period history_, not calendar buckets — verified with a cycle-15
+household: a `Mat` transaction on **Apr 12** landed under the **`"2026-03"`**
+bucket (the period that starts Mar 15). For cycle day 1 it happens to coincide
+with calendar months. Same `formatSeriesMonthLabel` for display, but don't tell
+users these are calendar months. (This corrected an earlier wrong claim that
+lumped variance with the calendar-month surfaces.)
+
+**Period-comparison is fully cycle-aware** — it takes `?anchor=` and the backend
+resolves the containing period from `cycleStartDay`; render its own
 `currentPeriod*`/`previousPeriod*` bounds via `formatPeriodRange`. Prev/next
 steppers derive the adjacent anchor with `addDays` one day outside the returned
 bounds (#7 convention).
@@ -412,6 +422,19 @@ keys — so for series keyed by backend ids (category-trend lines, breakdown
 slices) set the color directly via `stroke`/`fill` from `chartColor(index)` and
 give `ChartConfig` entries only a `label`. Never pass a category id/name as a
 config color key.
+
+### 42. Per-category drill-down: `variance-history?categoryId=` + actual fallback
+
+`variance-history` takes an optional `categoryId` — when present, `planned`/
+`actual`/`variance` are scoped to that one budget category (omit → aggregate,
+unchanged). Clicking a category in the trend legend or breakdown
+(legend row / slice) opens `category-detail-dialog.tsx` (transient, **not**
+URL-persisted — it's a drill-down, not a view). The dialog shows that category's
+planned-vs-actual; if it isn't budgeted in range the series is empty (200) and
+it **falls back to the actual trend** from the cached `category-trend` so a click
+never opens an empty dialog. Inherits #36: the budgeted view's buckets are
+budget-period months (the dialog says so), the fallback is calendar months.
+⚠️ Budget lines are upserted via **`PUT /economy/budgets/lines`** (`POST` → 405).
 
 ## Forms
 
