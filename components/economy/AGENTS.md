@@ -30,6 +30,9 @@ points so an agent walking in cold makes correct calls.
 | rule/import enums, rule cap, `duplicateChip`            | `lib/economy/categorization-rule.ts`   |
 | `?step=` nuqs parser, **client-only**                   | `lib/economy/import-step.ts`           |
 | import-step names (server-safe, no nuqs)                | `lib/economy/import-step-constants.ts` |
+| analytics defaults + `toPlotValue`/labels, server-safe  | `lib/economy/analytics.ts`             |
+| analytics `?from=/?to=/?anchor=/?category=`, **client** | `lib/economy/analytics-filters.ts`     |
+| label-union / trend pivot (reshaping only, pure)        | `lib/economy/series.ts`                |
 
 ## Contract points — get these right
 
