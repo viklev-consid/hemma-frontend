@@ -794,6 +794,133 @@
         ]
       }
     },
+    "/v1/economy/transactions/{transactionId}/project": {
+      "post": {
+        "tags": [
+          "Hemma.Api"
+        ],
+        "summary": "Link or unlink an economy transaction to a property project.",
+        "operationId": "AssignEconomyTransactionToProject",
+        "parameters": [
+          {
+            "name": "transactionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignTransactionToProjectRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/v1/economy/projects/{projectId}/transactions": {
+      "get": {
+        "tags": [
+          "Hemma.Api"
+        ],
+        "summary": "List economy transactions linked to a property project.",
+        "operationId": "ListEconomyTransactionsForProject",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "householdId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "format": "int32"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListTransactionsForProjectResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
     "/v1/economy/transactions/search": {
       "get": {
         "tags": [
@@ -3556,6 +3683,1503 @@
         ]
       }
     },
+    "/v1/property/projects": {
+      "post": {
+        "tags": [
+          "Property"
+        ],
+        "operationId": "CreatePropertyProject",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Property"
+        ],
+        "operationId": "ListPropertyProjects",
+        "parameters": [
+          {
+            "name": "householdId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ProjectStatus"
+            }
+          },
+          {
+            "name": "area",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListProjectsResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/v1/property/projects/{projectId}": {
+      "get": {
+        "tags": [
+          "Property"
+        ],
+        "operationId": "GetPropertyProject",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "householdId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Property"
+        ],
+        "operationId": "UpdatePropertyProject",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Property"
+        ],
+        "operationId": "DeletePropertyProject",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "householdId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/v1/property/projects/{projectId}/budget": {
+      "get": {
+        "tags": [
+          "Property"
+        ],
+        "operationId": "GetPropertyProjectBudget",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "householdId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetProjectBudgetResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/v1/property/projects/{projectId}/status": {
+      "post": {
+        "tags": [
+          "Property"
+        ],
+        "operationId": "ChangePropertyProjectStatus",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeProjectStatusRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChangeProjectStatusResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/v1/property/projects/{projectId}/tasks": {
+      "get": {
+        "tags": [
+          "Property"
+        ],
+        "operationId": "GetPropertyProjectTasks",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "householdId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Property"
+        ],
+        "operationId": "AddPropertyProjectTask",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectTaskRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/v1/property/projects/{projectId}/tasks/{taskId}": {
+      "put": {
+        "tags": [
+          "Property"
+        ],
+        "operationId": "UpdatePropertyProjectTask",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "taskId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectTaskRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Property"
+        ],
+        "operationId": "DeletePropertyProjectTask",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "taskId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "householdId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/v1/property/projects/{projectId}/tasks/reorder": {
+      "post": {
+        "tags": [
+          "Property"
+        ],
+        "operationId": "ReorderPropertyProjectTasks",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReorderTasksRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/v1/property/projects/{projectId}/links": {
+      "post": {
+        "tags": [
+          "Property"
+        ],
+        "operationId": "AddPropertyProjectLink",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectLinkRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/v1/property/projects/{projectId}/links/{linkId}": {
+      "delete": {
+        "tags": [
+          "Property"
+        ],
+        "operationId": "RemovePropertyProjectLink",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "linkId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "householdId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/v1/property/projects/{projectId}/attachments": {
+      "post": {
+        "tags": [
+          "Property"
+        ],
+        "operationId": "AddPropertyProjectAttachment",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "householdId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "file"
+                ],
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "$ref": "#/components/schemas/IFormFile"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/v1/property/projects/{projectId}/attachments/{attachmentId}/content": {
+      "get": {
+        "tags": [
+          "Property"
+        ],
+        "operationId": "GetPropertyProjectAttachmentContent",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "attachmentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "householdId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/v1/property/projects/{projectId}/attachments/{attachmentId}": {
+      "delete": {
+        "tags": [
+          "Property"
+        ],
+        "operationId": "RemovePropertyProjectAttachment",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "attachmentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "householdId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/v1/property/maintenance/plans": {
+      "post": {
+        "tags": [
+          "Property"
+        ],
+        "operationId": "CreatePropertyMaintenancePlan",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MaintenancePlanRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetMaintenancePlanResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Property"
+        ],
+        "operationId": "ListPropertyMaintenancePlans",
+        "parameters": [
+          {
+            "name": "householdId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "activeOnly",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListMaintenancePlansResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/v1/property/maintenance/plans/{planId}": {
+      "get": {
+        "tags": [
+          "Property"
+        ],
+        "operationId": "GetPropertyMaintenancePlan",
+        "parameters": [
+          {
+            "name": "planId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "householdId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetMaintenancePlanResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Property"
+        ],
+        "operationId": "UpdatePropertyMaintenancePlan",
+        "parameters": [
+          {
+            "name": "planId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MaintenancePlanRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaintenancePlanResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Property"
+        ],
+        "operationId": "DeletePropertyMaintenancePlan",
+        "parameters": [
+          {
+            "name": "planId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "householdId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/v1/property/maintenance/plans/{planId}/deactivate": {
+      "post": {
+        "tags": [
+          "Property"
+        ],
+        "operationId": "DeactivatePropertyMaintenancePlan",
+        "parameters": [
+          {
+            "name": "planId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "householdId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaintenancePlanResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/v1/property/maintenance/occurrences": {
+      "get": {
+        "tags": [
+          "Property"
+        ],
+        "operationId": "ListPropertyUpcomingMaintenanceOccurrences",
+        "parameters": [
+          {
+            "name": "householdId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "horizonDays",
+            "in": "query",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListUpcomingOccurrencesResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/v1/property/maintenance/occurrences/{occurrenceId}/complete": {
+      "post": {
+        "tags": [
+          "Property"
+        ],
+        "operationId": "CompletePropertyMaintenanceOccurrence",
+        "parameters": [
+          {
+            "name": "occurrenceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompleteOccurrenceRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompleteOccurrenceResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/v1/property/maintenance/occurrences/{occurrenceId}/skip": {
+      "post": {
+        "tags": [
+          "Property"
+        ],
+        "operationId": "SkipPropertyMaintenanceOccurrence",
+        "parameters": [
+          {
+            "name": "occurrenceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SkipOccurrenceRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SkipOccurrenceResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/v1/property/maintenance/occurrences/{occurrenceId}/promote": {
+      "post": {
+        "tags": [
+          "Property"
+        ],
+        "operationId": "PromotePropertyMaintenanceOccurrence",
+        "parameters": [
+          {
+            "name": "occurrenceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PromoteOccurrenceRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PromoteOccurrenceResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/v1/property/history": {
+      "post": {
+        "tags": [
+          "Property"
+        ],
+        "operationId": "CreatePropertyHistoryEntry",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HistoryEntryRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HistoryEntryResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Property"
+        ],
+        "operationId": "ListPropertyHistory",
+        "parameters": [
+          {
+            "name": "householdId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "year",
+            "in": "query",
+            "schema": {
+              "pattern": "^-?(?:0|[1-9]\\d*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "format": "int32"
+            }
+          },
+          {
+            "name": "area",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/HistoryEntryType"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListHistoryResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/v1/property/history/{historyEntryId}": {
+      "put": {
+        "tags": [
+          "Property"
+        ],
+        "operationId": "UpdatePropertyHistoryEntry",
+        "parameters": [
+          {
+            "name": "historyEntryId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HistoryEntryRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HistoryEntryResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HttpValidationProblemDetails"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Property"
+        ],
+        "operationId": "DeletePropertyHistoryEntry",
+        "parameters": [
+          {
+            "name": "historyEntryId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "householdId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
+    "/v1/property/history/{historyEntryId}/photos/{blobKey}/content": {
+      "get": {
+        "tags": [
+          "Property"
+        ],
+        "operationId": "GetPropertyHistoryPhotoContent",
+        "parameters": [
+          {
+            "name": "historyEntryId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "blobKey",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "householdId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "Bearer": [ ]
+          }
+        ]
+      }
+    },
     "/v1/users/register": {
       "post": {
         "tags": [
@@ -5445,7 +7069,7 @@
             "$ref": "#/components/schemas/AccountType"
           },
           "balance": {
-            "$ref": "#/components/schemas/MoneyResponse"
+            "$ref": "#/components/schemas/MoneyDto"
           }
         }
       },
@@ -5474,7 +7098,7 @@
             "$ref": "#/components/schemas/AccountType"
           },
           "openingBalance": {
-            "$ref": "#/components/schemas/MoneyResponse"
+            "$ref": "#/components/schemas/MoneyDto"
           }
         }
       },
@@ -5510,6 +7134,26 @@
           },
           "budgetable": {
             "type": "boolean"
+          }
+        }
+      },
+      "AssignTransactionToProjectRequest": {
+        "required": [
+          "householdId",
+          "projectId"
+        ],
+        "type": "object",
+        "properties": {
+          "householdId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "projectId": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "uuid"
           }
         }
       },
@@ -5594,7 +7238,7 @@
             "format": "uuid"
           },
           "amount": {
-            "$ref": "#/components/schemas/MoneyResponse"
+            "$ref": "#/components/schemas/MoneyDto"
           }
         }
       },
@@ -5652,10 +7296,10 @@
             "format": "uuid"
           },
           "planned": {
-            "$ref": "#/components/schemas/MoneyResponse"
+            "$ref": "#/components/schemas/MoneyDto"
           },
           "actual": {
-            "$ref": "#/components/schemas/MoneyResponse"
+            "$ref": "#/components/schemas/MoneyDto"
           },
           "pacePercent": {
             "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
@@ -5875,6 +7519,44 @@
           }
         }
       },
+      "ChangeProjectStatusRequest": {
+        "required": [
+          "householdId",
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "householdId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ProjectStatus"
+          }
+        }
+      },
+      "ChangeProjectStatusResponse": {
+        "required": [
+          "project",
+          "suggestedHistoryEntry"
+        ],
+        "type": "object",
+        "properties": {
+          "project": {
+            "$ref": "#/components/schemas/ProjectResponse"
+          },
+          "suggestedHistoryEntry": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/SuggestedHistoryEntryResponse"
+              }
+            ]
+          }
+        }
+      },
       "ChangeRecurringBillOccurrenceRequest": {
         "required": [
           "householdId",
@@ -5938,7 +7620,7 @@
             "format": "date"
           },
           "amount": {
-            "$ref": "#/components/schemas/MoneyResponse"
+            "$ref": "#/components/schemas/MoneyDto"
           },
           "note": {
             "type": [
@@ -6071,6 +7753,58 @@
           }
         }
       },
+      "CompleteOccurrenceRequest": {
+        "required": [
+          "householdId",
+          "notes"
+        ],
+        "type": "object",
+        "properties": {
+          "householdId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "notes": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "CompleteOccurrenceResponse": {
+        "required": [
+          "occurrence",
+          "suggestedHistoryEntry",
+          "nextOccurrence"
+        ],
+        "type": "object",
+        "properties": {
+          "occurrence": {
+            "$ref": "#/components/schemas/MaintenanceOccurrenceResponse"
+          },
+          "suggestedHistoryEntry": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/SuggestedHistoryEntryResponse"
+              }
+            ]
+          },
+          "nextOccurrence": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/MaintenanceOccurrenceResponse"
+              }
+            ]
+          }
+        }
+      },
       "CompleteOnboardingRequest": {
         "type": "object",
         "properties": {
@@ -6146,7 +7880,7 @@
             "format": "uuid"
           },
           "amount": {
-            "$ref": "#/components/schemas/MoneyRequest"
+            "$ref": "#/components/schemas/MoneyDto"
           },
           "occurredOn": {
             "type": "string",
@@ -6216,7 +7950,7 @@
             "$ref": "#/components/schemas/AccountType"
           },
           "openingBalance": {
-            "$ref": "#/components/schemas/MoneyRequest"
+            "$ref": "#/components/schemas/MoneyDto"
           }
         }
       },
@@ -6454,7 +8188,7 @@
             "format": "uuid"
           },
           "amount": {
-            "$ref": "#/components/schemas/MoneyRequest"
+            "$ref": "#/components/schemas/MoneyDto"
           },
           "type": {
             "$ref": "#/components/schemas/RecurringBillType"
@@ -6523,7 +8257,7 @@
             "format": "int32"
           },
           "expectedAmount": {
-            "$ref": "#/components/schemas/MoneyRequest"
+            "$ref": "#/components/schemas/MoneyDto"
           },
           "lifecycleState": {
             "$ref": "#/components/schemas/SubscriptionLifecycleState"
@@ -6575,7 +8309,7 @@
             "format": "uuid"
           },
           "amount": {
-            "$ref": "#/components/schemas/MoneyRequest"
+            "$ref": "#/components/schemas/MoneyDto"
           },
           "occurredOn": {
             "type": "string",
@@ -7268,6 +9002,28 @@
           }
         }
       },
+      "GetMaintenancePlanResponse": {
+        "required": [
+          "plan",
+          "nextOccurrence"
+        ],
+        "type": "object",
+        "properties": {
+          "plan": {
+            "$ref": "#/components/schemas/MaintenancePlanResponse"
+          },
+          "nextOccurrence": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/MaintenanceOccurrenceResponse"
+              }
+            ]
+          }
+        }
+      },
       "GetMyNotificationPreferencesResponse": {
         "required": [
           "preferences"
@@ -7327,6 +9083,48 @@
             "items": {
               "$ref": "#/components/schemas/PeriodComparisonItemResponse"
             }
+          }
+        }
+      },
+      "GetProjectBudgetResponse": {
+        "required": [
+          "estimate",
+          "linkedTotal",
+          "remaining",
+          "transactionCount"
+        ],
+        "type": "object",
+        "properties": {
+          "estimate": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/MoneyDto"
+              }
+            ]
+          },
+          "linkedTotal": {
+            "$ref": "#/components/schemas/MoneyDto"
+          },
+          "remaining": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/MoneyDto"
+              }
+            ]
+          },
+          "transactionCount": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
           }
         }
       },
@@ -7418,6 +9216,198 @@
             "items": {
               "$ref": "#/components/schemas/VarianceHistoryPointResponse"
             }
+          }
+        }
+      },
+      "HistoryEntryRequest": {
+        "required": [
+          "householdId",
+          "date",
+          "title",
+          "area",
+          "cost",
+          "type",
+          "sourceProjectId",
+          "sourceMaintenanceOccurrenceId",
+          "photoRefs"
+        ],
+        "type": "object",
+        "properties": {
+          "householdId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "title": {
+            "type": "string"
+          },
+          "area": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "cost": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/MoneyDto"
+              }
+            ]
+          },
+          "type": {
+            "$ref": "#/components/schemas/HistoryEntryType"
+          },
+          "sourceProjectId": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "uuid"
+          },
+          "sourceMaintenanceOccurrenceId": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "uuid"
+          },
+          "photoRefs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HistoryPhotoRefRequest"
+            }
+          }
+        }
+      },
+      "HistoryEntryResponse": {
+        "required": [
+          "historyEntryId",
+          "householdId",
+          "date",
+          "title",
+          "area",
+          "cost",
+          "type",
+          "sourceProjectId",
+          "sourceMaintenanceOccurrenceId",
+          "photos"
+        ],
+        "type": "object",
+        "properties": {
+          "historyEntryId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "householdId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "title": {
+            "type": "string"
+          },
+          "area": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "cost": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/MoneyDto"
+              }
+            ]
+          },
+          "type": {
+            "$ref": "#/components/schemas/HistoryEntryType"
+          },
+          "sourceProjectId": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "uuid"
+          },
+          "sourceMaintenanceOccurrenceId": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "uuid"
+          },
+          "photos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HistoryPhotoResponse"
+            }
+          }
+        }
+      },
+      "HistoryEntryType": {
+        "enum": [
+          "Project",
+          "Maintenance",
+          "Manual"
+        ],
+        "type": "string"
+      },
+      "HistoryPhotoRefRequest": {
+        "required": [
+          "container",
+          "key"
+        ],
+        "type": "object",
+        "properties": {
+          "container": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          }
+        }
+      },
+      "HistoryPhotoResponse": {
+        "required": [
+          "container",
+          "key",
+          "fileName",
+          "contentType",
+          "size"
+        ],
+        "type": "object",
+        "properties": {
+          "container": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "fileName": {
+            "type": "string"
+          },
+          "contentType": {
+            "type": "string"
+          },
+          "size": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int64"
           }
         }
       },
@@ -7654,7 +9644,7 @@
                 "type": "null"
               },
               {
-                "$ref": "#/components/schemas/MoneyResponse"
+                "$ref": "#/components/schemas/MoneyDto"
               }
             ]
           },
@@ -7685,7 +9675,7 @@
                 "type": "null"
               },
               {
-                "$ref": "#/components/schemas/MoneyResponse"
+                "$ref": "#/components/schemas/MoneyDto"
               }
             ]
           },
@@ -7777,13 +9767,13 @@
             "type": "string"
           },
           "income": {
-            "$ref": "#/components/schemas/MoneyResponse"
+            "$ref": "#/components/schemas/MoneyDto"
           },
           "expense": {
-            "$ref": "#/components/schemas/MoneyResponse"
+            "$ref": "#/components/schemas/MoneyDto"
           },
           "net": {
-            "$ref": "#/components/schemas/MoneyResponse"
+            "$ref": "#/components/schemas/MoneyDto"
           }
         }
       },
@@ -7842,7 +9832,7 @@
             "format": "date"
           },
           "amount": {
-            "$ref": "#/components/schemas/MoneyResponse"
+            "$ref": "#/components/schemas/MoneyDto"
           },
           "note": {
             "type": [
@@ -7926,6 +9916,20 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/CategorizationRuleResponse"
+            }
+          }
+        }
+      },
+      "ListHistoryResponse": {
+        "required": [
+          "entries"
+        ],
+        "type": "object",
+        "properties": {
+          "entries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HistoryEntryResponse"
             }
           }
         }
@@ -8099,6 +10103,20 @@
           }
         }
       },
+      "ListMaintenancePlansResponse": {
+        "required": [
+          "plans"
+        ],
+        "type": "object",
+        "properties": {
+          "plans": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MaintenancePlanResponse"
+            }
+          }
+        }
+      },
       "ListMyHouseholdsResponse": {
         "required": [
           "households"
@@ -8143,6 +10161,20 @@
           }
         }
       },
+      "ListProjectsResponse": {
+        "required": [
+          "projects"
+        ],
+        "type": "object",
+        "properties": {
+          "projects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProjectListItemResponse"
+            }
+          }
+        }
+      },
       "ListRecurringBillsResponse": {
         "required": [
           "recurringBills"
@@ -8168,6 +10200,47 @@
             "items": {
               "$ref": "#/components/schemas/SubscriptionResponse"
             }
+          }
+        }
+      },
+      "ListTransactionsForProjectResponse": {
+        "required": [
+          "transactions",
+          "page",
+          "pageSize",
+          "totalCount"
+        ],
+        "type": "object",
+        "properties": {
+          "transactions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransactionResponse"
+            }
+          },
+          "page": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "pageSize": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "totalCount": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
           }
         }
       },
@@ -8209,6 +10282,20 @@
               "string"
             ],
             "format": "int32"
+          }
+        }
+      },
+      "ListUpcomingOccurrencesResponse": {
+        "required": [
+          "occurrences"
+        ],
+        "type": "object",
+        "properties": {
+          "occurrences": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UpcomingOccurrenceItem"
+            }
           }
         }
       },
@@ -8453,23 +10540,199 @@
           }
         }
       },
-      "MoneyRequest": {
+      "MaintenanceOccurrenceResponse": {
         "required": [
-          "amount",
-          "currency"
+          "occurrenceId",
+          "planId",
+          "householdId",
+          "dueDate",
+          "status",
+          "completedAt",
+          "notes",
+          "spawnedProjectId"
         ],
         "type": "object",
         "properties": {
-          "amount": {
-            "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
-            "type": "string"
+          "occurrenceId": {
+            "type": "string",
+            "format": "uuid"
           },
-          "currency": {
-            "$ref": "#/components/schemas/Currency"
+          "planId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "householdId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "dueDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "status": {
+            "$ref": "#/components/schemas/MaintenanceOccurrenceStatus"
+          },
+          "completedAt": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          },
+          "notes": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "spawnedProjectId": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "uuid"
           }
         }
       },
-      "MoneyResponse": {
+      "MaintenanceOccurrenceStatus": {
+        "enum": [
+          "Upcoming",
+          "Done",
+          "Skipped"
+        ],
+        "type": "string"
+      },
+      "MaintenancePlanRequest": {
+        "required": [
+          "householdId",
+          "title",
+          "description",
+          "area",
+          "recurrenceUnit",
+          "recurrenceInterval",
+          "anchorDate",
+          "leadTimeDays"
+        ],
+        "type": "object",
+        "properties": {
+          "householdId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "area": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "recurrenceUnit": {
+            "$ref": "#/components/schemas/MaintenanceRecurrenceUnit"
+          },
+          "recurrenceInterval": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "anchorDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "leadTimeDays": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          }
+        }
+      },
+      "MaintenancePlanResponse": {
+        "required": [
+          "planId",
+          "householdId",
+          "title",
+          "description",
+          "area",
+          "recurrenceUnit",
+          "recurrenceInterval",
+          "anchorDate",
+          "leadTimeDays",
+          "isActive"
+        ],
+        "type": "object",
+        "properties": {
+          "planId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "householdId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "area": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "recurrenceUnit": {
+            "$ref": "#/components/schemas/MaintenanceRecurrenceUnit"
+          },
+          "recurrenceInterval": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "anchorDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "leadTimeDays": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        }
+      },
+      "MaintenanceRecurrenceUnit": {
+        "enum": [
+          "Month",
+          "Year"
+        ],
+        "type": "string"
+      },
+      "MoneyDto": {
         "required": [
           "amount",
           "currency"
@@ -8496,7 +10759,7 @@
             "type": "string"
           },
           "value": {
-            "$ref": "#/components/schemas/MoneyResponse"
+            "$ref": "#/components/schemas/MoneyDto"
           }
         }
       },
@@ -8520,10 +10783,10 @@
             }
           },
           "actualTotal": {
-            "$ref": "#/components/schemas/MoneyResponse"
+            "$ref": "#/components/schemas/MoneyDto"
           },
           "predictedTotal": {
-            "$ref": "#/components/schemas/MoneyResponse"
+            "$ref": "#/components/schemas/MoneyDto"
           }
         }
       },
@@ -8564,7 +10827,7 @@
             "type": "string"
           },
           "amount": {
-            "$ref": "#/components/schemas/MoneyResponse"
+            "$ref": "#/components/schemas/MoneyDto"
           },
           "matchState": {
             "$ref": "#/components/schemas/SubscriptionMatchState"
@@ -8762,7 +11025,7 @@
                 "type": "null"
               },
               {
-                "$ref": "#/components/schemas/MoneyRequest"
+                "$ref": "#/components/schemas/MoneyDto"
               }
             ]
           },
@@ -8879,13 +11142,13 @@
             "type": "string"
           },
           "current": {
-            "$ref": "#/components/schemas/MoneyResponse"
+            "$ref": "#/components/schemas/MoneyDto"
           },
           "previous": {
-            "$ref": "#/components/schemas/MoneyResponse"
+            "$ref": "#/components/schemas/MoneyDto"
           },
           "delta": {
-            "$ref": "#/components/schemas/MoneyResponse"
+            "$ref": "#/components/schemas/MoneyDto"
           },
           "deltaPercent": {
             "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
@@ -8989,10 +11252,10 @@
             "format": "date"
           },
           "previousAmount": {
-            "$ref": "#/components/schemas/MoneyResponse"
+            "$ref": "#/components/schemas/MoneyDto"
           },
           "newAmount": {
-            "$ref": "#/components/schemas/MoneyResponse"
+            "$ref": "#/components/schemas/MoneyDto"
           }
         }
       },
@@ -9034,6 +11297,555 @@
           }
         }
       },
+      "ProjectAttachmentResponse": {
+        "required": [
+          "attachmentId",
+          "projectId",
+          "fileName",
+          "contentType",
+          "size"
+        ],
+        "type": "object",
+        "properties": {
+          "attachmentId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "projectId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "fileName": {
+            "type": "string"
+          },
+          "contentType": {
+            "type": "string"
+          },
+          "size": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int64"
+          }
+        }
+      },
+      "ProjectLinkRequest": {
+        "required": [
+          "householdId",
+          "label",
+          "url"
+        ],
+        "type": "object",
+        "properties": {
+          "householdId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "label": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      },
+      "ProjectLinkResponse": {
+        "required": [
+          "linkId",
+          "projectId",
+          "label",
+          "url"
+        ],
+        "type": "object",
+        "properties": {
+          "linkId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "projectId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "label": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      },
+      "ProjectListItemResponse": {
+        "required": [
+          "projectId",
+          "householdId",
+          "name",
+          "description",
+          "status",
+          "area",
+          "targetStartDate",
+          "targetEndDate",
+          "budgetEstimate",
+          "completedAt",
+          "notes"
+        ],
+        "type": "object",
+        "properties": {
+          "projectId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "householdId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "status": {
+            "$ref": "#/components/schemas/ProjectStatus"
+          },
+          "area": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "targetStartDate": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date"
+          },
+          "targetEndDate": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date"
+          },
+          "budgetEstimate": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/MoneyDto"
+              }
+            ]
+          },
+          "completedAt": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          },
+          "notes": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "ProjectRequest": {
+        "required": [
+          "householdId",
+          "name",
+          "description",
+          "status",
+          "area",
+          "targetStartDate",
+          "targetEndDate",
+          "budgetEstimate",
+          "notes"
+        ],
+        "type": "object",
+        "properties": {
+          "householdId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "status": {
+            "$ref": "#/components/schemas/ProjectStatus"
+          },
+          "area": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "targetStartDate": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date"
+          },
+          "targetEndDate": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date"
+          },
+          "budgetEstimate": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/MoneyDto"
+              }
+            ]
+          },
+          "notes": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "ProjectResponse": {
+        "required": [
+          "projectId",
+          "householdId",
+          "name",
+          "description",
+          "status",
+          "area",
+          "targetStartDate",
+          "targetEndDate",
+          "budgetEstimate",
+          "completedAt",
+          "notes",
+          "tasks",
+          "links",
+          "attachments"
+        ],
+        "type": "object",
+        "properties": {
+          "projectId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "householdId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "status": {
+            "$ref": "#/components/schemas/ProjectStatus"
+          },
+          "area": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "targetStartDate": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date"
+          },
+          "targetEndDate": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date"
+          },
+          "budgetEstimate": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/MoneyDto"
+              }
+            ]
+          },
+          "completedAt": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          },
+          "notes": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "tasks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProjectTaskResponse"
+            }
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProjectLinkResponse"
+            }
+          },
+          "attachments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProjectAttachmentResponse"
+            }
+          }
+        }
+      },
+      "ProjectStatus": {
+        "enum": [
+          "Planning",
+          "Active",
+          "OnHold",
+          "Done"
+        ],
+        "type": "string"
+      },
+      "ProjectTaskRequest": {
+        "required": [
+          "householdId",
+          "title",
+          "status",
+          "estimate",
+          "assigneeId",
+          "dueDate"
+        ],
+        "type": "object",
+        "properties": {
+          "householdId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ProjectTaskStatus"
+          },
+          "estimate": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/MoneyDto"
+              }
+            ]
+          },
+          "assigneeId": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "uuid"
+          },
+          "dueDate": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date"
+          }
+        }
+      },
+      "ProjectTaskResponse": {
+        "required": [
+          "taskId",
+          "projectId",
+          "title",
+          "status",
+          "estimate",
+          "assigneeId",
+          "dueDate",
+          "sortOrder"
+        ],
+        "type": "object",
+        "properties": {
+          "taskId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "projectId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ProjectTaskStatus"
+          },
+          "estimate": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/MoneyDto"
+              }
+            ]
+          },
+          "assigneeId": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "uuid"
+          },
+          "dueDate": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date"
+          },
+          "sortOrder": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          }
+        }
+      },
+      "ProjectTaskStatus": {
+        "enum": [
+          "Todo",
+          "Doing",
+          "Done"
+        ],
+        "type": "string"
+      },
+      "PromoteOccurrenceRequest": {
+        "required": [
+          "householdId",
+          "name",
+          "description",
+          "status",
+          "area",
+          "targetStartDate",
+          "targetEndDate",
+          "budgetEstimate",
+          "notes"
+        ],
+        "type": "object",
+        "properties": {
+          "householdId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "status": {
+            "$ref": "#/components/schemas/ProjectStatus"
+          },
+          "area": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "targetStartDate": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date"
+          },
+          "targetEndDate": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date"
+          },
+          "budgetEstimate": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/MoneyDto"
+              }
+            ]
+          },
+          "notes": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "PromoteOccurrenceResponse": {
+        "required": [
+          "occurrence",
+          "project",
+          "nextOccurrence"
+        ],
+        "type": "object",
+        "properties": {
+          "occurrence": {
+            "$ref": "#/components/schemas/MaintenanceOccurrenceResponse"
+          },
+          "project": {
+            "$ref": "#/components/schemas/ProjectResponse"
+          },
+          "nextOccurrence": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/MaintenanceOccurrenceResponse"
+              }
+            ]
+          }
+        }
+      },
       "RecordTransactionRequest": {
         "required": [
           "householdId",
@@ -9063,7 +11875,7 @@
             "format": "uuid"
           },
           "amount": {
-            "$ref": "#/components/schemas/MoneyRequest"
+            "$ref": "#/components/schemas/MoneyDto"
           },
           "occurredOn": {
             "type": "string",
@@ -9171,7 +11983,7 @@
             "format": "uuid"
           },
           "amount": {
-            "$ref": "#/components/schemas/MoneyResponse"
+            "$ref": "#/components/schemas/MoneyDto"
           },
           "type": {
             "$ref": "#/components/schemas/RecurringBillType"
@@ -9328,6 +12140,26 @@
           "message": {
             "type": "string",
             "default": "Registration successful. Check your email to confirm your account before signing in."
+          }
+        }
+      },
+      "ReorderTasksRequest": {
+        "required": [
+          "householdId",
+          "taskIds"
+        ],
+        "type": "object",
+        "properties": {
+          "householdId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "taskIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
           }
         }
       },
@@ -9493,6 +12325,47 @@
           }
         }
       },
+      "SkipOccurrenceRequest": {
+        "required": [
+          "householdId",
+          "notes"
+        ],
+        "type": "object",
+        "properties": {
+          "householdId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "notes": {
+            "type": [
+              "null",
+              "string"
+            ]
+          }
+        }
+      },
+      "SkipOccurrenceResponse": {
+        "required": [
+          "occurrence",
+          "nextOccurrence"
+        ],
+        "type": "object",
+        "properties": {
+          "occurrence": {
+            "$ref": "#/components/schemas/MaintenanceOccurrenceResponse"
+          },
+          "nextOccurrence": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/MaintenanceOccurrenceResponse"
+              }
+            ]
+          }
+        }
+      },
       "SpendBreakdownSliceResponse": {
         "required": [
           "label",
@@ -9514,7 +12387,7 @@
             "type": "string"
           },
           "value": {
-            "$ref": "#/components/schemas/MoneyResponse"
+            "$ref": "#/components/schemas/MoneyDto"
           },
           "sharePercent": {
             "pattern": "^-?(?:0|[1-9]\\d*)(?:\\.\\d+)?$",
@@ -9563,7 +12436,7 @@
             "$ref": "#/components/schemas/SubscriptionMatchState"
           },
           "expectedAmount": {
-            "$ref": "#/components/schemas/MoneyResponse"
+            "$ref": "#/components/schemas/MoneyDto"
           }
         }
       },
@@ -9639,7 +12512,7 @@
             "format": "int32"
           },
           "expectedAmount": {
-            "$ref": "#/components/schemas/MoneyResponse"
+            "$ref": "#/components/schemas/MoneyDto"
           },
           "lifecycleState": {
             "$ref": "#/components/schemas/SubscriptionLifecycleState"
@@ -9668,6 +12541,82 @@
               "string"
             ],
             "format": "date"
+          }
+        }
+      },
+      "SuggestedHistoryAttachmentResponse": {
+        "required": [
+          "container",
+          "key"
+        ],
+        "type": "object",
+        "properties": {
+          "container": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          }
+        }
+      },
+      "SuggestedHistoryEntryResponse": {
+        "required": [
+          "date",
+          "title",
+          "area",
+          "cost",
+          "type",
+          "sourceProjectId",
+          "sourceMaintenanceOccurrenceId",
+          "photoRefs"
+        ],
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "title": {
+            "type": "string"
+          },
+          "area": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "cost": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/MoneyDto"
+              }
+            ]
+          },
+          "type": {
+            "$ref": "#/components/schemas/HistoryEntryType"
+          },
+          "sourceProjectId": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "uuid"
+          },
+          "sourceMaintenanceOccurrenceId": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "uuid"
+          },
+          "photoRefs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SuggestedHistoryAttachmentResponse"
+            }
           }
         }
       },
@@ -9728,7 +12677,7 @@
             ]
           },
           "amount": {
-            "$ref": "#/components/schemas/MoneyResponse"
+            "$ref": "#/components/schemas/MoneyDto"
           },
           "kind": {
             "$ref": "#/components/schemas/TransactionKind"
@@ -9786,7 +12735,7 @@
             "format": "uuid"
           },
           "amount": {
-            "$ref": "#/components/schemas/MoneyResponse"
+            "$ref": "#/components/schemas/MoneyDto"
           },
           "occurredOn": {
             "type": "string",
@@ -9829,6 +12778,48 @@
           "Savings"
         ],
         "type": "string"
+      },
+      "UpcomingOccurrenceItem": {
+        "required": [
+          "occurrenceId",
+          "planId",
+          "householdId",
+          "planTitle",
+          "area",
+          "dueDate",
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "occurrenceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "planId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "householdId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "planTitle": {
+            "type": "string"
+          },
+          "area": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "dueDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "status": {
+            "$ref": "#/components/schemas/MaintenanceOccurrenceStatus"
+          }
+        }
       },
       "UpdateAvatarResponse": {
         "required": [
@@ -10038,7 +13029,7 @@
             "format": "uuid"
           },
           "amount": {
-            "$ref": "#/components/schemas/MoneyRequest"
+            "$ref": "#/components/schemas/MoneyDto"
           }
         }
       },
@@ -10055,13 +13046,13 @@
             "type": "string"
           },
           "planned": {
-            "$ref": "#/components/schemas/MoneyResponse"
+            "$ref": "#/components/schemas/MoneyDto"
           },
           "actual": {
-            "$ref": "#/components/schemas/MoneyResponse"
+            "$ref": "#/components/schemas/MoneyDto"
           },
           "variance": {
-            "$ref": "#/components/schemas/MoneyResponse"
+            "$ref": "#/components/schemas/MoneyDto"
           }
         }
       }
@@ -10077,6 +13068,9 @@
   "tags": [
     {
       "name": "Hemma.Api"
+    },
+    {
+      "name": "Property"
     },
     {
       "name": "Admin — Dead Letters"

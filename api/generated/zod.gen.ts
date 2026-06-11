@@ -32,6 +32,11 @@ export const zAddCategoryRequest = z.object({
     budgetable: z.boolean()
 });
 
+export const zAssignTransactionToProjectRequest = z.object({
+    householdId: z.uuid(),
+    projectId: z.uuid().nullable()
+});
+
 export const zAttachReceiptResponse = z.object({
     transactionId: z.uuid(),
     blobContainer: z.string(),
@@ -87,6 +92,11 @@ export const zChangePasswordResponse = z.object({
 export const zChangeRecurringBillOccurrenceRequest = z.object({
     householdId: z.uuid(),
     dueOn: z.iso.date()
+});
+
+export const zCompleteOccurrenceRequest = z.object({
+    householdId: z.uuid(),
+    notes: z.string().nullable()
 });
 
 export const zCompleteOnboardingRequest = z.object({
@@ -283,6 +293,28 @@ export const zGetUnreadNotificationCountResponse = z.object({
     count: z.union([
         z.int().min(-2147483648, { error: 'Invalid value: Expected int32 to be >= -2147483648' }).max(2147483647, { error: 'Invalid value: Expected int32 to be <= 2147483647' }),
         z.string().regex(/^-?(?:0|[1-9]\d*)$/)
+    ])
+});
+
+export const zHistoryEntryType = z.enum([
+    'Project',
+    'Maintenance',
+    'Manual'
+]);
+
+export const zHistoryPhotoRefRequest = z.object({
+    container: z.string(),
+    key: z.string()
+});
+
+export const zHistoryPhotoResponse = z.object({
+    container: z.string(),
+    key: z.string(),
+    fileName: z.string(),
+    contentType: z.string(),
+    size: z.union([
+        z.coerce.bigint().min(BigInt('-9223372036854775808'), { error: 'Invalid value: Expected int64 to be >= -9223372036854775808' }).max(BigInt('9223372036854775807'), { error: 'Invalid value: Expected int64 to be <= 9223372036854775807' }),
+        z.coerce.bigint().min(BigInt('-9223372036854775808'), { error: 'Invalid value: Expected int64 to be >= -9223372036854775808' }).max(BigInt('9223372036854775807'), { error: 'Invalid value: Expected int64 to be <= 9223372036854775807' })
     ])
 });
 
@@ -547,26 +579,71 @@ export const zLogoutResponse = z.object({
     message: z.string().optional().default('Logged out successfully.')
 });
 
-export const zMoneyRequest = z.object({
-    amount: z.string().regex(/^-?(?:0|[1-9]\d*)(?:\.\d+)?$/),
-    currency: zCurrency
-});
+export const zMaintenanceOccurrenceStatus = z.enum([
+    'Upcoming',
+    'Done',
+    'Skipped'
+]);
 
-export const zConfirmEstimatedBillRequest = z.object({
+export const zMaintenanceOccurrenceResponse = z.object({
+    occurrenceId: z.uuid(),
+    planId: z.uuid(),
     householdId: z.uuid(),
-    transactionId: z.uuid(),
-    amount: zMoneyRequest,
-    occurredOn: z.iso.date()
+    dueDate: z.iso.date(),
+    status: zMaintenanceOccurrenceStatus,
+    completedAt: z.iso.datetime().nullable(),
+    notes: z.string().nullable(),
+    spawnedProjectId: z.uuid().nullable()
 });
 
-export const zCreateAccountRequest = z.object({
+export const zMaintenanceRecurrenceUnit = z.enum(['Month', 'Year']);
+
+export const zMaintenancePlanRequest = z.object({
     householdId: z.uuid(),
-    name: z.string(),
-    type: zAccountType,
-    openingBalance: zMoneyRequest
+    title: z.string(),
+    description: z.string().nullable(),
+    area: z.string().nullable(),
+    recurrenceUnit: zMaintenanceRecurrenceUnit,
+    recurrenceInterval: z.union([
+        z.int().min(-2147483648, { error: 'Invalid value: Expected int32 to be >= -2147483648' }).max(2147483647, { error: 'Invalid value: Expected int32 to be <= 2147483647' }),
+        z.string().regex(/^-?(?:0|[1-9]\d*)$/)
+    ]),
+    anchorDate: z.iso.date(),
+    leadTimeDays: z.union([
+        z.int().min(-2147483648, { error: 'Invalid value: Expected int32 to be >= -2147483648' }).max(2147483647, { error: 'Invalid value: Expected int32 to be <= 2147483647' }),
+        z.string().regex(/^-?(?:0|[1-9]\d*)$/)
+    ])
 });
 
-export const zMoneyResponse = z.object({
+export const zMaintenancePlanResponse = z.object({
+    planId: z.uuid(),
+    householdId: z.uuid(),
+    title: z.string(),
+    description: z.string().nullable(),
+    area: z.string().nullable(),
+    recurrenceUnit: zMaintenanceRecurrenceUnit,
+    recurrenceInterval: z.union([
+        z.int().min(-2147483648, { error: 'Invalid value: Expected int32 to be >= -2147483648' }).max(2147483647, { error: 'Invalid value: Expected int32 to be <= 2147483647' }),
+        z.string().regex(/^-?(?:0|[1-9]\d*)$/)
+    ]),
+    anchorDate: z.iso.date(),
+    leadTimeDays: z.union([
+        z.int().min(-2147483648, { error: 'Invalid value: Expected int32 to be >= -2147483648' }).max(2147483647, { error: 'Invalid value: Expected int32 to be <= 2147483647' }),
+        z.string().regex(/^-?(?:0|[1-9]\d*)$/)
+    ]),
+    isActive: z.boolean()
+});
+
+export const zGetMaintenancePlanResponse = z.object({
+    plan: zMaintenancePlanResponse,
+    nextOccurrence: zMaintenanceOccurrenceResponse.nullable()
+});
+
+export const zListMaintenancePlansResponse = z.object({
+    plans: z.array(zMaintenancePlanResponse)
+});
+
+export const zMoneyDto = z.object({
     amount: z.string().regex(/^-?(?:0|[1-9]\d*)(?:\.\d+)?$/),
     currency: zCurrency
 });
@@ -575,7 +652,7 @@ export const zAccountBalanceResponse = z.object({
     accountId: z.uuid(),
     name: z.string(),
     type: zAccountType,
-    balance: zMoneyResponse
+    balance: zMoneyDto
 });
 
 export const zAccountResponse = z.object({
@@ -583,13 +660,13 @@ export const zAccountResponse = z.object({
     householdId: z.uuid(),
     name: z.string(),
     type: zAccountType,
-    openingBalance: zMoneyResponse
+    openingBalance: zMoneyDto
 });
 
 export const zBudgetLineResponse = z.object({
     budgetLineId: z.uuid(),
     categoryId: z.uuid(),
-    amount: zMoneyResponse
+    amount: zMoneyDto
 });
 
 export const zBudgetResponse = z.object({
@@ -603,13 +680,27 @@ export const zBudgetResponse = z.object({
 
 export const zBudgetSummaryLineResponse = z.object({
     categoryId: z.uuid(),
-    planned: zMoneyResponse,
-    actual: zMoneyResponse,
+    planned: zMoneyDto,
+    actual: zMoneyDto,
     pacePercent: z.union([
         z.number(),
         z.string().regex(/^-?(?:0|[1-9]\d*)(?:\.\d+)?$/)
     ]),
     isOverPace: z.boolean()
+});
+
+export const zConfirmEstimatedBillRequest = z.object({
+    householdId: z.uuid(),
+    transactionId: z.uuid(),
+    amount: zMoneyDto,
+    occurredOn: z.iso.date()
+});
+
+export const zCreateAccountRequest = z.object({
+    householdId: z.uuid(),
+    name: z.string(),
+    type: zAccountType,
+    openingBalance: zMoneyDto
 });
 
 export const zGetAccountBalancesResponse = z.object({
@@ -628,11 +719,46 @@ export const zGetBudgetSummaryResponse = z.object({
     lines: z.array(zBudgetSummaryLineResponse)
 });
 
+export const zGetProjectBudgetResponse = z.object({
+    estimate: zMoneyDto.nullable(),
+    linkedTotal: zMoneyDto,
+    remaining: zMoneyDto.nullable(),
+    transactionCount: z.union([
+        z.int().min(-2147483648, { error: 'Invalid value: Expected int32 to be >= -2147483648' }).max(2147483647, { error: 'Invalid value: Expected int32 to be <= 2147483647' }),
+        z.string().regex(/^-?(?:0|[1-9]\d*)$/)
+    ])
+});
+
+export const zHistoryEntryRequest = z.object({
+    householdId: z.uuid(),
+    date: z.iso.date(),
+    title: z.string(),
+    area: z.string().nullable(),
+    cost: zMoneyDto.nullable(),
+    type: zHistoryEntryType,
+    sourceProjectId: z.uuid().nullable(),
+    sourceMaintenanceOccurrenceId: z.uuid().nullable(),
+    photoRefs: z.array(zHistoryPhotoRefRequest)
+});
+
+export const zHistoryEntryResponse = z.object({
+    historyEntryId: z.uuid(),
+    householdId: z.uuid(),
+    date: z.iso.date(),
+    title: z.string(),
+    area: z.string().nullable(),
+    cost: zMoneyDto.nullable(),
+    type: zHistoryEntryType,
+    sourceProjectId: z.uuid().nullable(),
+    sourceMaintenanceOccurrenceId: z.uuid().nullable(),
+    photos: z.array(zHistoryPhotoResponse)
+});
+
 export const zIncomeVsExpensePointResponse = z.object({
     label: z.string(),
-    income: zMoneyResponse,
-    expense: zMoneyResponse,
-    net: zMoneyResponse
+    income: zMoneyDto,
+    expense: zMoneyDto,
+    net: zMoneyDto
 });
 
 export const zGetIncomeVsExpenseResponse = z.object({
@@ -642,7 +768,7 @@ export const zGetIncomeVsExpenseResponse = z.object({
 export const zLinkCandidateResponse = z.object({
     transactionId: z.uuid(),
     occurredOn: z.iso.date(),
-    amount: zMoneyResponse,
+    amount: zMoneyDto,
     note: z.string().nullable()
 });
 
@@ -655,9 +781,13 @@ export const zListAccountsResponse = z.object({
     accounts: z.array(zAccountResponse)
 });
 
+export const zListHistoryResponse = z.object({
+    entries: z.array(zHistoryEntryResponse)
+});
+
 export const zMoneySeriesPointResponse = z.object({
     label: z.string(),
-    value: zMoneyResponse
+    value: zMoneyDto
 });
 
 export const zCategoryTrendSeriesResponse = z.object({
@@ -697,7 +827,7 @@ export const zNormalizedImportRowRequest = z.object({
     currency: zCurrency,
     counterparty: z.string().nullable(),
     reference: z.string().nullable(),
-    balanceAfter: zMoneyRequest.nullable(),
+    balanceAfter: zMoneyDto.nullable(),
     rawDescription: z.string().nullable(),
     categoryId: z.uuid().nullable()
 });
@@ -764,9 +894,9 @@ export const zGetOnboardingLegalRequirementsResponse = z.object({
 
 export const zPeriodComparisonItemResponse = z.object({
     label: z.string(),
-    current: zMoneyResponse,
-    previous: zMoneyResponse,
-    delta: zMoneyResponse,
+    current: zMoneyDto,
+    previous: zMoneyDto,
+    delta: zMoneyDto,
     deltaPercent: z.union([
         z.number(),
         z.string().regex(/^-?(?:0|[1-9]\d*)(?:\.\d+)?$/)
@@ -856,8 +986,8 @@ export const zPreviewImportRequest = z.object({
 
 export const zPriceChangeResponse = z.object({
     changedOn: z.iso.date(),
-    previousAmount: zMoneyResponse,
-    newAmount: zMoneyResponse
+    previousAmount: zMoneyDto,
+    newAmount: zMoneyDto
 });
 
 export const zProblemDetails = z.object({
@@ -869,6 +999,136 @@ export const zProblemDetails = z.object({
     ]).nullish(),
     detail: z.string().nullish(),
     instance: z.string().nullish()
+});
+
+export const zProjectAttachmentResponse = z.object({
+    attachmentId: z.uuid(),
+    projectId: z.uuid(),
+    fileName: z.string(),
+    contentType: z.string(),
+    size: z.union([
+        z.coerce.bigint().min(BigInt('-9223372036854775808'), { error: 'Invalid value: Expected int64 to be >= -9223372036854775808' }).max(BigInt('9223372036854775807'), { error: 'Invalid value: Expected int64 to be <= 9223372036854775807' }),
+        z.coerce.bigint().min(BigInt('-9223372036854775808'), { error: 'Invalid value: Expected int64 to be >= -9223372036854775808' }).max(BigInt('9223372036854775807'), { error: 'Invalid value: Expected int64 to be <= 9223372036854775807' })
+    ])
+});
+
+export const zProjectLinkRequest = z.object({
+    householdId: z.uuid(),
+    label: z.string(),
+    url: z.string()
+});
+
+export const zProjectLinkResponse = z.object({
+    linkId: z.uuid(),
+    projectId: z.uuid(),
+    label: z.string(),
+    url: z.string()
+});
+
+export const zProjectStatus = z.enum([
+    'Planning',
+    'Active',
+    'OnHold',
+    'Done'
+]);
+
+export const zChangeProjectStatusRequest = z.object({
+    householdId: z.uuid(),
+    status: zProjectStatus
+});
+
+export const zProjectListItemResponse = z.object({
+    projectId: z.uuid(),
+    householdId: z.uuid(),
+    name: z.string(),
+    description: z.string().nullable(),
+    status: zProjectStatus,
+    area: z.string().nullable(),
+    targetStartDate: z.iso.date().nullable(),
+    targetEndDate: z.iso.date().nullable(),
+    budgetEstimate: zMoneyDto.nullable(),
+    completedAt: z.iso.datetime().nullable(),
+    notes: z.string().nullable()
+});
+
+export const zListProjectsResponse = z.object({
+    projects: z.array(zProjectListItemResponse)
+});
+
+export const zProjectRequest = z.object({
+    householdId: z.uuid(),
+    name: z.string(),
+    description: z.string().nullable(),
+    status: zProjectStatus,
+    area: z.string().nullable(),
+    targetStartDate: z.iso.date().nullable(),
+    targetEndDate: z.iso.date().nullable(),
+    budgetEstimate: zMoneyDto.nullable(),
+    notes: z.string().nullable()
+});
+
+export const zProjectTaskStatus = z.enum([
+    'Todo',
+    'Doing',
+    'Done'
+]);
+
+export const zProjectTaskRequest = z.object({
+    householdId: z.uuid(),
+    title: z.string(),
+    status: zProjectTaskStatus,
+    estimate: zMoneyDto.nullable(),
+    assigneeId: z.uuid().nullable(),
+    dueDate: z.iso.date().nullable()
+});
+
+export const zProjectTaskResponse = z.object({
+    taskId: z.uuid(),
+    projectId: z.uuid(),
+    title: z.string(),
+    status: zProjectTaskStatus,
+    estimate: zMoneyDto.nullable(),
+    assigneeId: z.uuid().nullable(),
+    dueDate: z.iso.date().nullable(),
+    sortOrder: z.union([
+        z.int().min(-2147483648, { error: 'Invalid value: Expected int32 to be >= -2147483648' }).max(2147483647, { error: 'Invalid value: Expected int32 to be <= 2147483647' }),
+        z.string().regex(/^-?(?:0|[1-9]\d*)$/)
+    ])
+});
+
+export const zProjectResponse = z.object({
+    projectId: z.uuid(),
+    householdId: z.uuid(),
+    name: z.string(),
+    description: z.string().nullable(),
+    status: zProjectStatus,
+    area: z.string().nullable(),
+    targetStartDate: z.iso.date().nullable(),
+    targetEndDate: z.iso.date().nullable(),
+    budgetEstimate: zMoneyDto.nullable(),
+    completedAt: z.iso.datetime().nullable(),
+    notes: z.string().nullable(),
+    tasks: z.array(zProjectTaskResponse),
+    links: z.array(zProjectLinkResponse),
+    attachments: z.array(zProjectAttachmentResponse)
+});
+
+export const zPromoteOccurrenceRequest = z.object({
+    householdId: z.uuid(),
+    name: z.string(),
+    description: z.string().nullable(),
+    status: zProjectStatus,
+    area: z.string().nullable(),
+    targetStartDate: z.iso.date().nullable(),
+    targetEndDate: z.iso.date().nullable(),
+    budgetEstimate: zMoneyDto.nullable(),
+    notes: z.string().nullable()
+});
+
+export const zPromoteOccurrenceResponse = z.object({
+    occurrence: zMaintenanceOccurrenceResponse,
+    project: zProjectResponse,
+    nextOccurrence: zMaintenanceOccurrenceResponse.nullable()
 });
 
 export const zRecurringBillDirection = z.enum(['Expense', 'Income']);
@@ -894,7 +1154,7 @@ export const zCreateRecurringBillRequest = z.object({
     name: z.string(),
     accountId: z.uuid(),
     categoryId: z.uuid().nullable(),
-    amount: zMoneyRequest,
+    amount: zMoneyDto,
     type: zRecurringBillType,
     direction: zRecurringBillDirection,
     cadenceFrequency: zCadenceFrequency,
@@ -910,7 +1170,7 @@ export const zRecurringBillResponse = z.object({
     name: z.string(),
     accountId: z.uuid(),
     categoryId: z.uuid().nullable(),
-    amount: zMoneyResponse,
+    amount: zMoneyDto,
     type: zRecurringBillType,
     direction: zRecurringBillDirection,
     cadenceFrequency: zCadenceFrequency,
@@ -959,6 +1219,11 @@ export const zRegisterResponse = z.object({
     message: z.string().optional().default('Registration successful. Check your email to confirm your account before signing in.')
 });
 
+export const zReorderTasksRequest = z.object({
+    householdId: z.uuid(),
+    taskIds: z.array(z.uuid())
+});
+
 export const zRequestEmailChangeRequest = z.object({
     newEmail: z.string(),
     currentPassword: z.string()
@@ -1004,11 +1269,21 @@ export const zSetupTotpResponse = z.object({
     otpAuthUri: z.string()
 });
 
+export const zSkipOccurrenceRequest = z.object({
+    householdId: z.uuid(),
+    notes: z.string().nullable()
+});
+
+export const zSkipOccurrenceResponse = z.object({
+    occurrence: zMaintenanceOccurrenceResponse,
+    nextOccurrence: zMaintenanceOccurrenceResponse.nullable()
+});
+
 export const zSpendBreakdownSliceResponse = z.object({
     label: z.string(),
     categoryId: z.uuid(),
     categoryName: z.string(),
-    value: zMoneyResponse,
+    value: zMoneyDto,
     sharePercent: z.union([
         z.number(),
         z.string().regex(/^-?(?:0|[1-9]\d*)(?:\.\d+)?$/)
@@ -1041,7 +1316,7 @@ export const zCreateSubscriptionRequest = z.object({
         z.int().min(-2147483648, { error: 'Invalid value: Expected int32 to be >= -2147483648' }).max(2147483647, { error: 'Invalid value: Expected int32 to be <= 2147483647' }),
         z.string().regex(/^-?(?:0|[1-9]\d*)$/)
     ]),
-    expectedAmount: zMoneyRequest,
+    expectedAmount: zMoneyDto,
     lifecycleState: zSubscriptionLifecycleState,
     trialEndsOn: z.iso.date().nullable(),
     accountId: z.uuid().nullable(),
@@ -1057,7 +1332,7 @@ export const zSubscriptionMatchState = z.enum([
 export const zChargeHistoryItemResponse = z.object({
     transactionId: z.uuid(),
     occurredOn: z.iso.date(),
-    amount: zMoneyResponse,
+    amount: zMoneyDto,
     note: z.string().nullable(),
     matchState: zSubscriptionMatchState
 });
@@ -1083,7 +1358,7 @@ export const zChargeHistoryResponse = z.object({
 export const zMonthChargeResponse = z.object({
     subscriptionId: z.uuid(),
     name: z.string(),
-    amount: zMoneyResponse,
+    amount: zMoneyDto,
     matchState: zSubscriptionMatchState,
     transactionId: z.uuid().nullable()
 });
@@ -1096,15 +1371,15 @@ export const zMonthChargeDayResponse = z.object({
 export const zMonthChargeCalendarResponse = z.object({
     month: z.iso.date(),
     days: z.array(zMonthChargeDayResponse),
-    actualTotal: zMoneyResponse,
-    predictedTotal: zMoneyResponse
+    actualTotal: zMoneyDto,
+    predictedTotal: zMoneyDto
 });
 
 export const zSubscriptionMatchSuggestionResponse = z.object({
     subscriptionId: z.uuid(),
     name: z.string(),
     matchState: zSubscriptionMatchState,
-    expectedAmount: zMoneyResponse
+    expectedAmount: zMoneyDto
 });
 
 export const zImportRowResponse = z.object({
@@ -1113,12 +1388,12 @@ export const zImportRowResponse = z.object({
         z.string().regex(/^-?(?:0|[1-9]\d*)$/)
     ]),
     occurredOn: z.iso.date().nullable(),
-    amount: zMoneyResponse.nullable(),
+    amount: zMoneyDto.nullable(),
     description: z.string().nullable(),
     currency: zCurrency,
     counterparty: z.string().nullable(),
     reference: z.string().nullable(),
-    balanceAfter: zMoneyResponse.nullable(),
+    balanceAfter: zMoneyDto.nullable(),
     rawDescription: z.string().nullable(),
     suggestedCategoryId: z.uuid().nullable(),
     selectedCategoryId: z.uuid().nullable(),
@@ -1162,7 +1437,7 @@ export const zSubscriptionResponse = z.object({
         z.int().min(-2147483648, { error: 'Invalid value: Expected int32 to be >= -2147483648' }).max(2147483647, { error: 'Invalid value: Expected int32 to be <= 2147483647' }),
         z.string().regex(/^-?(?:0|[1-9]\d*)$/)
     ]),
-    expectedAmount: zMoneyResponse,
+    expectedAmount: zMoneyDto,
     lifecycleState: zSubscriptionLifecycleState,
     trialEndsOn: z.iso.date().nullable(),
     accountId: z.uuid().nullable(),
@@ -1172,6 +1447,33 @@ export const zSubscriptionResponse = z.object({
 
 export const zListSubscriptionsResponse = z.object({
     subscriptions: z.array(zSubscriptionResponse)
+});
+
+export const zSuggestedHistoryAttachmentResponse = z.object({
+    container: z.string(),
+    key: z.string()
+});
+
+export const zSuggestedHistoryEntryResponse = z.object({
+    date: z.iso.date(),
+    title: z.string(),
+    area: z.string().nullable(),
+    cost: zMoneyDto.nullable(),
+    type: zHistoryEntryType,
+    sourceProjectId: z.uuid().nullable(),
+    sourceMaintenanceOccurrenceId: z.uuid().nullable(),
+    photoRefs: z.array(zSuggestedHistoryAttachmentResponse)
+});
+
+export const zChangeProjectStatusResponse = z.object({
+    project: zProjectResponse,
+    suggestedHistoryEntry: zSuggestedHistoryEntryResponse.nullable()
+});
+
+export const zCompleteOccurrenceResponse = z.object({
+    occurrence: zMaintenanceOccurrenceResponse,
+    suggestedHistoryEntry: zSuggestedHistoryEntryResponse.nullable(),
+    nextOccurrence: zMaintenanceOccurrenceResponse.nullable()
 });
 
 export const zTimeRange = z.object({
@@ -1207,7 +1509,7 @@ export const zRecordTransactionRequest = z.object({
     householdId: z.uuid(),
     accountId: z.uuid(),
     categoryId: z.uuid().nullable(),
-    amount: zMoneyRequest,
+    amount: zMoneyDto,
     occurredOn: z.iso.date(),
     note: z.string().nullable(),
     kind: zTransactionKind,
@@ -1219,7 +1521,7 @@ export const zTopTransactionResponse = z.object({
     occurredOn: z.iso.date(),
     categoryId: z.uuid().nullable(),
     categoryName: z.string().nullable(),
-    amount: zMoneyResponse,
+    amount: zMoneyDto,
     kind: zTransactionKind,
     note: z.string().nullable()
 });
@@ -1233,7 +1535,7 @@ export const zTransactionResponse = z.object({
     householdId: z.uuid(),
     accountId: z.uuid(),
     categoryId: z.uuid().nullable(),
-    amount: zMoneyResponse,
+    amount: zMoneyDto,
     occurredOn: z.iso.date(),
     note: z.string().nullable(),
     kind: zTransactionKind,
@@ -1254,6 +1556,22 @@ export const zCommitImportResponse = z.object({
     ]),
     transactions: z.array(zTransactionResponse),
     suggestedRules: z.array(zImportRuleSuggestionResponse)
+});
+
+export const zListTransactionsForProjectResponse = z.object({
+    transactions: z.array(zTransactionResponse),
+    page: z.union([
+        z.int().min(-2147483648, { error: 'Invalid value: Expected int32 to be >= -2147483648' }).max(2147483647, { error: 'Invalid value: Expected int32 to be <= 2147483647' }),
+        z.string().regex(/^-?(?:0|[1-9]\d*)$/)
+    ]),
+    pageSize: z.union([
+        z.int().min(-2147483648, { error: 'Invalid value: Expected int32 to be >= -2147483648' }).max(2147483647, { error: 'Invalid value: Expected int32 to be <= 2147483647' }),
+        z.string().regex(/^-?(?:0|[1-9]\d*)$/)
+    ]),
+    totalCount: z.union([
+        z.int().min(-2147483648, { error: 'Invalid value: Expected int32 to be >= -2147483648' }).max(2147483647, { error: 'Invalid value: Expected int32 to be <= 2147483647' }),
+        z.string().regex(/^-?(?:0|[1-9]\d*)$/)
+    ])
 });
 
 export const zListTransactionsResponse = z.object({
@@ -1294,7 +1612,7 @@ export const zCreateTransferRequest = z.object({
     householdId: z.uuid(),
     fromAccountId: z.uuid(),
     toAccountId: z.uuid(),
-    amount: zMoneyRequest,
+    amount: zMoneyDto,
     occurredOn: z.iso.date(),
     note: z.string().nullable(),
     mode: zTransferMode,
@@ -1307,6 +1625,20 @@ export const zCreateTransferResponse = z.object({
     mode: zTransferMode,
     outflow: zTransactionResponse,
     inflow: zTransactionResponse
+});
+
+export const zUpcomingOccurrenceItem = z.object({
+    occurrenceId: z.uuid(),
+    planId: z.uuid(),
+    householdId: z.uuid(),
+    planTitle: z.string(),
+    area: z.string().nullable(),
+    dueDate: z.iso.date(),
+    status: zMaintenanceOccurrenceStatus
+});
+
+export const zListUpcomingOccurrencesResponse = z.object({
+    occurrences: z.array(zUpcomingOccurrenceItem)
 });
 
 export const zUpdateAvatarResponse = z.object({
@@ -1373,14 +1705,14 @@ export const zUpsertBudgetLineRequest = z.object({
     householdId: z.uuid(),
     budgetId: z.uuid(),
     categoryId: z.uuid(),
-    amount: zMoneyRequest
+    amount: zMoneyDto
 });
 
 export const zVarianceHistoryPointResponse = z.object({
     label: z.string(),
-    planned: zMoneyResponse,
-    actual: zMoneyResponse,
-    variance: zMoneyResponse
+    planned: zMoneyDto,
+    actual: zMoneyDto,
+    variance: zMoneyDto
 });
 
 export const zGetVarianceHistoryResponse = z.object({
@@ -1532,6 +1864,38 @@ export const zAttachEconomyTransactionReceiptPath = z.object({
  * OK
  */
 export const zAttachEconomyTransactionReceiptResponse = zAttachReceiptResponse;
+
+export const zAssignEconomyTransactionToProjectBody = zAssignTransactionToProjectRequest;
+
+export const zAssignEconomyTransactionToProjectPath = z.object({
+    transactionId: z.uuid()
+});
+
+/**
+ * OK
+ */
+export const zAssignEconomyTransactionToProjectResponse = zTransactionResponse;
+
+export const zListEconomyTransactionsForProjectPath = z.object({
+    projectId: z.uuid()
+});
+
+export const zListEconomyTransactionsForProjectQuery = z.object({
+    householdId: z.uuid(),
+    page: z.union([
+        z.int().min(-2147483648, { error: 'Invalid value: Expected int32 to be >= -2147483648' }).max(2147483647, { error: 'Invalid value: Expected int32 to be <= 2147483647' }),
+        z.string().regex(/^-?(?:0|[1-9]\d*)$/)
+    ]).optional(),
+    pageSize: z.union([
+        z.int().min(-2147483648, { error: 'Invalid value: Expected int32 to be >= -2147483648' }).max(2147483647, { error: 'Invalid value: Expected int32 to be <= 2147483647' }),
+        z.string().regex(/^-?(?:0|[1-9]\d*)$/)
+    ]).optional()
+});
+
+/**
+ * OK
+ */
+export const zListEconomyTransactionsForProjectResponse = zListTransactionsForProjectResponse;
 
 export const zSearchEconomyTransactionNotesQuery = z.object({
     householdId: z.uuid(),
@@ -2126,6 +2490,334 @@ export const zUpdateMyNotificationPreferencesBody = zUpdateMyNotificationPrefere
  * No Content
  */
 export const zUpdateMyNotificationPreferencesResponse = z.void();
+
+export const zListPropertyProjectsQuery = z.object({
+    householdId: z.uuid(),
+    status: zProjectStatus.optional(),
+    area: z.string().optional()
+});
+
+/**
+ * OK
+ */
+export const zListPropertyProjectsResponse = zListProjectsResponse;
+
+export const zCreatePropertyProjectBody = zProjectRequest;
+
+/**
+ * Created
+ */
+export const zCreatePropertyProjectResponse = zProjectResponse;
+
+export const zDeletePropertyProjectPath = z.object({
+    projectId: z.uuid()
+});
+
+export const zDeletePropertyProjectQuery = z.object({
+    householdId: z.uuid()
+});
+
+/**
+ * No Content
+ */
+export const zDeletePropertyProjectResponse = z.void();
+
+export const zGetPropertyProjectPath = z.object({
+    projectId: z.uuid()
+});
+
+export const zGetPropertyProjectQuery = z.object({
+    householdId: z.uuid()
+});
+
+/**
+ * OK
+ */
+export const zGetPropertyProjectResponse = zProjectResponse;
+
+export const zUpdatePropertyProjectBody = zProjectRequest;
+
+export const zUpdatePropertyProjectPath = z.object({
+    projectId: z.uuid()
+});
+
+/**
+ * OK
+ */
+export const zUpdatePropertyProjectResponse = zProjectResponse;
+
+export const zGetPropertyProjectBudgetPath = z.object({
+    projectId: z.uuid()
+});
+
+export const zGetPropertyProjectBudgetQuery = z.object({
+    householdId: z.uuid()
+});
+
+/**
+ * OK
+ */
+export const zGetPropertyProjectBudgetResponse = zGetProjectBudgetResponse;
+
+export const zChangePropertyProjectStatusBody = zChangeProjectStatusRequest;
+
+export const zChangePropertyProjectStatusPath = z.object({
+    projectId: z.uuid()
+});
+
+/**
+ * OK
+ */
+export const zChangePropertyProjectStatusResponse = zChangeProjectStatusResponse;
+
+export const zGetPropertyProjectTasksPath = z.object({
+    projectId: z.uuid()
+});
+
+export const zGetPropertyProjectTasksQuery = z.object({
+    householdId: z.uuid()
+});
+
+export const zAddPropertyProjectTaskBody = zProjectTaskRequest;
+
+export const zAddPropertyProjectTaskPath = z.object({
+    projectId: z.uuid()
+});
+
+export const zDeletePropertyProjectTaskPath = z.object({
+    projectId: z.uuid(),
+    taskId: z.uuid()
+});
+
+export const zDeletePropertyProjectTaskQuery = z.object({
+    householdId: z.uuid()
+});
+
+export const zUpdatePropertyProjectTaskBody = zProjectTaskRequest;
+
+export const zUpdatePropertyProjectTaskPath = z.object({
+    projectId: z.uuid(),
+    taskId: z.uuid()
+});
+
+export const zReorderPropertyProjectTasksBody = zReorderTasksRequest;
+
+export const zReorderPropertyProjectTasksPath = z.object({
+    projectId: z.uuid()
+});
+
+export const zAddPropertyProjectLinkBody = zProjectLinkRequest;
+
+export const zAddPropertyProjectLinkPath = z.object({
+    projectId: z.uuid()
+});
+
+export const zRemovePropertyProjectLinkPath = z.object({
+    projectId: z.uuid(),
+    linkId: z.uuid()
+});
+
+export const zRemovePropertyProjectLinkQuery = z.object({
+    householdId: z.uuid()
+});
+
+export const zAddPropertyProjectAttachmentBody = z.object({
+    file: zIFormFile
+});
+
+export const zAddPropertyProjectAttachmentPath = z.object({
+    projectId: z.uuid()
+});
+
+export const zAddPropertyProjectAttachmentQuery = z.object({
+    householdId: z.uuid()
+});
+
+export const zGetPropertyProjectAttachmentContentPath = z.object({
+    projectId: z.uuid(),
+    attachmentId: z.uuid()
+});
+
+export const zGetPropertyProjectAttachmentContentQuery = z.object({
+    householdId: z.uuid()
+});
+
+export const zRemovePropertyProjectAttachmentPath = z.object({
+    projectId: z.uuid(),
+    attachmentId: z.uuid()
+});
+
+export const zRemovePropertyProjectAttachmentQuery = z.object({
+    householdId: z.uuid()
+});
+
+export const zListPropertyMaintenancePlansQuery = z.object({
+    householdId: z.uuid(),
+    activeOnly: z.boolean().optional()
+});
+
+/**
+ * OK
+ */
+export const zListPropertyMaintenancePlansResponse = zListMaintenancePlansResponse;
+
+export const zCreatePropertyMaintenancePlanBody = zMaintenancePlanRequest;
+
+/**
+ * Created
+ */
+export const zCreatePropertyMaintenancePlanResponse = zGetMaintenancePlanResponse;
+
+export const zDeletePropertyMaintenancePlanPath = z.object({
+    planId: z.uuid()
+});
+
+export const zDeletePropertyMaintenancePlanQuery = z.object({
+    householdId: z.uuid()
+});
+
+/**
+ * No Content
+ */
+export const zDeletePropertyMaintenancePlanResponse = z.void();
+
+export const zGetPropertyMaintenancePlanPath = z.object({
+    planId: z.uuid()
+});
+
+export const zGetPropertyMaintenancePlanQuery = z.object({
+    householdId: z.uuid()
+});
+
+/**
+ * OK
+ */
+export const zGetPropertyMaintenancePlanResponse = zGetMaintenancePlanResponse;
+
+export const zUpdatePropertyMaintenancePlanBody = zMaintenancePlanRequest;
+
+export const zUpdatePropertyMaintenancePlanPath = z.object({
+    planId: z.uuid()
+});
+
+/**
+ * OK
+ */
+export const zUpdatePropertyMaintenancePlanResponse = zMaintenancePlanResponse;
+
+export const zDeactivatePropertyMaintenancePlanPath = z.object({
+    planId: z.uuid()
+});
+
+export const zDeactivatePropertyMaintenancePlanQuery = z.object({
+    householdId: z.uuid()
+});
+
+/**
+ * OK
+ */
+export const zDeactivatePropertyMaintenancePlanResponse = zMaintenancePlanResponse;
+
+export const zListPropertyUpcomingMaintenanceOccurrencesQuery = z.object({
+    householdId: z.uuid(),
+    horizonDays: z.union([
+        z.int().min(-2147483648, { error: 'Invalid value: Expected int32 to be >= -2147483648' }).max(2147483647, { error: 'Invalid value: Expected int32 to be <= 2147483647' }),
+        z.string().regex(/^-?(?:0|[1-9]\d*)$/)
+    ]).optional()
+});
+
+/**
+ * OK
+ */
+export const zListPropertyUpcomingMaintenanceOccurrencesResponse = zListUpcomingOccurrencesResponse;
+
+export const zCompletePropertyMaintenanceOccurrenceBody = zCompleteOccurrenceRequest;
+
+export const zCompletePropertyMaintenanceOccurrencePath = z.object({
+    occurrenceId: z.uuid()
+});
+
+/**
+ * OK
+ */
+export const zCompletePropertyMaintenanceOccurrenceResponse = zCompleteOccurrenceResponse;
+
+export const zSkipPropertyMaintenanceOccurrenceBody = zSkipOccurrenceRequest;
+
+export const zSkipPropertyMaintenanceOccurrencePath = z.object({
+    occurrenceId: z.uuid()
+});
+
+/**
+ * OK
+ */
+export const zSkipPropertyMaintenanceOccurrenceResponse = zSkipOccurrenceResponse;
+
+export const zPromotePropertyMaintenanceOccurrenceBody = zPromoteOccurrenceRequest;
+
+export const zPromotePropertyMaintenanceOccurrencePath = z.object({
+    occurrenceId: z.uuid()
+});
+
+/**
+ * Created
+ */
+export const zPromotePropertyMaintenanceOccurrenceResponse = zPromoteOccurrenceResponse;
+
+export const zListPropertyHistoryQuery = z.object({
+    householdId: z.uuid(),
+    year: z.union([
+        z.int().min(-2147483648, { error: 'Invalid value: Expected int32 to be >= -2147483648' }).max(2147483647, { error: 'Invalid value: Expected int32 to be <= 2147483647' }),
+        z.string().regex(/^-?(?:0|[1-9]\d*)$/)
+    ]).optional(),
+    area: z.string().optional(),
+    type: zHistoryEntryType.optional()
+});
+
+/**
+ * OK
+ */
+export const zListPropertyHistoryResponse = zListHistoryResponse;
+
+export const zCreatePropertyHistoryEntryBody = zHistoryEntryRequest;
+
+/**
+ * Created
+ */
+export const zCreatePropertyHistoryEntryResponse = zHistoryEntryResponse;
+
+export const zDeletePropertyHistoryEntryPath = z.object({
+    historyEntryId: z.uuid()
+});
+
+export const zDeletePropertyHistoryEntryQuery = z.object({
+    householdId: z.uuid()
+});
+
+/**
+ * No Content
+ */
+export const zDeletePropertyHistoryEntryResponse = z.void();
+
+export const zUpdatePropertyHistoryEntryBody = zHistoryEntryRequest;
+
+export const zUpdatePropertyHistoryEntryPath = z.object({
+    historyEntryId: z.uuid()
+});
+
+/**
+ * OK
+ */
+export const zUpdatePropertyHistoryEntryResponse = zHistoryEntryResponse;
+
+export const zGetPropertyHistoryPhotoContentPath = z.object({
+    historyEntryId: z.uuid(),
+    blobKey: z.string()
+});
+
+export const zGetPropertyHistoryPhotoContentQuery = z.object({
+    householdId: z.uuid()
+});
 
 export const zRegisterBody = zRegisterRequest;
 

@@ -34,7 +34,7 @@ export type AccountBalanceResponse = {
     accountId: string;
     name: string;
     type: AccountType;
-    balance: MoneyResponse;
+    balance: MoneyDto;
 };
 
 export type AccountResponse = {
@@ -42,7 +42,7 @@ export type AccountResponse = {
     householdId: string;
     name: string;
     type: AccountType;
-    openingBalance: MoneyResponse;
+    openingBalance: MoneyDto;
 };
 
 export type AccountType = 'Spending' | 'Savings';
@@ -52,6 +52,11 @@ export type AddCategoryRequest = {
     name: string;
     parentCategoryId: null | string;
     budgetable: boolean;
+};
+
+export type AssignTransactionToProjectRequest = {
+    householdId: string;
+    projectId: null | string;
 };
 
 export type AttachReceiptResponse = {
@@ -72,7 +77,7 @@ export type AuditEntryDto = {
 export type BudgetLineResponse = {
     budgetLineId: string;
     categoryId: string;
-    amount: MoneyResponse;
+    amount: MoneyDto;
 };
 
 export type BudgetResponse = {
@@ -86,8 +91,8 @@ export type BudgetResponse = {
 
 export type BudgetSummaryLineResponse = {
     categoryId: string;
-    planned: MoneyResponse;
-    actual: MoneyResponse;
+    planned: MoneyDto;
+    actual: MoneyDto;
     pacePercent: number | string;
     isOverPace: boolean;
 };
@@ -150,6 +155,16 @@ export type ChangePasswordResponse = {
     message?: string;
 };
 
+export type ChangeProjectStatusRequest = {
+    householdId: string;
+    status: ProjectStatus;
+};
+
+export type ChangeProjectStatusResponse = {
+    project: ProjectResponse;
+    suggestedHistoryEntry: null | SuggestedHistoryEntryResponse;
+};
+
 export type ChangeRecurringBillOccurrenceRequest = {
     householdId: string;
     dueOn: string;
@@ -167,7 +182,7 @@ export type ChangeUserRoleResponse = {
 export type ChargeHistoryItemResponse = {
     transactionId: string;
     occurredOn: string;
-    amount: MoneyResponse;
+    amount: MoneyDto;
     note: null | string;
     matchState: SubscriptionMatchState;
 };
@@ -195,6 +210,17 @@ export type CommitImportResponse = {
     suggestedRules: Array<ImportRuleSuggestionResponse>;
 };
 
+export type CompleteOccurrenceRequest = {
+    householdId: string;
+    notes: null | string;
+};
+
+export type CompleteOccurrenceResponse = {
+    occurrence: MaintenanceOccurrenceResponse;
+    suggestedHistoryEntry: null | SuggestedHistoryEntryResponse;
+    nextOccurrence: null | MaintenanceOccurrenceResponse;
+};
+
 export type CompleteOnboardingRequest = {
     acceptMarketingEmails?: boolean;
     acceptedDocuments?: null | Array<AcceptedLegalDocumentRequest>;
@@ -219,7 +245,7 @@ export type ConfirmEmailResponse = {
 export type ConfirmEstimatedBillRequest = {
     householdId: string;
     transactionId: string;
-    amount: MoneyRequest;
+    amount: MoneyDto;
     occurredOn: string;
 };
 
@@ -240,7 +266,7 @@ export type CreateAccountRequest = {
     householdId: string;
     name: string;
     type: AccountType;
-    openingBalance: MoneyRequest;
+    openingBalance: MoneyDto;
 };
 
 export type CreateBudgetRequest = {
@@ -303,7 +329,7 @@ export type CreateRecurringBillRequest = {
     name: string;
     accountId: string;
     categoryId: null | string;
-    amount: MoneyRequest;
+    amount: MoneyDto;
     type: RecurringBillType;
     direction: RecurringBillDirection;
     cadenceFrequency: CadenceFrequency;
@@ -319,7 +345,7 @@ export type CreateSubscriptionRequest = {
     cadenceFrequency: CadenceFrequency;
     cadenceInterval: number;
     chargeDay: number | string;
-    expectedAmount: MoneyRequest;
+    expectedAmount: MoneyDto;
     lifecycleState: SubscriptionLifecycleState;
     trialEndsOn: null | string;
     accountId: null | string;
@@ -330,7 +356,7 @@ export type CreateTransferRequest = {
     householdId: string;
     fromAccountId: string;
     toAccountId: string;
-    amount: MoneyRequest;
+    amount: MoneyDto;
     occurredOn: string;
     note: null | string;
     mode: TransferMode;
@@ -517,6 +543,11 @@ export type GetLegalDocumentResponse = {
     markdown: string;
 };
 
+export type GetMaintenancePlanResponse = {
+    plan: MaintenancePlanResponse;
+    nextOccurrence: null | MaintenanceOccurrenceResponse;
+};
+
 export type GetMyNotificationPreferencesResponse = {
     preferences: Array<MyNotificationPreferenceResponse>;
 };
@@ -531,6 +562,13 @@ export type GetPeriodComparisonResponse = {
     previousPeriodStartsOn: string;
     previousPeriodEndsOn: string;
     series: Array<PeriodComparisonItemResponse>;
+};
+
+export type GetProjectBudgetResponse = {
+    estimate: null | MoneyDto;
+    linkedTotal: MoneyDto;
+    remaining: null | MoneyDto;
+    transactionCount: number | string;
 };
 
 export type GetSpendBreakdownResponse = {
@@ -556,6 +594,46 @@ export type GetUserByIdResponse = {
 
 export type GetVarianceHistoryResponse = {
     series: Array<VarianceHistoryPointResponse>;
+};
+
+export type HistoryEntryRequest = {
+    householdId: string;
+    date: string;
+    title: string;
+    area: null | string;
+    cost: null | MoneyDto;
+    type: HistoryEntryType;
+    sourceProjectId: null | string;
+    sourceMaintenanceOccurrenceId: null | string;
+    photoRefs: Array<HistoryPhotoRefRequest>;
+};
+
+export type HistoryEntryResponse = {
+    historyEntryId: string;
+    householdId: string;
+    date: string;
+    title: string;
+    area: null | string;
+    cost: null | MoneyDto;
+    type: HistoryEntryType;
+    sourceProjectId: null | string;
+    sourceMaintenanceOccurrenceId: null | string;
+    photos: Array<HistoryPhotoResponse>;
+};
+
+export type HistoryEntryType = 'Project' | 'Maintenance' | 'Manual';
+
+export type HistoryPhotoRefRequest = {
+    container: string;
+    key: string;
+};
+
+export type HistoryPhotoResponse = {
+    container: string;
+    key: string;
+    fileName: string;
+    contentType: string;
+    size: number | string;
 };
 
 export type HouseholdAccessMode = 'ScopedPermission' | 'PlatformOverride';
@@ -607,12 +685,12 @@ export type ImportDuplicateState = 'None' | 'Exact' | 'Possible';
 export type ImportRowResponse = {
     rowNumber: number | string;
     occurredOn: null | string;
-    amount: null | MoneyResponse;
+    amount: null | MoneyDto;
     description: null | string;
     currency: Currency;
     counterparty: null | string;
     reference: null | string;
-    balanceAfter: null | MoneyResponse;
+    balanceAfter: null | MoneyDto;
     rawDescription: null | string;
     suggestedCategoryId: null | string;
     selectedCategoryId: null | string;
@@ -635,9 +713,9 @@ export type ImportRuleSuggestionResponse = {
 
 export type IncomeVsExpensePointResponse = {
     label: string;
-    income: MoneyResponse;
-    expense: MoneyResponse;
-    net: MoneyResponse;
+    income: MoneyDto;
+    expense: MoneyDto;
+    net: MoneyDto;
 };
 
 export type LegalComplianceDocumentResponse = {
@@ -653,7 +731,7 @@ export type LegalComplianceDocumentResponse = {
 export type LinkCandidateResponse = {
     transactionId: string;
     occurredOn: string;
-    amount: MoneyResponse;
+    amount: MoneyDto;
     note: null | string;
 };
 
@@ -677,6 +755,10 @@ export type ListCategoriesResponse = {
 
 export type ListCategorizationRulesResponse = {
     rules: Array<CategorizationRuleResponse>;
+};
+
+export type ListHistoryResponse = {
+    entries: Array<HistoryEntryResponse>;
 };
 
 export type ListHouseholdInvitationsResponse = {
@@ -710,6 +792,10 @@ export type ListInvitationsResponse = {
     totalCount: number | string;
 };
 
+export type ListMaintenancePlansResponse = {
+    plans: Array<MaintenancePlanResponse>;
+};
+
 export type ListMyHouseholdsResponse = {
     households: Array<MyHouseholdItem>;
 };
@@ -720,6 +806,10 @@ export type ListMyNotificationsResponse = {
     nextBeforeId: null | string;
 };
 
+export type ListProjectsResponse = {
+    projects: Array<ProjectListItemResponse>;
+};
+
 export type ListRecurringBillsResponse = {
     recurringBills: Array<RecurringBillResponse>;
 };
@@ -728,11 +818,22 @@ export type ListSubscriptionsResponse = {
     subscriptions: Array<SubscriptionResponse>;
 };
 
+export type ListTransactionsForProjectResponse = {
+    transactions: Array<TransactionResponse>;
+    page: number | string;
+    pageSize: number | string;
+    totalCount: number | string;
+};
+
 export type ListTransactionsResponse = {
     transactions: Array<TransactionResponse>;
     page: number | string;
     pageSize: number | string;
     totalCount: number | string;
+};
+
+export type ListUpcomingOccurrencesResponse = {
+    occurrences: Array<UpcomingOccurrenceItem>;
 };
 
 export type ListUsersResponse = {
@@ -802,26 +903,60 @@ export type LogoutResponse = {
     message?: string;
 };
 
-export type MoneyRequest = {
-    amount: string;
-    currency: Currency;
+export type MaintenanceOccurrenceResponse = {
+    occurrenceId: string;
+    planId: string;
+    householdId: string;
+    dueDate: string;
+    status: MaintenanceOccurrenceStatus;
+    completedAt: null | string;
+    notes: null | string;
+    spawnedProjectId: null | string;
 };
 
-export type MoneyResponse = {
+export type MaintenanceOccurrenceStatus = 'Upcoming' | 'Done' | 'Skipped';
+
+export type MaintenancePlanRequest = {
+    householdId: string;
+    title: string;
+    description: null | string;
+    area: null | string;
+    recurrenceUnit: MaintenanceRecurrenceUnit;
+    recurrenceInterval: number | string;
+    anchorDate: string;
+    leadTimeDays: number | string;
+};
+
+export type MaintenancePlanResponse = {
+    planId: string;
+    householdId: string;
+    title: string;
+    description: null | string;
+    area: null | string;
+    recurrenceUnit: MaintenanceRecurrenceUnit;
+    recurrenceInterval: number | string;
+    anchorDate: string;
+    leadTimeDays: number | string;
+    isActive: boolean;
+};
+
+export type MaintenanceRecurrenceUnit = 'Month' | 'Year';
+
+export type MoneyDto = {
     amount: string;
     currency: Currency;
 };
 
 export type MoneySeriesPointResponse = {
     label: string;
-    value: MoneyResponse;
+    value: MoneyDto;
 };
 
 export type MonthChargeCalendarResponse = {
     month: string;
     days: Array<MonthChargeDayResponse>;
-    actualTotal: MoneyResponse;
-    predictedTotal: MoneyResponse;
+    actualTotal: MoneyDto;
+    predictedTotal: MoneyDto;
 };
 
 export type MonthChargeDayResponse = {
@@ -832,7 +967,7 @@ export type MonthChargeDayResponse = {
 export type MonthChargeResponse = {
     subscriptionId: string;
     name: string;
-    amount: MoneyResponse;
+    amount: MoneyDto;
     matchState: SubscriptionMatchState;
     transactionId: null | string;
 };
@@ -874,7 +1009,7 @@ export type NormalizedImportRowRequest = {
     currency: Currency;
     counterparty: null | string;
     reference: null | string;
-    balanceAfter: null | MoneyRequest;
+    balanceAfter: null | MoneyDto;
     rawDescription: null | string;
     categoryId: null | string;
 };
@@ -905,9 +1040,9 @@ export type PaymentScheduleResponse = {
 
 export type PeriodComparisonItemResponse = {
     label: string;
-    current: MoneyResponse;
-    previous: MoneyResponse;
-    delta: MoneyResponse;
+    current: MoneyDto;
+    previous: MoneyDto;
+    delta: MoneyDto;
     deltaPercent: number | string;
 };
 
@@ -936,8 +1071,8 @@ export type PreviewImportResponse = {
 
 export type PriceChangeResponse = {
     changedOn: string;
-    previousAmount: MoneyResponse;
-    newAmount: MoneyResponse;
+    previousAmount: MoneyDto;
+    newAmount: MoneyDto;
 };
 
 export type ProblemDetails = {
@@ -948,11 +1083,117 @@ export type ProblemDetails = {
     instance?: null | string;
 };
 
+export type ProjectAttachmentResponse = {
+    attachmentId: string;
+    projectId: string;
+    fileName: string;
+    contentType: string;
+    size: number | string;
+};
+
+export type ProjectLinkRequest = {
+    householdId: string;
+    label: string;
+    url: string;
+};
+
+export type ProjectLinkResponse = {
+    linkId: string;
+    projectId: string;
+    label: string;
+    url: string;
+};
+
+export type ProjectListItemResponse = {
+    projectId: string;
+    householdId: string;
+    name: string;
+    description: null | string;
+    status: ProjectStatus;
+    area: null | string;
+    targetStartDate: null | string;
+    targetEndDate: null | string;
+    budgetEstimate: null | MoneyDto;
+    completedAt: null | string;
+    notes: null | string;
+};
+
+export type ProjectRequest = {
+    householdId: string;
+    name: string;
+    description: null | string;
+    status: ProjectStatus;
+    area: null | string;
+    targetStartDate: null | string;
+    targetEndDate: null | string;
+    budgetEstimate: null | MoneyDto;
+    notes: null | string;
+};
+
+export type ProjectResponse = {
+    projectId: string;
+    householdId: string;
+    name: string;
+    description: null | string;
+    status: ProjectStatus;
+    area: null | string;
+    targetStartDate: null | string;
+    targetEndDate: null | string;
+    budgetEstimate: null | MoneyDto;
+    completedAt: null | string;
+    notes: null | string;
+    tasks: Array<ProjectTaskResponse>;
+    links: Array<ProjectLinkResponse>;
+    attachments: Array<ProjectAttachmentResponse>;
+};
+
+export type ProjectStatus = 'Planning' | 'Active' | 'OnHold' | 'Done';
+
+export type ProjectTaskRequest = {
+    householdId: string;
+    title: string;
+    status: ProjectTaskStatus;
+    estimate: null | MoneyDto;
+    assigneeId: null | string;
+    dueDate: null | string;
+};
+
+export type ProjectTaskResponse = {
+    taskId: string;
+    projectId: string;
+    title: string;
+    status: ProjectTaskStatus;
+    estimate: null | MoneyDto;
+    assigneeId: null | string;
+    dueDate: null | string;
+    sortOrder: number | string;
+};
+
+export type ProjectTaskStatus = 'Todo' | 'Doing' | 'Done';
+
+export type PromoteOccurrenceRequest = {
+    householdId: string;
+    name: string;
+    description: null | string;
+    status: ProjectStatus;
+    area: null | string;
+    targetStartDate: null | string;
+    targetEndDate: null | string;
+    budgetEstimate: null | MoneyDto;
+    notes: null | string;
+};
+
+export type PromoteOccurrenceResponse = {
+    occurrence: MaintenanceOccurrenceResponse;
+    project: ProjectResponse;
+    nextOccurrence: null | MaintenanceOccurrenceResponse;
+};
+
 export type RecordTransactionRequest = {
     householdId: string;
     accountId: string;
     categoryId: null | string;
-    amount: MoneyRequest;
+    amount: MoneyDto;
     occurredOn: string;
     note: null | string;
     kind: TransactionKind;
@@ -975,7 +1216,7 @@ export type RecurringBillResponse = {
     name: string;
     accountId: string;
     categoryId: null | string;
-    amount: MoneyResponse;
+    amount: MoneyDto;
     type: RecurringBillType;
     direction: RecurringBillDirection;
     cadenceFrequency: CadenceFrequency;
@@ -1020,6 +1261,11 @@ export type RegisterRequest = {
 export type RegisterResponse = {
     userId: string;
     message?: string;
+};
+
+export type ReorderTasksRequest = {
+    householdId: string;
+    taskIds: Array<string>;
 };
 
 export type RequestEmailChangeRequest = {
@@ -1074,11 +1320,21 @@ export type SetupTotpResponse = {
     otpAuthUri: string;
 };
 
+export type SkipOccurrenceRequest = {
+    householdId: string;
+    notes: null | string;
+};
+
+export type SkipOccurrenceResponse = {
+    occurrence: MaintenanceOccurrenceResponse;
+    nextOccurrence: null | MaintenanceOccurrenceResponse;
+};
+
 export type SpendBreakdownSliceResponse = {
     label: string;
     categoryId: string;
     categoryName: string;
-    value: MoneyResponse;
+    value: MoneyDto;
     sharePercent: number | string;
 };
 
@@ -1090,7 +1346,7 @@ export type SubscriptionMatchSuggestionResponse = {
     subscriptionId: string;
     name: string;
     matchState: SubscriptionMatchState;
-    expectedAmount: MoneyResponse;
+    expectedAmount: MoneyDto;
 };
 
 export type SubscriptionPaymentScheduleResponse = {
@@ -1106,12 +1362,28 @@ export type SubscriptionResponse = {
     cadenceFrequency: CadenceFrequency;
     cadenceInterval: number;
     chargeDay: number | string;
-    expectedAmount: MoneyResponse;
+    expectedAmount: MoneyDto;
     lifecycleState: SubscriptionLifecycleState;
     trialEndsOn: null | string;
     accountId: null | string;
     startsOn: string;
     cancelledOn: null | string;
+};
+
+export type SuggestedHistoryAttachmentResponse = {
+    container: string;
+    key: string;
+};
+
+export type SuggestedHistoryEntryResponse = {
+    date: string;
+    title: string;
+    area: null | string;
+    cost: null | MoneyDto;
+    type: HistoryEntryType;
+    sourceProjectId: null | string;
+    sourceMaintenanceOccurrenceId: null | string;
+    photoRefs: Array<SuggestedHistoryAttachmentResponse>;
 };
 
 export type TimeRange = {
@@ -1124,7 +1396,7 @@ export type TopTransactionResponse = {
     occurredOn: string;
     categoryId: null | string;
     categoryName: null | string;
-    amount: MoneyResponse;
+    amount: MoneyDto;
     kind: TransactionKind;
     note: null | string;
 };
@@ -1136,7 +1408,7 @@ export type TransactionResponse = {
     householdId: string;
     accountId: string;
     categoryId: null | string;
-    amount: MoneyResponse;
+    amount: MoneyDto;
     occurredOn: string;
     note: null | string;
     kind: TransactionKind;
@@ -1147,6 +1419,16 @@ export type TransactionResponse = {
 };
 
 export type TransferMode = 'Neutral' | 'Savings';
+
+export type UpcomingOccurrenceItem = {
+    occurrenceId: string;
+    planId: string;
+    householdId: string;
+    planTitle: string;
+    area: null | string;
+    dueDate: string;
+    status: MaintenanceOccurrenceStatus;
+};
 
 export type UpdateAvatarResponse = {
     url: string;
@@ -1206,14 +1488,14 @@ export type UpsertBudgetLineRequest = {
     householdId: string;
     budgetId: string;
     categoryId: string;
-    amount: MoneyRequest;
+    amount: MoneyDto;
 };
 
 export type VarianceHistoryPointResponse = {
     label: string;
-    planned: MoneyResponse;
-    actual: MoneyResponse;
-    variance: MoneyResponse;
+    planned: MoneyDto;
+    actual: MoneyDto;
+    variance: MoneyDto;
 };
 
 export type GetAuditTrailData = {
@@ -1574,6 +1856,55 @@ export type AttachEconomyTransactionReceiptResponses = {
 };
 
 export type AttachEconomyTransactionReceiptResponse = AttachEconomyTransactionReceiptResponses[keyof AttachEconomyTransactionReceiptResponses];
+
+export type AssignEconomyTransactionToProjectData = {
+    body: AssignTransactionToProjectRequest;
+    path: {
+        transactionId: string;
+    };
+    query?: never;
+    url: '/v1/economy/transactions/{transactionId}/project';
+};
+
+export type AssignEconomyTransactionToProjectErrors = {
+    /**
+     * Unprocessable Entity
+     */
+    422: HttpValidationProblemDetails;
+};
+
+export type AssignEconomyTransactionToProjectError = AssignEconomyTransactionToProjectErrors[keyof AssignEconomyTransactionToProjectErrors];
+
+export type AssignEconomyTransactionToProjectResponses = {
+    /**
+     * OK
+     */
+    200: TransactionResponse;
+};
+
+export type AssignEconomyTransactionToProjectResponse = AssignEconomyTransactionToProjectResponses[keyof AssignEconomyTransactionToProjectResponses];
+
+export type ListEconomyTransactionsForProjectData = {
+    body?: never;
+    path: {
+        projectId: string;
+    };
+    query: {
+        householdId: string;
+        page?: number | string;
+        pageSize?: number | string;
+    };
+    url: '/v1/economy/projects/{projectId}/transactions';
+};
+
+export type ListEconomyTransactionsForProjectResponses = {
+    /**
+     * OK
+     */
+    200: ListTransactionsForProjectResponse;
+};
+
+export type ListEconomyTransactionsForProjectResponse = ListEconomyTransactionsForProjectResponses[keyof ListEconomyTransactionsForProjectResponses];
 
 export type SearchEconomyTransactionNotesData = {
     body?: never;
@@ -2865,6 +3196,687 @@ export type UpdateMyNotificationPreferencesResponses = {
 };
 
 export type UpdateMyNotificationPreferencesResponse = UpdateMyNotificationPreferencesResponses[keyof UpdateMyNotificationPreferencesResponses];
+
+export type ListPropertyProjectsData = {
+    body?: never;
+    path?: never;
+    query: {
+        householdId: string;
+        status?: ProjectStatus;
+        area?: string;
+    };
+    url: '/v1/property/projects';
+};
+
+export type ListPropertyProjectsResponses = {
+    /**
+     * OK
+     */
+    200: ListProjectsResponse;
+};
+
+export type ListPropertyProjectsResponse = ListPropertyProjectsResponses[keyof ListPropertyProjectsResponses];
+
+export type CreatePropertyProjectData = {
+    body: ProjectRequest;
+    path?: never;
+    query?: never;
+    url: '/v1/property/projects';
+};
+
+export type CreatePropertyProjectErrors = {
+    /**
+     * Unprocessable Entity
+     */
+    422: HttpValidationProblemDetails;
+};
+
+export type CreatePropertyProjectError = CreatePropertyProjectErrors[keyof CreatePropertyProjectErrors];
+
+export type CreatePropertyProjectResponses = {
+    /**
+     * Created
+     */
+    201: ProjectResponse;
+};
+
+export type CreatePropertyProjectResponse = CreatePropertyProjectResponses[keyof CreatePropertyProjectResponses];
+
+export type DeletePropertyProjectData = {
+    body?: never;
+    path: {
+        projectId: string;
+    };
+    query: {
+        householdId: string;
+    };
+    url: '/v1/property/projects/{projectId}';
+};
+
+export type DeletePropertyProjectResponses = {
+    /**
+     * No Content
+     */
+    204: void;
+};
+
+export type DeletePropertyProjectResponse = DeletePropertyProjectResponses[keyof DeletePropertyProjectResponses];
+
+export type GetPropertyProjectData = {
+    body?: never;
+    path: {
+        projectId: string;
+    };
+    query: {
+        householdId: string;
+    };
+    url: '/v1/property/projects/{projectId}';
+};
+
+export type GetPropertyProjectResponses = {
+    /**
+     * OK
+     */
+    200: ProjectResponse;
+};
+
+export type GetPropertyProjectResponse = GetPropertyProjectResponses[keyof GetPropertyProjectResponses];
+
+export type UpdatePropertyProjectData = {
+    body: ProjectRequest;
+    path: {
+        projectId: string;
+    };
+    query?: never;
+    url: '/v1/property/projects/{projectId}';
+};
+
+export type UpdatePropertyProjectErrors = {
+    /**
+     * Unprocessable Entity
+     */
+    422: HttpValidationProblemDetails;
+};
+
+export type UpdatePropertyProjectError = UpdatePropertyProjectErrors[keyof UpdatePropertyProjectErrors];
+
+export type UpdatePropertyProjectResponses = {
+    /**
+     * OK
+     */
+    200: ProjectResponse;
+};
+
+export type UpdatePropertyProjectResponse = UpdatePropertyProjectResponses[keyof UpdatePropertyProjectResponses];
+
+export type GetPropertyProjectBudgetData = {
+    body?: never;
+    path: {
+        projectId: string;
+    };
+    query: {
+        householdId: string;
+    };
+    url: '/v1/property/projects/{projectId}/budget';
+};
+
+export type GetPropertyProjectBudgetResponses = {
+    /**
+     * OK
+     */
+    200: GetProjectBudgetResponse;
+};
+
+export type GetPropertyProjectBudgetResponse = GetPropertyProjectBudgetResponses[keyof GetPropertyProjectBudgetResponses];
+
+export type ChangePropertyProjectStatusData = {
+    body: ChangeProjectStatusRequest;
+    path: {
+        projectId: string;
+    };
+    query?: never;
+    url: '/v1/property/projects/{projectId}/status';
+};
+
+export type ChangePropertyProjectStatusErrors = {
+    /**
+     * Unprocessable Entity
+     */
+    422: HttpValidationProblemDetails;
+};
+
+export type ChangePropertyProjectStatusError = ChangePropertyProjectStatusErrors[keyof ChangePropertyProjectStatusErrors];
+
+export type ChangePropertyProjectStatusResponses = {
+    /**
+     * OK
+     */
+    200: ChangeProjectStatusResponse;
+};
+
+export type ChangePropertyProjectStatusResponse = ChangePropertyProjectStatusResponses[keyof ChangePropertyProjectStatusResponses];
+
+export type GetPropertyProjectTasksData = {
+    body?: never;
+    path: {
+        projectId: string;
+    };
+    query: {
+        householdId: string;
+    };
+    url: '/v1/property/projects/{projectId}/tasks';
+};
+
+export type GetPropertyProjectTasksResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
+export type AddPropertyProjectTaskData = {
+    body: ProjectTaskRequest;
+    path: {
+        projectId: string;
+    };
+    query?: never;
+    url: '/v1/property/projects/{projectId}/tasks';
+};
+
+export type AddPropertyProjectTaskResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
+export type DeletePropertyProjectTaskData = {
+    body?: never;
+    path: {
+        projectId: string;
+        taskId: string;
+    };
+    query: {
+        householdId: string;
+    };
+    url: '/v1/property/projects/{projectId}/tasks/{taskId}';
+};
+
+export type DeletePropertyProjectTaskResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
+export type UpdatePropertyProjectTaskData = {
+    body: ProjectTaskRequest;
+    path: {
+        projectId: string;
+        taskId: string;
+    };
+    query?: never;
+    url: '/v1/property/projects/{projectId}/tasks/{taskId}';
+};
+
+export type UpdatePropertyProjectTaskResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
+export type ReorderPropertyProjectTasksData = {
+    body: ReorderTasksRequest;
+    path: {
+        projectId: string;
+    };
+    query?: never;
+    url: '/v1/property/projects/{projectId}/tasks/reorder';
+};
+
+export type ReorderPropertyProjectTasksResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
+export type AddPropertyProjectLinkData = {
+    body: ProjectLinkRequest;
+    path: {
+        projectId: string;
+    };
+    query?: never;
+    url: '/v1/property/projects/{projectId}/links';
+};
+
+export type AddPropertyProjectLinkResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
+export type RemovePropertyProjectLinkData = {
+    body?: never;
+    path: {
+        projectId: string;
+        linkId: string;
+    };
+    query: {
+        householdId: string;
+    };
+    url: '/v1/property/projects/{projectId}/links/{linkId}';
+};
+
+export type RemovePropertyProjectLinkResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
+export type AddPropertyProjectAttachmentData = {
+    body: {
+        file: IFormFile;
+    };
+    path: {
+        projectId: string;
+    };
+    query: {
+        householdId: string;
+    };
+    url: '/v1/property/projects/{projectId}/attachments';
+};
+
+export type AddPropertyProjectAttachmentResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
+export type GetPropertyProjectAttachmentContentData = {
+    body?: never;
+    path: {
+        projectId: string;
+        attachmentId: string;
+    };
+    query: {
+        householdId: string;
+    };
+    url: '/v1/property/projects/{projectId}/attachments/{attachmentId}/content';
+};
+
+export type GetPropertyProjectAttachmentContentResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
+export type RemovePropertyProjectAttachmentData = {
+    body?: never;
+    path: {
+        projectId: string;
+        attachmentId: string;
+    };
+    query: {
+        householdId: string;
+    };
+    url: '/v1/property/projects/{projectId}/attachments/{attachmentId}';
+};
+
+export type RemovePropertyProjectAttachmentResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
+
+export type ListPropertyMaintenancePlansData = {
+    body?: never;
+    path?: never;
+    query: {
+        householdId: string;
+        activeOnly?: boolean;
+    };
+    url: '/v1/property/maintenance/plans';
+};
+
+export type ListPropertyMaintenancePlansResponses = {
+    /**
+     * OK
+     */
+    200: ListMaintenancePlansResponse;
+};
+
+export type ListPropertyMaintenancePlansResponse = ListPropertyMaintenancePlansResponses[keyof ListPropertyMaintenancePlansResponses];
+
+export type CreatePropertyMaintenancePlanData = {
+    body: MaintenancePlanRequest;
+    path?: never;
+    query?: never;
+    url: '/v1/property/maintenance/plans';
+};
+
+export type CreatePropertyMaintenancePlanErrors = {
+    /**
+     * Unprocessable Entity
+     */
+    422: HttpValidationProblemDetails;
+};
+
+export type CreatePropertyMaintenancePlanError = CreatePropertyMaintenancePlanErrors[keyof CreatePropertyMaintenancePlanErrors];
+
+export type CreatePropertyMaintenancePlanResponses = {
+    /**
+     * Created
+     */
+    201: GetMaintenancePlanResponse;
+};
+
+export type CreatePropertyMaintenancePlanResponse = CreatePropertyMaintenancePlanResponses[keyof CreatePropertyMaintenancePlanResponses];
+
+export type DeletePropertyMaintenancePlanData = {
+    body?: never;
+    path: {
+        planId: string;
+    };
+    query: {
+        householdId: string;
+    };
+    url: '/v1/property/maintenance/plans/{planId}';
+};
+
+export type DeletePropertyMaintenancePlanResponses = {
+    /**
+     * No Content
+     */
+    204: void;
+};
+
+export type DeletePropertyMaintenancePlanResponse = DeletePropertyMaintenancePlanResponses[keyof DeletePropertyMaintenancePlanResponses];
+
+export type GetPropertyMaintenancePlanData = {
+    body?: never;
+    path: {
+        planId: string;
+    };
+    query: {
+        householdId: string;
+    };
+    url: '/v1/property/maintenance/plans/{planId}';
+};
+
+export type GetPropertyMaintenancePlanResponses = {
+    /**
+     * OK
+     */
+    200: GetMaintenancePlanResponse;
+};
+
+export type GetPropertyMaintenancePlanResponse = GetPropertyMaintenancePlanResponses[keyof GetPropertyMaintenancePlanResponses];
+
+export type UpdatePropertyMaintenancePlanData = {
+    body: MaintenancePlanRequest;
+    path: {
+        planId: string;
+    };
+    query?: never;
+    url: '/v1/property/maintenance/plans/{planId}';
+};
+
+export type UpdatePropertyMaintenancePlanErrors = {
+    /**
+     * Unprocessable Entity
+     */
+    422: HttpValidationProblemDetails;
+};
+
+export type UpdatePropertyMaintenancePlanError = UpdatePropertyMaintenancePlanErrors[keyof UpdatePropertyMaintenancePlanErrors];
+
+export type UpdatePropertyMaintenancePlanResponses = {
+    /**
+     * OK
+     */
+    200: MaintenancePlanResponse;
+};
+
+export type UpdatePropertyMaintenancePlanResponse = UpdatePropertyMaintenancePlanResponses[keyof UpdatePropertyMaintenancePlanResponses];
+
+export type DeactivatePropertyMaintenancePlanData = {
+    body?: never;
+    path: {
+        planId: string;
+    };
+    query: {
+        householdId: string;
+    };
+    url: '/v1/property/maintenance/plans/{planId}/deactivate';
+};
+
+export type DeactivatePropertyMaintenancePlanResponses = {
+    /**
+     * OK
+     */
+    200: MaintenancePlanResponse;
+};
+
+export type DeactivatePropertyMaintenancePlanResponse = DeactivatePropertyMaintenancePlanResponses[keyof DeactivatePropertyMaintenancePlanResponses];
+
+export type ListPropertyUpcomingMaintenanceOccurrencesData = {
+    body?: never;
+    path?: never;
+    query: {
+        householdId: string;
+        horizonDays?: number | string;
+    };
+    url: '/v1/property/maintenance/occurrences';
+};
+
+export type ListPropertyUpcomingMaintenanceOccurrencesResponses = {
+    /**
+     * OK
+     */
+    200: ListUpcomingOccurrencesResponse;
+};
+
+export type ListPropertyUpcomingMaintenanceOccurrencesResponse = ListPropertyUpcomingMaintenanceOccurrencesResponses[keyof ListPropertyUpcomingMaintenanceOccurrencesResponses];
+
+export type CompletePropertyMaintenanceOccurrenceData = {
+    body: CompleteOccurrenceRequest;
+    path: {
+        occurrenceId: string;
+    };
+    query?: never;
+    url: '/v1/property/maintenance/occurrences/{occurrenceId}/complete';
+};
+
+export type CompletePropertyMaintenanceOccurrenceErrors = {
+    /**
+     * Unprocessable Entity
+     */
+    422: HttpValidationProblemDetails;
+};
+
+export type CompletePropertyMaintenanceOccurrenceError = CompletePropertyMaintenanceOccurrenceErrors[keyof CompletePropertyMaintenanceOccurrenceErrors];
+
+export type CompletePropertyMaintenanceOccurrenceResponses = {
+    /**
+     * OK
+     */
+    200: CompleteOccurrenceResponse;
+};
+
+export type CompletePropertyMaintenanceOccurrenceResponse = CompletePropertyMaintenanceOccurrenceResponses[keyof CompletePropertyMaintenanceOccurrenceResponses];
+
+export type SkipPropertyMaintenanceOccurrenceData = {
+    body: SkipOccurrenceRequest;
+    path: {
+        occurrenceId: string;
+    };
+    query?: never;
+    url: '/v1/property/maintenance/occurrences/{occurrenceId}/skip';
+};
+
+export type SkipPropertyMaintenanceOccurrenceErrors = {
+    /**
+     * Unprocessable Entity
+     */
+    422: HttpValidationProblemDetails;
+};
+
+export type SkipPropertyMaintenanceOccurrenceError = SkipPropertyMaintenanceOccurrenceErrors[keyof SkipPropertyMaintenanceOccurrenceErrors];
+
+export type SkipPropertyMaintenanceOccurrenceResponses = {
+    /**
+     * OK
+     */
+    200: SkipOccurrenceResponse;
+};
+
+export type SkipPropertyMaintenanceOccurrenceResponse = SkipPropertyMaintenanceOccurrenceResponses[keyof SkipPropertyMaintenanceOccurrenceResponses];
+
+export type PromotePropertyMaintenanceOccurrenceData = {
+    body: PromoteOccurrenceRequest;
+    path: {
+        occurrenceId: string;
+    };
+    query?: never;
+    url: '/v1/property/maintenance/occurrences/{occurrenceId}/promote';
+};
+
+export type PromotePropertyMaintenanceOccurrenceErrors = {
+    /**
+     * Unprocessable Entity
+     */
+    422: HttpValidationProblemDetails;
+};
+
+export type PromotePropertyMaintenanceOccurrenceError = PromotePropertyMaintenanceOccurrenceErrors[keyof PromotePropertyMaintenanceOccurrenceErrors];
+
+export type PromotePropertyMaintenanceOccurrenceResponses = {
+    /**
+     * Created
+     */
+    201: PromoteOccurrenceResponse;
+};
+
+export type PromotePropertyMaintenanceOccurrenceResponse = PromotePropertyMaintenanceOccurrenceResponses[keyof PromotePropertyMaintenanceOccurrenceResponses];
+
+export type ListPropertyHistoryData = {
+    body?: never;
+    path?: never;
+    query: {
+        householdId: string;
+        year?: number | string;
+        area?: string;
+        type?: HistoryEntryType;
+    };
+    url: '/v1/property/history';
+};
+
+export type ListPropertyHistoryResponses = {
+    /**
+     * OK
+     */
+    200: ListHistoryResponse;
+};
+
+export type ListPropertyHistoryResponse = ListPropertyHistoryResponses[keyof ListPropertyHistoryResponses];
+
+export type CreatePropertyHistoryEntryData = {
+    body: HistoryEntryRequest;
+    path?: never;
+    query?: never;
+    url: '/v1/property/history';
+};
+
+export type CreatePropertyHistoryEntryErrors = {
+    /**
+     * Unprocessable Entity
+     */
+    422: HttpValidationProblemDetails;
+};
+
+export type CreatePropertyHistoryEntryError = CreatePropertyHistoryEntryErrors[keyof CreatePropertyHistoryEntryErrors];
+
+export type CreatePropertyHistoryEntryResponses = {
+    /**
+     * Created
+     */
+    201: HistoryEntryResponse;
+};
+
+export type CreatePropertyHistoryEntryResponse = CreatePropertyHistoryEntryResponses[keyof CreatePropertyHistoryEntryResponses];
+
+export type DeletePropertyHistoryEntryData = {
+    body?: never;
+    path: {
+        historyEntryId: string;
+    };
+    query: {
+        householdId: string;
+    };
+    url: '/v1/property/history/{historyEntryId}';
+};
+
+export type DeletePropertyHistoryEntryResponses = {
+    /**
+     * No Content
+     */
+    204: void;
+};
+
+export type DeletePropertyHistoryEntryResponse = DeletePropertyHistoryEntryResponses[keyof DeletePropertyHistoryEntryResponses];
+
+export type UpdatePropertyHistoryEntryData = {
+    body: HistoryEntryRequest;
+    path: {
+        historyEntryId: string;
+    };
+    query?: never;
+    url: '/v1/property/history/{historyEntryId}';
+};
+
+export type UpdatePropertyHistoryEntryErrors = {
+    /**
+     * Unprocessable Entity
+     */
+    422: HttpValidationProblemDetails;
+};
+
+export type UpdatePropertyHistoryEntryError = UpdatePropertyHistoryEntryErrors[keyof UpdatePropertyHistoryEntryErrors];
+
+export type UpdatePropertyHistoryEntryResponses = {
+    /**
+     * OK
+     */
+    200: HistoryEntryResponse;
+};
+
+export type UpdatePropertyHistoryEntryResponse = UpdatePropertyHistoryEntryResponses[keyof UpdatePropertyHistoryEntryResponses];
+
+export type GetPropertyHistoryPhotoContentData = {
+    body?: never;
+    path: {
+        historyEntryId: string;
+        blobKey: string;
+    };
+    query: {
+        householdId: string;
+    };
+    url: '/v1/property/history/{historyEntryId}/photos/{blobKey}/content';
+};
+
+export type GetPropertyHistoryPhotoContentResponses = {
+    /**
+     * OK
+     */
+    200: unknown;
+};
 
 export type RegisterData = {
     body: RegisterRequest;

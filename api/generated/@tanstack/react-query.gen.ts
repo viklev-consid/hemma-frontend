@@ -3,8 +3,8 @@
 import { type DefaultError, type InfiniteData, infiniteQueryOptions, queryOptions, type UseMutationOptions } from '@tanstack/react-query';
 
 import { client } from '../client.gen';
-import { acceptHouseholdInvitation, acceptLegalDocuments, addEconomyCategory, archiveNotification, attachEconomyTransactionReceipt, changeEconomySubscriptionLifecycleState, changeHouseholdMemberRole, changePassword, changeUserRole, commitEconomyImport, completeOnboarding, confirmEconomyEstimatedBill, confirmEmail, confirmEmailChange, confirmTotp, copyEconomyBudgetFromPreviousPeriod, createEconomyAccount, createEconomyBudget, createEconomyCategorizationRule, createEconomyRecurringBill, createEconomySettings, createEconomySubscription, createEconomyTransfer, createHousehold, createHouseholdInvitation, createInvitation, deleteAccount, deleteAvatar, deleteEconomyCategorizationRule, deleteHousehold, disableTwoFactor, exportEconomyGdpr, exportPersonalData, forgotPassword, getAuditTrail, getCurrentUser, getEconomyAccountBalances, getEconomyBudgetSummary, getEconomyCategoryTrend, getEconomyIncomeVsExpense, getEconomyNotificationPreferences, getEconomyPeriodComparison, getEconomySettings, getEconomySpendBreakdown, getEconomySubscription, getEconomySubscriptionChargeHistory, getEconomySubscriptionLinkCandidates, getEconomySubscriptionMonthCalendar, getEconomySubscriptionPaymentSchedule, getEconomyTopTransactions, getEconomyVarianceHistory, getHousehold, getHouseholdAudit, getLegalCompliance, getLegalDocument, getMyNotificationPreferences, getOnboardingLegalRequirements, getUnreadNotificationCount, getUserAvatar, getUserById, linkEconomySubscriptionTransaction, listEconomyAccounts, listEconomyCategories, listEconomyCategorizationRules, listEconomyRecurringBills, listEconomySubscriptions, listEconomyTransactions, listHouseholdInvitations, listHouseholdMembers, listInvitations, listMyHouseholds, listMyNotifications, listUsers, login, loginTwoFactor, logout, logoutAll, markAllNotificationsAsRead, markNotificationAsRead, type Options, pauseEconomyRecurringBillOccurrence, previewEconomyImport, recordEconomyTransaction, refreshToken, regenerateRecoveryCodes, register, removeHouseholdMember, requestEmailChange, resendEmailConfirmation, resetPassword, resumeEconomyRecurringBillOccurrence, revokeHouseholdInvitation, revokeInvitation, searchEconomyTransactionNotes, setEconomyCategorizationRuleEnabled, setupTotp, skipEconomyRecurringBillOccurrence, streamMyNotifications, unlinkEconomySubscriptionTransaction, updateAvatar, updateEconomyCategorizationRule, updateEconomyCycleStartDay, updateEconomyNotificationPreferences, updateHousehold, updateMyNotificationPreferences, updateProfile, upsertEconomyBudgetLine } from '../sdk.gen';
-import type { AcceptHouseholdInvitationData, AcceptHouseholdInvitationResponse2, AcceptLegalDocumentsData, AcceptLegalDocumentsError, AcceptLegalDocumentsResponse, AddEconomyCategoryData, AddEconomyCategoryError, AddEconomyCategoryResponse, ArchiveNotificationData, ArchiveNotificationError, ArchiveNotificationResponse, AttachEconomyTransactionReceiptData, AttachEconomyTransactionReceiptError, AttachEconomyTransactionReceiptResponse, ChangeEconomySubscriptionLifecycleStateData, ChangeEconomySubscriptionLifecycleStateError, ChangeEconomySubscriptionLifecycleStateResponse, ChangeHouseholdMemberRoleData, ChangeHouseholdMemberRoleResponse2, ChangePasswordData, ChangePasswordError, ChangePasswordResponse2, ChangeUserRoleData, ChangeUserRoleError, ChangeUserRoleResponse2, CommitEconomyImportData, CommitEconomyImportError, CommitEconomyImportResponse, CompleteOnboardingData, CompleteOnboardingError, CompleteOnboardingResponse, ConfirmEconomyEstimatedBillData, ConfirmEconomyEstimatedBillError, ConfirmEconomyEstimatedBillResponse, ConfirmEmailChangeData, ConfirmEmailChangeError, ConfirmEmailChangeResponse2, ConfirmEmailData, ConfirmEmailError, ConfirmEmailResponse2, ConfirmTotpData, ConfirmTotpError, ConfirmTotpResponse2, CopyEconomyBudgetFromPreviousPeriodData, CopyEconomyBudgetFromPreviousPeriodError, CopyEconomyBudgetFromPreviousPeriodResponse, CreateEconomyAccountData, CreateEconomyAccountError, CreateEconomyAccountResponse, CreateEconomyBudgetData, CreateEconomyBudgetError, CreateEconomyBudgetResponse, CreateEconomyCategorizationRuleData, CreateEconomyCategorizationRuleError, CreateEconomyCategorizationRuleResponse, CreateEconomyRecurringBillData, CreateEconomyRecurringBillError, CreateEconomyRecurringBillResponse, CreateEconomySettingsData, CreateEconomySettingsError, CreateEconomySettingsResponse2, CreateEconomySubscriptionData, CreateEconomySubscriptionError, CreateEconomySubscriptionResponse, CreateEconomyTransferData, CreateEconomyTransferError, CreateEconomyTransferResponse, CreateHouseholdData, CreateHouseholdError, CreateHouseholdInvitationData, CreateHouseholdInvitationResponse2, CreateHouseholdResponse2, CreateInvitationData, CreateInvitationError, CreateInvitationResponse2, DeleteAccountData, DeleteAccountError, DeleteAccountResponse, DeleteAvatarData, DeleteAvatarError, DeleteAvatarResponse, DeleteEconomyCategorizationRuleData, DeleteEconomyCategorizationRuleResponse, DeleteHouseholdData, DeleteHouseholdResponse, DisableTwoFactorData, DisableTwoFactorError, DisableTwoFactorResponse2, ExportEconomyGdprData, ExportEconomyGdprResponse2, ExportPersonalDataData, ExportPersonalDataError, ExportPersonalDataResponse2, ForgotPasswordData, ForgotPasswordResponse2, GetAuditTrailData, GetAuditTrailError, GetAuditTrailResponse2, GetCurrentUserData, GetCurrentUserError, GetCurrentUserResponse2, GetEconomyAccountBalancesData, GetEconomyAccountBalancesResponse, GetEconomyBudgetSummaryData, GetEconomyBudgetSummaryResponse, GetEconomyCategoryTrendData, GetEconomyCategoryTrendResponse, GetEconomyIncomeVsExpenseData, GetEconomyIncomeVsExpenseResponse, GetEconomyNotificationPreferencesData, GetEconomyNotificationPreferencesResponse, GetEconomyPeriodComparisonData, GetEconomyPeriodComparisonError, GetEconomyPeriodComparisonResponse, GetEconomySettingsData, GetEconomySettingsError, GetEconomySettingsResponse2, GetEconomySpendBreakdownData, GetEconomySpendBreakdownResponse, GetEconomySubscriptionChargeHistoryData, GetEconomySubscriptionChargeHistoryResponse, GetEconomySubscriptionData, GetEconomySubscriptionLinkCandidatesData, GetEconomySubscriptionLinkCandidatesResponse, GetEconomySubscriptionMonthCalendarData, GetEconomySubscriptionMonthCalendarResponse, GetEconomySubscriptionPaymentScheduleData, GetEconomySubscriptionPaymentScheduleResponse, GetEconomySubscriptionResponse, GetEconomyTopTransactionsData, GetEconomyTopTransactionsResponse, GetEconomyVarianceHistoryData, GetEconomyVarianceHistoryResponse, GetHouseholdAuditData, GetHouseholdAuditResponse2, GetHouseholdData, GetHouseholdResponse2, GetLegalComplianceData, GetLegalComplianceError, GetLegalComplianceResponse2, GetLegalDocumentData, GetLegalDocumentError, GetLegalDocumentResponse2, GetMyNotificationPreferencesData, GetMyNotificationPreferencesError, GetMyNotificationPreferencesResponse2, GetOnboardingLegalRequirementsData, GetOnboardingLegalRequirementsError, GetOnboardingLegalRequirementsResponse2, GetUnreadNotificationCountData, GetUnreadNotificationCountError, GetUnreadNotificationCountResponse2, GetUserAvatarData, GetUserAvatarError, GetUserByIdData, GetUserByIdError, GetUserByIdResponse2, LinkEconomySubscriptionTransactionData, LinkEconomySubscriptionTransactionError, LinkEconomySubscriptionTransactionResponse, ListEconomyAccountsData, ListEconomyAccountsResponse, ListEconomyCategoriesData, ListEconomyCategoriesResponse, ListEconomyCategorizationRulesData, ListEconomyCategorizationRulesResponse, ListEconomyRecurringBillsData, ListEconomyRecurringBillsResponse, ListEconomySubscriptionsData, ListEconomySubscriptionsResponse, ListEconomyTransactionsData, ListEconomyTransactionsResponse, ListHouseholdInvitationsData, ListHouseholdInvitationsResponse2, ListHouseholdMembersData, ListHouseholdMembersResponse2, ListInvitationsData, ListInvitationsError, ListInvitationsResponse2, ListMyHouseholdsData, ListMyHouseholdsResponse2, ListMyNotificationsData, ListMyNotificationsError, ListMyNotificationsResponse2, ListUsersData, ListUsersError, ListUsersResponse2, LoginData, LoginError, LoginResponse2, LoginTwoFactorData, LoginTwoFactorError, LoginTwoFactorResponse2, LogoutAllData, LogoutAllError, LogoutAllResponse2, LogoutData, LogoutError, LogoutResponse2, MarkAllNotificationsAsReadData, MarkAllNotificationsAsReadError, MarkAllNotificationsAsReadResponse, MarkNotificationAsReadData, MarkNotificationAsReadError, MarkNotificationAsReadResponse, PauseEconomyRecurringBillOccurrenceData, PauseEconomyRecurringBillOccurrenceError, PauseEconomyRecurringBillOccurrenceResponse, PreviewEconomyImportData, PreviewEconomyImportError, PreviewEconomyImportResponse, RecordEconomyTransactionData, RecordEconomyTransactionError, RecordEconomyTransactionResponse, RefreshTokenData, RefreshTokenError, RefreshTokenResponse2, RegenerateRecoveryCodesData, RegenerateRecoveryCodesError, RegenerateRecoveryCodesResponse2, RegisterData, RegisterError, RegisterResponse2, RemoveHouseholdMemberData, RemoveHouseholdMemberResponse, RequestEmailChangeData, RequestEmailChangeError, RequestEmailChangeResponse2, ResendEmailConfirmationData, ResendEmailConfirmationResponse2, ResetPasswordData, ResetPasswordError, ResetPasswordResponse2, ResumeEconomyRecurringBillOccurrenceData, ResumeEconomyRecurringBillOccurrenceError, ResumeEconomyRecurringBillOccurrenceResponse, RevokeHouseholdInvitationData, RevokeHouseholdInvitationResponse, RevokeInvitationData, RevokeInvitationError, RevokeInvitationResponse2, SearchEconomyTransactionNotesData, SearchEconomyTransactionNotesError, SearchEconomyTransactionNotesResponse, SetEconomyCategorizationRuleEnabledData, SetEconomyCategorizationRuleEnabledError, SetEconomyCategorizationRuleEnabledResponse, SetupTotpData, SetupTotpError, SetupTotpResponse2, SkipEconomyRecurringBillOccurrenceData, SkipEconomyRecurringBillOccurrenceError, SkipEconomyRecurringBillOccurrenceResponse, StreamMyNotificationsData, StreamMyNotificationsError, UnlinkEconomySubscriptionTransactionData, UnlinkEconomySubscriptionTransactionError, UnlinkEconomySubscriptionTransactionResponse, UpdateAvatarData, UpdateAvatarError, UpdateAvatarResponse2, UpdateEconomyCategorizationRuleData, UpdateEconomyCategorizationRuleError, UpdateEconomyCategorizationRuleResponse, UpdateEconomyCycleStartDayData, UpdateEconomyCycleStartDayError, UpdateEconomyCycleStartDayResponse, UpdateEconomyNotificationPreferencesData, UpdateEconomyNotificationPreferencesResponse, UpdateHouseholdData, UpdateHouseholdResponse2, UpdateMyNotificationPreferencesData, UpdateMyNotificationPreferencesError, UpdateMyNotificationPreferencesResponse, UpdateProfileData, UpdateProfileError, UpdateProfileResponse2, UpsertEconomyBudgetLineData, UpsertEconomyBudgetLineError, UpsertEconomyBudgetLineResponse } from '../types.gen';
+import { acceptHouseholdInvitation, acceptLegalDocuments, addEconomyCategory, addPropertyProjectAttachment, addPropertyProjectLink, addPropertyProjectTask, archiveNotification, assignEconomyTransactionToProject, attachEconomyTransactionReceipt, changeEconomySubscriptionLifecycleState, changeHouseholdMemberRole, changePassword, changePropertyProjectStatus, changeUserRole, commitEconomyImport, completeOnboarding, completePropertyMaintenanceOccurrence, confirmEconomyEstimatedBill, confirmEmail, confirmEmailChange, confirmTotp, copyEconomyBudgetFromPreviousPeriod, createEconomyAccount, createEconomyBudget, createEconomyCategorizationRule, createEconomyRecurringBill, createEconomySettings, createEconomySubscription, createEconomyTransfer, createHousehold, createHouseholdInvitation, createInvitation, createPropertyHistoryEntry, createPropertyMaintenancePlan, createPropertyProject, deactivatePropertyMaintenancePlan, deleteAccount, deleteAvatar, deleteEconomyCategorizationRule, deleteHousehold, deletePropertyHistoryEntry, deletePropertyMaintenancePlan, deletePropertyProject, deletePropertyProjectTask, disableTwoFactor, exportEconomyGdpr, exportPersonalData, forgotPassword, getAuditTrail, getCurrentUser, getEconomyAccountBalances, getEconomyBudgetSummary, getEconomyCategoryTrend, getEconomyIncomeVsExpense, getEconomyNotificationPreferences, getEconomyPeriodComparison, getEconomySettings, getEconomySpendBreakdown, getEconomySubscription, getEconomySubscriptionChargeHistory, getEconomySubscriptionLinkCandidates, getEconomySubscriptionMonthCalendar, getEconomySubscriptionPaymentSchedule, getEconomyTopTransactions, getEconomyVarianceHistory, getHousehold, getHouseholdAudit, getLegalCompliance, getLegalDocument, getMyNotificationPreferences, getOnboardingLegalRequirements, getPropertyHistoryPhotoContent, getPropertyMaintenancePlan, getPropertyProject, getPropertyProjectAttachmentContent, getPropertyProjectBudget, getPropertyProjectTasks, getUnreadNotificationCount, getUserAvatar, getUserById, linkEconomySubscriptionTransaction, listEconomyAccounts, listEconomyCategories, listEconomyCategorizationRules, listEconomyRecurringBills, listEconomySubscriptions, listEconomyTransactions, listEconomyTransactionsForProject, listHouseholdInvitations, listHouseholdMembers, listInvitations, listMyHouseholds, listMyNotifications, listPropertyHistory, listPropertyMaintenancePlans, listPropertyProjects, listPropertyUpcomingMaintenanceOccurrences, listUsers, login, loginTwoFactor, logout, logoutAll, markAllNotificationsAsRead, markNotificationAsRead, type Options, pauseEconomyRecurringBillOccurrence, previewEconomyImport, promotePropertyMaintenanceOccurrence, recordEconomyTransaction, refreshToken, regenerateRecoveryCodes, register, removeHouseholdMember, removePropertyProjectAttachment, removePropertyProjectLink, reorderPropertyProjectTasks, requestEmailChange, resendEmailConfirmation, resetPassword, resumeEconomyRecurringBillOccurrence, revokeHouseholdInvitation, revokeInvitation, searchEconomyTransactionNotes, setEconomyCategorizationRuleEnabled, setupTotp, skipEconomyRecurringBillOccurrence, skipPropertyMaintenanceOccurrence, streamMyNotifications, unlinkEconomySubscriptionTransaction, updateAvatar, updateEconomyCategorizationRule, updateEconomyCycleStartDay, updateEconomyNotificationPreferences, updateHousehold, updateMyNotificationPreferences, updateProfile, updatePropertyHistoryEntry, updatePropertyMaintenancePlan, updatePropertyProject, updatePropertyProjectTask, upsertEconomyBudgetLine } from '../sdk.gen';
+import type { AcceptHouseholdInvitationData, AcceptHouseholdInvitationResponse2, AcceptLegalDocumentsData, AcceptLegalDocumentsError, AcceptLegalDocumentsResponse, AddEconomyCategoryData, AddEconomyCategoryError, AddEconomyCategoryResponse, AddPropertyProjectAttachmentData, AddPropertyProjectLinkData, AddPropertyProjectTaskData, ArchiveNotificationData, ArchiveNotificationError, ArchiveNotificationResponse, AssignEconomyTransactionToProjectData, AssignEconomyTransactionToProjectError, AssignEconomyTransactionToProjectResponse, AttachEconomyTransactionReceiptData, AttachEconomyTransactionReceiptError, AttachEconomyTransactionReceiptResponse, ChangeEconomySubscriptionLifecycleStateData, ChangeEconomySubscriptionLifecycleStateError, ChangeEconomySubscriptionLifecycleStateResponse, ChangeHouseholdMemberRoleData, ChangeHouseholdMemberRoleResponse2, ChangePasswordData, ChangePasswordError, ChangePasswordResponse2, ChangePropertyProjectStatusData, ChangePropertyProjectStatusError, ChangePropertyProjectStatusResponse, ChangeUserRoleData, ChangeUserRoleError, ChangeUserRoleResponse2, CommitEconomyImportData, CommitEconomyImportError, CommitEconomyImportResponse, CompleteOnboardingData, CompleteOnboardingError, CompleteOnboardingResponse, CompletePropertyMaintenanceOccurrenceData, CompletePropertyMaintenanceOccurrenceError, CompletePropertyMaintenanceOccurrenceResponse, ConfirmEconomyEstimatedBillData, ConfirmEconomyEstimatedBillError, ConfirmEconomyEstimatedBillResponse, ConfirmEmailChangeData, ConfirmEmailChangeError, ConfirmEmailChangeResponse2, ConfirmEmailData, ConfirmEmailError, ConfirmEmailResponse2, ConfirmTotpData, ConfirmTotpError, ConfirmTotpResponse2, CopyEconomyBudgetFromPreviousPeriodData, CopyEconomyBudgetFromPreviousPeriodError, CopyEconomyBudgetFromPreviousPeriodResponse, CreateEconomyAccountData, CreateEconomyAccountError, CreateEconomyAccountResponse, CreateEconomyBudgetData, CreateEconomyBudgetError, CreateEconomyBudgetResponse, CreateEconomyCategorizationRuleData, CreateEconomyCategorizationRuleError, CreateEconomyCategorizationRuleResponse, CreateEconomyRecurringBillData, CreateEconomyRecurringBillError, CreateEconomyRecurringBillResponse, CreateEconomySettingsData, CreateEconomySettingsError, CreateEconomySettingsResponse2, CreateEconomySubscriptionData, CreateEconomySubscriptionError, CreateEconomySubscriptionResponse, CreateEconomyTransferData, CreateEconomyTransferError, CreateEconomyTransferResponse, CreateHouseholdData, CreateHouseholdError, CreateHouseholdInvitationData, CreateHouseholdInvitationResponse2, CreateHouseholdResponse2, CreateInvitationData, CreateInvitationError, CreateInvitationResponse2, CreatePropertyHistoryEntryData, CreatePropertyHistoryEntryError, CreatePropertyHistoryEntryResponse, CreatePropertyMaintenancePlanData, CreatePropertyMaintenancePlanError, CreatePropertyMaintenancePlanResponse, CreatePropertyProjectData, CreatePropertyProjectError, CreatePropertyProjectResponse, DeactivatePropertyMaintenancePlanData, DeactivatePropertyMaintenancePlanResponse, DeleteAccountData, DeleteAccountError, DeleteAccountResponse, DeleteAvatarData, DeleteAvatarError, DeleteAvatarResponse, DeleteEconomyCategorizationRuleData, DeleteEconomyCategorizationRuleResponse, DeleteHouseholdData, DeleteHouseholdResponse, DeletePropertyHistoryEntryData, DeletePropertyHistoryEntryResponse, DeletePropertyMaintenancePlanData, DeletePropertyMaintenancePlanResponse, DeletePropertyProjectData, DeletePropertyProjectResponse, DeletePropertyProjectTaskData, DisableTwoFactorData, DisableTwoFactorError, DisableTwoFactorResponse2, ExportEconomyGdprData, ExportEconomyGdprResponse2, ExportPersonalDataData, ExportPersonalDataError, ExportPersonalDataResponse2, ForgotPasswordData, ForgotPasswordResponse2, GetAuditTrailData, GetAuditTrailError, GetAuditTrailResponse2, GetCurrentUserData, GetCurrentUserError, GetCurrentUserResponse2, GetEconomyAccountBalancesData, GetEconomyAccountBalancesResponse, GetEconomyBudgetSummaryData, GetEconomyBudgetSummaryResponse, GetEconomyCategoryTrendData, GetEconomyCategoryTrendResponse, GetEconomyIncomeVsExpenseData, GetEconomyIncomeVsExpenseResponse, GetEconomyNotificationPreferencesData, GetEconomyNotificationPreferencesResponse, GetEconomyPeriodComparisonData, GetEconomyPeriodComparisonError, GetEconomyPeriodComparisonResponse, GetEconomySettingsData, GetEconomySettingsError, GetEconomySettingsResponse2, GetEconomySpendBreakdownData, GetEconomySpendBreakdownResponse, GetEconomySubscriptionChargeHistoryData, GetEconomySubscriptionChargeHistoryResponse, GetEconomySubscriptionData, GetEconomySubscriptionLinkCandidatesData, GetEconomySubscriptionLinkCandidatesResponse, GetEconomySubscriptionMonthCalendarData, GetEconomySubscriptionMonthCalendarResponse, GetEconomySubscriptionPaymentScheduleData, GetEconomySubscriptionPaymentScheduleResponse, GetEconomySubscriptionResponse, GetEconomyTopTransactionsData, GetEconomyTopTransactionsResponse, GetEconomyVarianceHistoryData, GetEconomyVarianceHistoryResponse, GetHouseholdAuditData, GetHouseholdAuditResponse2, GetHouseholdData, GetHouseholdResponse2, GetLegalComplianceData, GetLegalComplianceError, GetLegalComplianceResponse2, GetLegalDocumentData, GetLegalDocumentError, GetLegalDocumentResponse2, GetMyNotificationPreferencesData, GetMyNotificationPreferencesError, GetMyNotificationPreferencesResponse2, GetOnboardingLegalRequirementsData, GetOnboardingLegalRequirementsError, GetOnboardingLegalRequirementsResponse2, GetPropertyHistoryPhotoContentData, GetPropertyMaintenancePlanData, GetPropertyMaintenancePlanResponse, GetPropertyProjectAttachmentContentData, GetPropertyProjectBudgetData, GetPropertyProjectBudgetResponse, GetPropertyProjectData, GetPropertyProjectResponse, GetPropertyProjectTasksData, GetUnreadNotificationCountData, GetUnreadNotificationCountError, GetUnreadNotificationCountResponse2, GetUserAvatarData, GetUserAvatarError, GetUserByIdData, GetUserByIdError, GetUserByIdResponse2, LinkEconomySubscriptionTransactionData, LinkEconomySubscriptionTransactionError, LinkEconomySubscriptionTransactionResponse, ListEconomyAccountsData, ListEconomyAccountsResponse, ListEconomyCategoriesData, ListEconomyCategoriesResponse, ListEconomyCategorizationRulesData, ListEconomyCategorizationRulesResponse, ListEconomyRecurringBillsData, ListEconomyRecurringBillsResponse, ListEconomySubscriptionsData, ListEconomySubscriptionsResponse, ListEconomyTransactionsData, ListEconomyTransactionsForProjectData, ListEconomyTransactionsForProjectResponse, ListEconomyTransactionsResponse, ListHouseholdInvitationsData, ListHouseholdInvitationsResponse2, ListHouseholdMembersData, ListHouseholdMembersResponse2, ListInvitationsData, ListInvitationsError, ListInvitationsResponse2, ListMyHouseholdsData, ListMyHouseholdsResponse2, ListMyNotificationsData, ListMyNotificationsError, ListMyNotificationsResponse2, ListPropertyHistoryData, ListPropertyHistoryResponse, ListPropertyMaintenancePlansData, ListPropertyMaintenancePlansResponse, ListPropertyProjectsData, ListPropertyProjectsResponse, ListPropertyUpcomingMaintenanceOccurrencesData, ListPropertyUpcomingMaintenanceOccurrencesResponse, ListUsersData, ListUsersError, ListUsersResponse2, LoginData, LoginError, LoginResponse2, LoginTwoFactorData, LoginTwoFactorError, LoginTwoFactorResponse2, LogoutAllData, LogoutAllError, LogoutAllResponse2, LogoutData, LogoutError, LogoutResponse2, MarkAllNotificationsAsReadData, MarkAllNotificationsAsReadError, MarkAllNotificationsAsReadResponse, MarkNotificationAsReadData, MarkNotificationAsReadError, MarkNotificationAsReadResponse, PauseEconomyRecurringBillOccurrenceData, PauseEconomyRecurringBillOccurrenceError, PauseEconomyRecurringBillOccurrenceResponse, PreviewEconomyImportData, PreviewEconomyImportError, PreviewEconomyImportResponse, PromotePropertyMaintenanceOccurrenceData, PromotePropertyMaintenanceOccurrenceError, PromotePropertyMaintenanceOccurrenceResponse, RecordEconomyTransactionData, RecordEconomyTransactionError, RecordEconomyTransactionResponse, RefreshTokenData, RefreshTokenError, RefreshTokenResponse2, RegenerateRecoveryCodesData, RegenerateRecoveryCodesError, RegenerateRecoveryCodesResponse2, RegisterData, RegisterError, RegisterResponse2, RemoveHouseholdMemberData, RemoveHouseholdMemberResponse, RemovePropertyProjectAttachmentData, RemovePropertyProjectLinkData, ReorderPropertyProjectTasksData, RequestEmailChangeData, RequestEmailChangeError, RequestEmailChangeResponse2, ResendEmailConfirmationData, ResendEmailConfirmationResponse2, ResetPasswordData, ResetPasswordError, ResetPasswordResponse2, ResumeEconomyRecurringBillOccurrenceData, ResumeEconomyRecurringBillOccurrenceError, ResumeEconomyRecurringBillOccurrenceResponse, RevokeHouseholdInvitationData, RevokeHouseholdInvitationResponse, RevokeInvitationData, RevokeInvitationError, RevokeInvitationResponse2, SearchEconomyTransactionNotesData, SearchEconomyTransactionNotesError, SearchEconomyTransactionNotesResponse, SetEconomyCategorizationRuleEnabledData, SetEconomyCategorizationRuleEnabledError, SetEconomyCategorizationRuleEnabledResponse, SetupTotpData, SetupTotpError, SetupTotpResponse2, SkipEconomyRecurringBillOccurrenceData, SkipEconomyRecurringBillOccurrenceError, SkipEconomyRecurringBillOccurrenceResponse, SkipPropertyMaintenanceOccurrenceData, SkipPropertyMaintenanceOccurrenceError, SkipPropertyMaintenanceOccurrenceResponse, StreamMyNotificationsData, StreamMyNotificationsError, UnlinkEconomySubscriptionTransactionData, UnlinkEconomySubscriptionTransactionError, UnlinkEconomySubscriptionTransactionResponse, UpdateAvatarData, UpdateAvatarError, UpdateAvatarResponse2, UpdateEconomyCategorizationRuleData, UpdateEconomyCategorizationRuleError, UpdateEconomyCategorizationRuleResponse, UpdateEconomyCycleStartDayData, UpdateEconomyCycleStartDayError, UpdateEconomyCycleStartDayResponse, UpdateEconomyNotificationPreferencesData, UpdateEconomyNotificationPreferencesResponse, UpdateHouseholdData, UpdateHouseholdResponse2, UpdateMyNotificationPreferencesData, UpdateMyNotificationPreferencesError, UpdateMyNotificationPreferencesResponse, UpdateProfileData, UpdateProfileError, UpdateProfileResponse2, UpdatePropertyHistoryEntryData, UpdatePropertyHistoryEntryError, UpdatePropertyHistoryEntryResponse, UpdatePropertyMaintenancePlanData, UpdatePropertyMaintenancePlanError, UpdatePropertyMaintenancePlanResponse, UpdatePropertyProjectData, UpdatePropertyProjectError, UpdatePropertyProjectResponse, UpdatePropertyProjectTaskData, UpsertEconomyBudgetLineData, UpsertEconomyBudgetLineError, UpsertEconomyBudgetLineResponse } from '../types.gen';
 
 export type QueryKey<TOptions extends Options> = [
     Pick<TOptions, 'baseUrl' | 'body' | 'headers' | 'path' | 'query'> & {
@@ -364,6 +364,68 @@ export const attachEconomyTransactionReceiptMutation = (options?: Partial<Option
     };
     return mutationOptions;
 };
+
+/**
+ * Link or unlink an economy transaction to a property project.
+ */
+export const assignEconomyTransactionToProjectMutation = (options?: Partial<Options<AssignEconomyTransactionToProjectData>>): UseMutationOptions<AssignEconomyTransactionToProjectResponse, AssignEconomyTransactionToProjectError, Options<AssignEconomyTransactionToProjectData>> => {
+    const mutationOptions: UseMutationOptions<AssignEconomyTransactionToProjectResponse, AssignEconomyTransactionToProjectError, Options<AssignEconomyTransactionToProjectData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await assignEconomyTransactionToProject({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const listEconomyTransactionsForProjectQueryKey = (options: Options<ListEconomyTransactionsForProjectData>) => createQueryKey('listEconomyTransactionsForProject', options);
+
+/**
+ * List economy transactions linked to a property project.
+ */
+export const listEconomyTransactionsForProjectOptions = (options: Options<ListEconomyTransactionsForProjectData>) => queryOptions<ListEconomyTransactionsForProjectResponse, DefaultError, ListEconomyTransactionsForProjectResponse, ReturnType<typeof listEconomyTransactionsForProjectQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await listEconomyTransactionsForProject({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: listEconomyTransactionsForProjectQueryKey(options)
+});
+
+export const listEconomyTransactionsForProjectInfiniteQueryKey = (options: Options<ListEconomyTransactionsForProjectData>): QueryKey<Options<ListEconomyTransactionsForProjectData>> => createQueryKey('listEconomyTransactionsForProject', options, true);
+
+/**
+ * List economy transactions linked to a property project.
+ */
+export const listEconomyTransactionsForProjectInfiniteOptions = (options: Options<ListEconomyTransactionsForProjectData>) => infiniteQueryOptions<ListEconomyTransactionsForProjectResponse, DefaultError, InfiniteData<ListEconomyTransactionsForProjectResponse>, QueryKey<Options<ListEconomyTransactionsForProjectData>>, number | string | Pick<QueryKey<Options<ListEconomyTransactionsForProjectData>>[0], 'body' | 'headers' | 'path' | 'query'>>(
+// @ts-ignore
+{
+    queryFn: async ({ pageParam, queryKey, signal }) => {
+        // @ts-ignore
+        const page: Pick<QueryKey<Options<ListEconomyTransactionsForProjectData>>[0], 'body' | 'headers' | 'path' | 'query'> = typeof pageParam === 'object' ? pageParam : {
+            query: {
+                page: pageParam
+            }
+        };
+        const params = createInfiniteParams(queryKey, page);
+        const { data } = await listEconomyTransactionsForProject({
+            ...options,
+            ...params,
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: listEconomyTransactionsForProjectInfiniteQueryKey(options)
+});
 
 export const searchEconomyTransactionNotesQueryKey = (options: Options<SearchEconomyTransactionNotesData>) => createQueryKey('searchEconomyTransactionNotes', options);
 
@@ -1523,6 +1585,464 @@ export const updateMyNotificationPreferencesMutation = (options?: Partial<Option
     };
     return mutationOptions;
 };
+
+export const listPropertyProjectsQueryKey = (options: Options<ListPropertyProjectsData>) => createQueryKey('listPropertyProjects', options);
+
+export const listPropertyProjectsOptions = (options: Options<ListPropertyProjectsData>) => queryOptions<ListPropertyProjectsResponse, DefaultError, ListPropertyProjectsResponse, ReturnType<typeof listPropertyProjectsQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await listPropertyProjects({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: listPropertyProjectsQueryKey(options)
+});
+
+export const createPropertyProjectMutation = (options?: Partial<Options<CreatePropertyProjectData>>): UseMutationOptions<CreatePropertyProjectResponse, CreatePropertyProjectError, Options<CreatePropertyProjectData>> => {
+    const mutationOptions: UseMutationOptions<CreatePropertyProjectResponse, CreatePropertyProjectError, Options<CreatePropertyProjectData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await createPropertyProject({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const deletePropertyProjectMutation = (options?: Partial<Options<DeletePropertyProjectData>>): UseMutationOptions<DeletePropertyProjectResponse, DefaultError, Options<DeletePropertyProjectData>> => {
+    const mutationOptions: UseMutationOptions<DeletePropertyProjectResponse, DefaultError, Options<DeletePropertyProjectData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await deletePropertyProject({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const getPropertyProjectQueryKey = (options: Options<GetPropertyProjectData>) => createQueryKey('getPropertyProject', options);
+
+export const getPropertyProjectOptions = (options: Options<GetPropertyProjectData>) => queryOptions<GetPropertyProjectResponse, DefaultError, GetPropertyProjectResponse, ReturnType<typeof getPropertyProjectQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await getPropertyProject({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: getPropertyProjectQueryKey(options)
+});
+
+export const updatePropertyProjectMutation = (options?: Partial<Options<UpdatePropertyProjectData>>): UseMutationOptions<UpdatePropertyProjectResponse, UpdatePropertyProjectError, Options<UpdatePropertyProjectData>> => {
+    const mutationOptions: UseMutationOptions<UpdatePropertyProjectResponse, UpdatePropertyProjectError, Options<UpdatePropertyProjectData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await updatePropertyProject({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const getPropertyProjectBudgetQueryKey = (options: Options<GetPropertyProjectBudgetData>) => createQueryKey('getPropertyProjectBudget', options);
+
+export const getPropertyProjectBudgetOptions = (options: Options<GetPropertyProjectBudgetData>) => queryOptions<GetPropertyProjectBudgetResponse, DefaultError, GetPropertyProjectBudgetResponse, ReturnType<typeof getPropertyProjectBudgetQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await getPropertyProjectBudget({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: getPropertyProjectBudgetQueryKey(options)
+});
+
+export const changePropertyProjectStatusMutation = (options?: Partial<Options<ChangePropertyProjectStatusData>>): UseMutationOptions<ChangePropertyProjectStatusResponse, ChangePropertyProjectStatusError, Options<ChangePropertyProjectStatusData>> => {
+    const mutationOptions: UseMutationOptions<ChangePropertyProjectStatusResponse, ChangePropertyProjectStatusError, Options<ChangePropertyProjectStatusData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await changePropertyProjectStatus({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const getPropertyProjectTasksQueryKey = (options: Options<GetPropertyProjectTasksData>) => createQueryKey('getPropertyProjectTasks', options);
+
+export const getPropertyProjectTasksOptions = (options: Options<GetPropertyProjectTasksData>) => queryOptions<unknown, DefaultError, unknown, ReturnType<typeof getPropertyProjectTasksQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await getPropertyProjectTasks({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: getPropertyProjectTasksQueryKey(options)
+});
+
+export const addPropertyProjectTaskMutation = (options?: Partial<Options<AddPropertyProjectTaskData>>): UseMutationOptions<unknown, DefaultError, Options<AddPropertyProjectTaskData>> => {
+    const mutationOptions: UseMutationOptions<unknown, DefaultError, Options<AddPropertyProjectTaskData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await addPropertyProjectTask({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const deletePropertyProjectTaskMutation = (options?: Partial<Options<DeletePropertyProjectTaskData>>): UseMutationOptions<unknown, DefaultError, Options<DeletePropertyProjectTaskData>> => {
+    const mutationOptions: UseMutationOptions<unknown, DefaultError, Options<DeletePropertyProjectTaskData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await deletePropertyProjectTask({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const updatePropertyProjectTaskMutation = (options?: Partial<Options<UpdatePropertyProjectTaskData>>): UseMutationOptions<unknown, DefaultError, Options<UpdatePropertyProjectTaskData>> => {
+    const mutationOptions: UseMutationOptions<unknown, DefaultError, Options<UpdatePropertyProjectTaskData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await updatePropertyProjectTask({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const reorderPropertyProjectTasksMutation = (options?: Partial<Options<ReorderPropertyProjectTasksData>>): UseMutationOptions<unknown, DefaultError, Options<ReorderPropertyProjectTasksData>> => {
+    const mutationOptions: UseMutationOptions<unknown, DefaultError, Options<ReorderPropertyProjectTasksData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await reorderPropertyProjectTasks({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const addPropertyProjectLinkMutation = (options?: Partial<Options<AddPropertyProjectLinkData>>): UseMutationOptions<unknown, DefaultError, Options<AddPropertyProjectLinkData>> => {
+    const mutationOptions: UseMutationOptions<unknown, DefaultError, Options<AddPropertyProjectLinkData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await addPropertyProjectLink({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const removePropertyProjectLinkMutation = (options?: Partial<Options<RemovePropertyProjectLinkData>>): UseMutationOptions<unknown, DefaultError, Options<RemovePropertyProjectLinkData>> => {
+    const mutationOptions: UseMutationOptions<unknown, DefaultError, Options<RemovePropertyProjectLinkData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await removePropertyProjectLink({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const addPropertyProjectAttachmentMutation = (options?: Partial<Options<AddPropertyProjectAttachmentData>>): UseMutationOptions<unknown, DefaultError, Options<AddPropertyProjectAttachmentData>> => {
+    const mutationOptions: UseMutationOptions<unknown, DefaultError, Options<AddPropertyProjectAttachmentData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await addPropertyProjectAttachment({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const getPropertyProjectAttachmentContentQueryKey = (options: Options<GetPropertyProjectAttachmentContentData>) => createQueryKey('getPropertyProjectAttachmentContent', options);
+
+export const getPropertyProjectAttachmentContentOptions = (options: Options<GetPropertyProjectAttachmentContentData>) => queryOptions<unknown, DefaultError, unknown, ReturnType<typeof getPropertyProjectAttachmentContentQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await getPropertyProjectAttachmentContent({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: getPropertyProjectAttachmentContentQueryKey(options)
+});
+
+export const removePropertyProjectAttachmentMutation = (options?: Partial<Options<RemovePropertyProjectAttachmentData>>): UseMutationOptions<unknown, DefaultError, Options<RemovePropertyProjectAttachmentData>> => {
+    const mutationOptions: UseMutationOptions<unknown, DefaultError, Options<RemovePropertyProjectAttachmentData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await removePropertyProjectAttachment({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const listPropertyMaintenancePlansQueryKey = (options: Options<ListPropertyMaintenancePlansData>) => createQueryKey('listPropertyMaintenancePlans', options);
+
+export const listPropertyMaintenancePlansOptions = (options: Options<ListPropertyMaintenancePlansData>) => queryOptions<ListPropertyMaintenancePlansResponse, DefaultError, ListPropertyMaintenancePlansResponse, ReturnType<typeof listPropertyMaintenancePlansQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await listPropertyMaintenancePlans({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: listPropertyMaintenancePlansQueryKey(options)
+});
+
+export const createPropertyMaintenancePlanMutation = (options?: Partial<Options<CreatePropertyMaintenancePlanData>>): UseMutationOptions<CreatePropertyMaintenancePlanResponse, CreatePropertyMaintenancePlanError, Options<CreatePropertyMaintenancePlanData>> => {
+    const mutationOptions: UseMutationOptions<CreatePropertyMaintenancePlanResponse, CreatePropertyMaintenancePlanError, Options<CreatePropertyMaintenancePlanData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await createPropertyMaintenancePlan({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const deletePropertyMaintenancePlanMutation = (options?: Partial<Options<DeletePropertyMaintenancePlanData>>): UseMutationOptions<DeletePropertyMaintenancePlanResponse, DefaultError, Options<DeletePropertyMaintenancePlanData>> => {
+    const mutationOptions: UseMutationOptions<DeletePropertyMaintenancePlanResponse, DefaultError, Options<DeletePropertyMaintenancePlanData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await deletePropertyMaintenancePlan({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const getPropertyMaintenancePlanQueryKey = (options: Options<GetPropertyMaintenancePlanData>) => createQueryKey('getPropertyMaintenancePlan', options);
+
+export const getPropertyMaintenancePlanOptions = (options: Options<GetPropertyMaintenancePlanData>) => queryOptions<GetPropertyMaintenancePlanResponse, DefaultError, GetPropertyMaintenancePlanResponse, ReturnType<typeof getPropertyMaintenancePlanQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await getPropertyMaintenancePlan({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: getPropertyMaintenancePlanQueryKey(options)
+});
+
+export const updatePropertyMaintenancePlanMutation = (options?: Partial<Options<UpdatePropertyMaintenancePlanData>>): UseMutationOptions<UpdatePropertyMaintenancePlanResponse, UpdatePropertyMaintenancePlanError, Options<UpdatePropertyMaintenancePlanData>> => {
+    const mutationOptions: UseMutationOptions<UpdatePropertyMaintenancePlanResponse, UpdatePropertyMaintenancePlanError, Options<UpdatePropertyMaintenancePlanData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await updatePropertyMaintenancePlan({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const deactivatePropertyMaintenancePlanMutation = (options?: Partial<Options<DeactivatePropertyMaintenancePlanData>>): UseMutationOptions<DeactivatePropertyMaintenancePlanResponse, DefaultError, Options<DeactivatePropertyMaintenancePlanData>> => {
+    const mutationOptions: UseMutationOptions<DeactivatePropertyMaintenancePlanResponse, DefaultError, Options<DeactivatePropertyMaintenancePlanData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await deactivatePropertyMaintenancePlan({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const listPropertyUpcomingMaintenanceOccurrencesQueryKey = (options: Options<ListPropertyUpcomingMaintenanceOccurrencesData>) => createQueryKey('listPropertyUpcomingMaintenanceOccurrences', options);
+
+export const listPropertyUpcomingMaintenanceOccurrencesOptions = (options: Options<ListPropertyUpcomingMaintenanceOccurrencesData>) => queryOptions<ListPropertyUpcomingMaintenanceOccurrencesResponse, DefaultError, ListPropertyUpcomingMaintenanceOccurrencesResponse, ReturnType<typeof listPropertyUpcomingMaintenanceOccurrencesQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await listPropertyUpcomingMaintenanceOccurrences({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: listPropertyUpcomingMaintenanceOccurrencesQueryKey(options)
+});
+
+export const completePropertyMaintenanceOccurrenceMutation = (options?: Partial<Options<CompletePropertyMaintenanceOccurrenceData>>): UseMutationOptions<CompletePropertyMaintenanceOccurrenceResponse, CompletePropertyMaintenanceOccurrenceError, Options<CompletePropertyMaintenanceOccurrenceData>> => {
+    const mutationOptions: UseMutationOptions<CompletePropertyMaintenanceOccurrenceResponse, CompletePropertyMaintenanceOccurrenceError, Options<CompletePropertyMaintenanceOccurrenceData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await completePropertyMaintenanceOccurrence({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const skipPropertyMaintenanceOccurrenceMutation = (options?: Partial<Options<SkipPropertyMaintenanceOccurrenceData>>): UseMutationOptions<SkipPropertyMaintenanceOccurrenceResponse, SkipPropertyMaintenanceOccurrenceError, Options<SkipPropertyMaintenanceOccurrenceData>> => {
+    const mutationOptions: UseMutationOptions<SkipPropertyMaintenanceOccurrenceResponse, SkipPropertyMaintenanceOccurrenceError, Options<SkipPropertyMaintenanceOccurrenceData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await skipPropertyMaintenanceOccurrence({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const promotePropertyMaintenanceOccurrenceMutation = (options?: Partial<Options<PromotePropertyMaintenanceOccurrenceData>>): UseMutationOptions<PromotePropertyMaintenanceOccurrenceResponse, PromotePropertyMaintenanceOccurrenceError, Options<PromotePropertyMaintenanceOccurrenceData>> => {
+    const mutationOptions: UseMutationOptions<PromotePropertyMaintenanceOccurrenceResponse, PromotePropertyMaintenanceOccurrenceError, Options<PromotePropertyMaintenanceOccurrenceData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await promotePropertyMaintenanceOccurrence({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const listPropertyHistoryQueryKey = (options: Options<ListPropertyHistoryData>) => createQueryKey('listPropertyHistory', options);
+
+export const listPropertyHistoryOptions = (options: Options<ListPropertyHistoryData>) => queryOptions<ListPropertyHistoryResponse, DefaultError, ListPropertyHistoryResponse, ReturnType<typeof listPropertyHistoryQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await listPropertyHistory({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: listPropertyHistoryQueryKey(options)
+});
+
+export const createPropertyHistoryEntryMutation = (options?: Partial<Options<CreatePropertyHistoryEntryData>>): UseMutationOptions<CreatePropertyHistoryEntryResponse, CreatePropertyHistoryEntryError, Options<CreatePropertyHistoryEntryData>> => {
+    const mutationOptions: UseMutationOptions<CreatePropertyHistoryEntryResponse, CreatePropertyHistoryEntryError, Options<CreatePropertyHistoryEntryData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await createPropertyHistoryEntry({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const deletePropertyHistoryEntryMutation = (options?: Partial<Options<DeletePropertyHistoryEntryData>>): UseMutationOptions<DeletePropertyHistoryEntryResponse, DefaultError, Options<DeletePropertyHistoryEntryData>> => {
+    const mutationOptions: UseMutationOptions<DeletePropertyHistoryEntryResponse, DefaultError, Options<DeletePropertyHistoryEntryData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await deletePropertyHistoryEntry({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const updatePropertyHistoryEntryMutation = (options?: Partial<Options<UpdatePropertyHistoryEntryData>>): UseMutationOptions<UpdatePropertyHistoryEntryResponse, UpdatePropertyHistoryEntryError, Options<UpdatePropertyHistoryEntryData>> => {
+    const mutationOptions: UseMutationOptions<UpdatePropertyHistoryEntryResponse, UpdatePropertyHistoryEntryError, Options<UpdatePropertyHistoryEntryData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await updatePropertyHistoryEntry({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const getPropertyHistoryPhotoContentQueryKey = (options: Options<GetPropertyHistoryPhotoContentData>) => createQueryKey('getPropertyHistoryPhotoContent', options);
+
+export const getPropertyHistoryPhotoContentOptions = (options: Options<GetPropertyHistoryPhotoContentData>) => queryOptions<unknown, DefaultError, unknown, ReturnType<typeof getPropertyHistoryPhotoContentQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await getPropertyHistoryPhotoContent({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: getPropertyHistoryPhotoContentQueryKey(options)
+});
 
 /**
  * Register a new user account.
