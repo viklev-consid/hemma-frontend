@@ -7,6 +7,7 @@
       "budget": "Budget",
       "recurring": "Recurring",
       "subscriptions": "Subscriptions",
+      "analytics": "Insights",
       "accounts": "Accounts",
       "categories": "Categories",
       "rules": "Rules",
@@ -645,6 +646,102 @@
       "board": "Board",
       "year": "Year schedule",
       "month": "Month calendar"
+    }
+  },
+  "analytics": {
+    "title": "Insights",
+    "description": "Observed spending, income, and budget history for this household. These charts look backward at what actually happened — they never forecast.",
+    "loadError": "Couldn't load this chart. Try again in a moment.",
+    "range": {
+      "label": "Range",
+      "presets": {
+        "3": "3 months",
+        "6": "6 months",
+        "12": "12 months"
+      },
+      "from": "From",
+      "to": "To"
+    },
+    "empty": {
+      "title": "Not enough data yet",
+      "description": "Record some transactions in this range and the chart will fill in."
+    },
+    "categoryTrend": {
+      "title": "Spending by category over time",
+      "description": "Monthly spend per category. Gaps are months with no spending — not zero."
+    },
+    "spendBreakdown": {
+      "title": "Where the money went",
+      "description": "Share of categorized spending across this range. Uncategorized spend isn't shown.",
+      "share": "{percent}%"
+    },
+    "periodComparison": {
+      "title": "This period vs. last",
+      "description": "Spending in the current cycle compared with the previous one.",
+      "empty": {
+        "title": "Not enough data yet",
+        "description": "Once this household has spending across two cycles, the comparison appears here."
+      },
+      "current": "This period",
+      "previous": "Previous period",
+      "delta": "Change",
+      "series": {
+        "spend": "Spending"
+      },
+      "prevPeriod": "Previous period",
+      "nextPeriod": "Next period"
+    },
+    "incomeExpense": {
+      "title": "Income vs. expense",
+      "description": "Money in and money out per month, with the net.",
+      "income": "Income",
+      "expense": "Expense",
+      "net": "Net"
+    },
+    "varianceHistory": {
+      "title": "Budget vs. actual",
+      "description": "Planned versus actual spending for budgeted months.",
+      "empty": {
+        "title": "No budgets in this range",
+        "description": "Set budget amounts to track planned versus actual over time."
+      },
+      "planned": "Planned",
+      "actual": "Actual",
+      "variance": "Variance",
+      "varianceHint": "Positive variance means under budget."
+    },
+    "topTransactions": {
+      "title": "Largest transactions",
+      "description": "The biggest amounts in this range, across all kinds.",
+      "empty": {
+        "title": "Not enough data yet",
+        "description": "Transactions in this range will be ranked here by amount."
+      },
+      "filterLabel": "Category",
+      "allCategories": "All categories",
+      "uncategorized": "Uncategorized",
+      "kind": {
+        "Expense": "Expense",
+        "Income": "Income",
+        "Transfer": "Transfer"
+      }
+    },
+    "categoryDetail": {
+      "title": "{category} over time",
+      "budgetVsActual": "Planned vs. actual spending for this category.",
+      "planned": "Planned",
+      "actual": "Actual",
+      "variance": "Variance",
+      "overBudget": "over budget",
+      "underBudget": "under budget",
+      "varianceHint": "Positive variance means under budget.",
+      "actualOnly": "No budget set for this category in this range — showing actual spend only.",
+      "budgetPeriodNote": "Buckets follow this household's budget periods.",
+      "empty": {
+        "title": "Not enough data yet",
+        "description": "Once this category has spending or a budget in this range, its history appears here."
+      },
+      "hint": "Click a category to see its history."
     }
   }
 }

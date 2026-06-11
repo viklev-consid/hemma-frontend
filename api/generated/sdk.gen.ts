@@ -107,7 +107,7 @@ export const addEconomyCategory = <ThrowOnError extends boolean = false>(options
 });
 
 /**
- * Create a budget for the cycle containing the anchor date.
+ * Create or return the budget for the cycle containing the anchor date.
  */
 export const createEconomyBudget = <ThrowOnError extends boolean = false>(options: Options<CreateEconomyBudgetData, ThrowOnError>) => (options.client ?? client).post<CreateEconomyBudgetResponses, CreateEconomyBudgetErrors, ThrowOnError>({
     security: [{ scheme: 'bearer', type: 'http' }],

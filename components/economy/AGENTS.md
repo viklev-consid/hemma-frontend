@@ -30,6 +30,9 @@ points so an agent walking in cold makes correct calls.
 | rule/import enums, rule cap, `duplicateChip`            | `lib/economy/categorization-rule.ts`   |
 | `?step=` nuqs parser, **client-only**                   | `lib/economy/import-step.ts`           |
 | import-step names (server-safe, no nuqs)                | `lib/economy/import-step-constants.ts` |
+| analytics defaults + `toPlotValue`/labels, server-safe  | `lib/economy/analytics.ts`             |
+| analytics `?from=/?to=/?anchor=/?category=`, **client** | `lib/economy/analytics-filters.ts`     |
+| label-union / trend pivot (reshaping only, pure)        | `lib/economy/series.ts`                |
 
 ## Contract points — get these right
 
@@ -341,6 +344,97 @@ month labels) is server-safe and feeds page prefetches;
 `?subscription=`, `?chargePage=`, `?chargePageSize=`) is client-only. Year /
 month defaults are applied at the call site with `.withDefault(...)` so they
 reflect render time.
+
+## Phase 6 contract points (Insights / analytics)
+
+Six **display-only** chart surfaces at `/h/[slug]/economy/analytics`
+(`analytics-page.tsx` + one component per chart, all behind `ChartCard` in
+`analytics-card.tsx`). No mutations, no invalidation, no `<Can>` (membership-
+gated). Built per `docs/workflows/phase-6-analytics.md`; behaviors verified
+against the local backend 2026-06-10.
+
+### 35. Two server/client split modules (same rule as #9 / #34)
+
+`lib/economy/analytics.ts` is **server-safe** (range defaults, `toPlotValue`,
+`formatPlotMoney`, `formatSeriesMonthLabel`, `DEFAULT_TOP_LIMIT`,
+`COMPARISON_SERIES_LABEL`) and feeds the page prefetch.
+`lib/economy/analytics-filters.ts` (nuqs parsers for `?from=`/`?to=`/`?anchor=`
+/`?category=`) is **client-only** — never import it from the server page.
+`lib/economy/series.ts` (`unionLabels`, `pivotTrendSeries`) is pure.
+
+### 36. Calendar-month buckets vs. period-aware surfaces — don't conflate
+
+**Trend** and **income-vs-expense** are labeled `"YYYY-MM"` **calendar** months
+regardless of `cycleStartDay`; render via `formatSeriesMonthLabel`.
+
+**Variance-history is NOT strict calendar-month.** It labels by the **budget-
+period start month** (`"YYYY-MM"`), so for a `cycleStartDay ≠ 1` household it's
+_budget-period history_, not calendar buckets — verified with a cycle-15
+household: a `Mat` transaction on **Apr 12** landed under the **`"2026-03"`**
+bucket (the period that starts Mar 15). For cycle day 1 it happens to coincide
+with calendar months. Same `formatSeriesMonthLabel` for display, but don't tell
+users these are calendar months. (This corrected an earlier wrong claim that
+lumped variance with the calendar-month surfaces.)
+
+**Period-comparison is fully cycle-aware** — it takes `?anchor=` and the backend
+resolves the containing period from `cycleStartDay`; render its own
+`currentPeriod*`/`previousPeriod*` bounds via `formatPeriodRange`. Prev/next
+steppers derive the adjacent anchor with `addDays` one day outside the returned
+bounds (#7 convention).
+
+### 37. No zero-fill; label-union + `toPlotValue` are the only reshaping
+
+The backend ships sparse series (only months/categories with data). Never
+fabricate a zero point or sum/derive a value. `series.ts` may union labels into
+a shared axis and pivot the trend response into rows; `<Line connectNulls=
+{false}>` keeps missing months as honest gaps. `toPlotValue(money)` (the single
+greppable carve-out) supplies numeric **plot coordinates only** — every visible
+amount still formats through `formatMoney`/`<Money>`/`formatPlotMoney`.
+
+### 38. Breakdown excludes uncategorized; savings shows only here
+
+Spend-breakdown `slices` are categorized expenses only; `sharePercent` is the
+backend's share of the **categorized** total — render it, never recompute, and
+never add a client "other"/uncategorized slice (resolved-Q #3). A `Savings`-mode
+transfer surfaces as a breakdown slice **and nowhere else** — it must not be
+added into period-comparison spend or income-vs-expense (resolved-Q #4).
+
+### 39. FE owns date validity — the backend 500s on junk
+
+A malformed `from`/`to`/`anchorDate` → **500**, not 422. Every date must come
+from a `parseAsAnchorDate`-validated param or a server-safe default; the parser
+dropping a junk `?from=` to its `.withDefault(...)` is what keeps the 500
+unreachable. `from > to` is safe (200, empty series → empty card).
+
+### 40. Period-comparison `"spend"` is a label-as-key; top-tx `limit` is explicit
+
+The comparison `series` is a single entry labeled lowercase `"spend"` — map it
+through i18n (`COMPARISON_SERIES_LABEL`) with a raw-label fallback, don't render
+it raw. A data-free anchor returns 200 with zero amounts (not 404) → treat
+all-zero as the empty state. Top-transactions is ranked desc across **all**
+kinds (Income included); always send `limit: DEFAULT_TOP_LIMIT` (no upper clamp,
+no reliable server default); `categoryName`/`note` are nullable.
+
+### 41. Chart colors bypass `ChartConfig` for backend-keyed series
+
+`components/ui/chart.tsx`'s `ChartStyle` injects raw CSS from `ChartConfig`
+keys — so for series keyed by backend ids (category-trend lines, breakdown
+slices) set the color directly via `stroke`/`fill` from `chartColor(index)` and
+give `ChartConfig` entries only a `label`. Never pass a category id/name as a
+config color key.
+
+### 42. Per-category drill-down: `variance-history?categoryId=` + actual fallback
+
+`variance-history` takes an optional `categoryId` — when present, `planned`/
+`actual`/`variance` are scoped to that one budget category (omit → aggregate,
+unchanged). Clicking a category in the trend legend or breakdown
+(legend row / slice) opens `category-detail-dialog.tsx` (transient, **not**
+URL-persisted — it's a drill-down, not a view). The dialog shows that category's
+planned-vs-actual; if it isn't budgeted in range the series is empty (200) and
+it **falls back to the actual trend** from the cached `category-trend` so a click
+never opens an empty dialog. Inherits #36: the budgeted view's buckets are
+budget-period months (the dialog says so), the fallback is calendar months.
+⚠️ Budget lines are upserted via **`PUT /economy/budgets/lines`** (`POST` → 405).
 
 ## Forms
 

@@ -1431,6 +1431,10 @@ export type CreateEconomyBudgetError = CreateEconomyBudgetErrors[keyof CreateEco
 
 export type CreateEconomyBudgetResponses = {
     /**
+     * OK
+     */
+    200: BudgetResponse;
+    /**
      * Created
      */
     201: BudgetResponse;
@@ -2300,6 +2304,7 @@ export type GetEconomyVarianceHistoryData = {
         householdId: string;
         from: string;
         to: string;
+        categoryId?: string;
     };
     url: '/v1/economy/analytics/variance-history';
 };
