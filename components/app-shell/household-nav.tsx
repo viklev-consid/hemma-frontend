@@ -34,6 +34,7 @@ const ECONOMY_NAV_ITEMS = [
   { key: "categories", path: "categories" },
   { key: "rules", path: "rules" },
   { key: "import", path: "import" },
+  { key: "privacy", path: "privacy" },
 ] as const;
 
 /**

@@ -436,6 +436,56 @@ never opens an empty dialog. Inherits #36: the budgeted view's buckets are
 budget-period months (the dialog says so), the fallback is calendar months.
 ⚠️ Budget lines are upserted via **`PUT /economy/budgets/lines`** (`POST` → 405).
 
+## Phase 7 contract points (Privacy disclosure + self-scoped export)
+
+One disclosure page at `/h/[slug]/economy/privacy` (`privacy-page.tsx`):
+honest copy about how economy data is handled, plus a single on-demand export.
+Accuracy-first, not feature-first — every sentence must be true against the
+backend as shipped. Membership-gated (no `<Can>`); copy lives under
+`economy.privacy.*`. Backend behaviors confirmed with the backend team
+2026-06-11.
+
+### 43. Sensitive economy fields are NOT encrypted at rest — release-time copy switch
+
+Field encryption is **not live** for Economy (transaction notes, account/
+category names, **and amounts** persist as plaintext). There is **no runtime
+flag/endpoint** the FE can read, so the encryption claim is a **manual
+release-time copy switch**: it lives in exactly one key
+(`economy.privacy.encryption.status`) and `privacy-copy.test.ts` pins its
+wording. ⚠️ **Re-confirm with the backend at every release** until field
+encryption ships, then flip that one key. The standing risk this whole page
+exists to prevent is this line going stale.
+
+### 44. Erasure deletes receipt blobs — two triggers, anonymize-in-place
+
+Both `DELETE /v1/users/me` (account erasure) and household member removal
+anonymize the user's economy transactions and **delete the linked receipt
+files**. The transaction **row is retained** with `payerId`, `note`, import
+fingerprint, and receipt metadata cleared — don't imply the row vanishes.
+Account erasure itself lives at `/me/settings/data`; this page **links** there
+and does **not** duplicate erasure.
+
+### 45. `economy/gdpr/export` is self-scoped and on-demand/uncached
+
+`GET /v1/economy/gdpr/export?householdId=` → `200 ExportEconomyGdprResponse
+{ householdId, exportedAt, data }`. **Self-scoped**: `data.transactions` is
+filtered to `payerId == currentUserId` within the household — the caller's own
+data, **never** a household-wide dump. Label the button so it can't read as
+one. Per-tx fields are scalar only; `hasReceipt` is a boolean (no blob keys /
+files). A fresh household → `200` with `data.transactions: []` (not 404) —
+still downloads a valid file, don't special-case it as an error. Fetch it with
+a **raw `fetch` → `Blob` → anchor download** (`ExportEconomyDataCard` in
+`privacy-page.tsx`, mirroring `downloadPersonalData()` in `data-settings.tsx`)
+— **never** a `useQuery`, never prefetched, never left in the React Query
+cache (it's sensitive personal data).
+
+### 46. Copy must NOT say (overclaim guardrail — enforced by a test)
+
+Never reintroduce any of: ❌ "We cannot see your financial data" · ❌ "All
+sensitive fields are encrypted" · ❌ "Household owners can export all members'
+economy data." `privacy-copy.test.ts` asserts the `economy.privacy.*` catalog
+contains none of these. When in doubt, say less.
+
 ## Forms
 
 TanStack Forms + generated Zod (`zCreateEconomySettingsRequest`,
