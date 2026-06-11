@@ -236,7 +236,7 @@ export const addEconomyCategoryMutation = (options?: Partial<Options<AddEconomyC
 };
 
 /**
- * Create a budget for the cycle containing the anchor date.
+ * Create or return the budget for the cycle containing the anchor date.
  */
 export const createEconomyBudgetMutation = (options?: Partial<Options<CreateEconomyBudgetData>>): UseMutationOptions<CreateEconomyBudgetResponse, CreateEconomyBudgetError, Options<CreateEconomyBudgetData>> => {
     const mutationOptions: UseMutationOptions<CreateEconomyBudgetResponse, CreateEconomyBudgetError, Options<CreateEconomyBudgetData>> = {

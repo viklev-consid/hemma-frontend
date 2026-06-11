@@ -403,7 +403,7 @@
         "tags": [
           "Hemma.Api"
         ],
-        "summary": "Create a budget for the cycle containing the anchor date.",
+        "summary": "Create or return the budget for the cycle containing the anchor date.",
         "operationId": "CreateEconomyBudget",
         "requestBody": {
           "content": {
@@ -418,6 +418,16 @@
         "responses": {
           "201": {
             "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
@@ -2389,6 +2399,14 @@
             "schema": {
               "type": "string",
               "format": "date"
+            }
+          },
+          {
+            "name": "categoryId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],

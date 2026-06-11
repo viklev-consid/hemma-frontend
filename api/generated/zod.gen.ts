@@ -1463,7 +1463,7 @@ export const zAddEconomyCategoryResponse = zCategoryResponse;
 export const zCreateEconomyBudgetBody = zCreateBudgetRequest;
 
 /**
- * Created
+ * OK
  */
 export const zCreateEconomyBudgetResponse = zBudgetResponse;
 
@@ -1867,7 +1867,8 @@ export const zGetEconomyIncomeVsExpenseResponse = zGetIncomeVsExpenseResponse;
 export const zGetEconomyVarianceHistoryQuery = z.object({
     householdId: z.uuid(),
     from: z.iso.date(),
-    to: z.iso.date()
+    to: z.iso.date(),
+    categoryId: z.uuid().optional()
 });
 
 /**
