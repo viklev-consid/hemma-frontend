@@ -1,0 +1,61 @@
+{
+  "shell": {
+    "nav": {
+      "label": "Property sections",
+      "projects": "Projects",
+      "maintenance": "Maintenance",
+      "logbook": "Logbook"
+    },
+    "noAccess": {
+      "title": "No access to property",
+      "description": "You don't have permission to view this household's property. Ask an owner for access."
+    },
+    "error": {
+      "title": "Couldn't load property",
+      "description": "Something went wrong loading this household's property. Try again in a moment."
+    }
+  },
+  "projects": {
+    "title": "Projects",
+    "description": "Renovation and improvement projects for this household.",
+    "empty": {
+      "title": "No projects yet",
+      "description": "Projects you plan and track will show up here."
+    }
+  },
+  "maintenance": {
+    "title": "Maintenance",
+    "description": "Recurring maintenance plans and their upcoming occurrences."
+  },
+  "logbook": {
+    "title": "Logbook",
+    "description": "A record of completed work on this household."
+  },
+  "enums": {
+    "projectStatus": {
+      "Planning": "Planning",
+      "Active": "Active",
+      "OnHold": "On hold",
+      "Done": "Done"
+    },
+    "taskStatus": {
+      "Todo": "To do",
+      "Doing": "Doing",
+      "Done": "Done"
+    },
+    "recurrenceUnit": {
+      "Month": "Month",
+      "Year": "Year"
+    },
+    "occurrenceStatus": {
+      "Upcoming": "Upcoming",
+      "Done": "Done",
+      "Skipped": "Skipped"
+    },
+    "historyType": {
+      "Project": "Project",
+      "Maintenance": "Maintenance",
+      "Manual": "Manual"
+    }
+  }
+}
