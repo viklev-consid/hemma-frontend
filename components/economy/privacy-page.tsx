@@ -159,10 +159,16 @@ function ExportEconomyDataCard() {
       anchor.click();
       URL.revokeObjectURL(url);
       toast.success(t("done"));
-    } catch {
-      // fetchJson already surfaces the ProblemDetails toast; add a generic
-      // fallback so a non-ProblemDetails failure still tells the user.
-      toast.error(t("error"));
+    } catch (error) {
+      // fetchJson already surfaced the ProblemDetails toast via handleProblem
+      // before throwing, so only add a fallback for true network/parse
+      // failures (which fetchJson can't toast) — a ProblemDetails always
+      // carries a numeric `status`. Avoids a double toast on 403/500.
+      const isProblem =
+        typeof (error as { status?: unknown } | null)?.status === "number";
+      if (!isProblem) {
+        toast.error(t("error"));
+      }
     } finally {
       setIsExporting(false);
     }
