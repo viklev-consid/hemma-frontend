@@ -11,7 +11,8 @@
       "accounts": "Accounts",
       "categories": "Categories",
       "rules": "Rules",
-      "import": "Import"
+      "import": "Import",
+      "privacy": "Privacy"
     },
     "error": {
       "title": "Couldn't load economy",
@@ -742,6 +743,38 @@
         "description": "Once this category has spending or a budget in this range, its history appears here."
       },
       "hint": "Click a category to see its history."
+    }
+  },
+  "privacy": {
+    "title": "Privacy & your economy data",
+    "description": "How Hemma handles the financial data in this household, and how to export or erase the data that is yours.",
+    "encryption": {
+      "title": "Storage & encryption",
+      "status": "Sensitive economy fields aren't encrypted at rest yet. Operators or anyone with raw database access may still see plaintext names, notes, and amounts. Encryption is a pre-production requirement."
+    },
+    "scope": {
+      "title": "What's yours to export",
+      "body": "You can export your own economy data for this household — the transactions where you're the payer. The export never includes other members' transactions, and there is no household-wide export."
+    },
+    "erasure": {
+      "title": "Erasing your economy data",
+      "body": "When your account is erased, or you're removed from this household, your economy transactions are anonymized: the payer, note, and receipt metadata are cleared and the receipt files are deleted. An anonymized transaction row is kept so the household's shared history stays consistent — the row doesn't disappear.",
+      "accountNote": "Account erasure lives in your personal data settings, not here."
+    },
+    "export": {
+      "title": "Export my economy data",
+      "description": "Download a JSON file of your own economy transactions in this household — the transactions where you're the payer. It never includes other members' data. Receipt files aren't included; each transaction only notes whether a receipt exists.",
+      "submit": "Export my economy data",
+      "submitting": "Preparing export…",
+      "done": "Your export has downloaded.",
+      "error": "Couldn't prepare your export. Try again in a moment."
+    },
+    "links": {
+      "title": "Related",
+      "privacyPolicy": "Read the Privacy Policy",
+      "privacyPolicyHint": "The versioned legal document you accepted, viewable in your personal data settings.",
+      "personalData": "Manage your personal data",
+      "personalDataHint": "Export all your personal data or delete your account."
     }
   }
 }
