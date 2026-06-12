@@ -50,7 +50,7 @@ import {
   type ProblemDetails,
 } from "@/api/problems";
 import { Money, MoneyInput } from "@/components/economy/money";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Field,
   FieldContent,
@@ -83,6 +83,7 @@ import {
   validateAttachmentFile,
 } from "@/lib/property/attachment";
 import { PROJECT_TASK_STATUS_OPTIONS } from "@/lib/property/enums";
+import { cn } from "@/lib/utils";
 
 const TASK_TITLE_MAX = 160;
 const LINK_LABEL_MAX = 160;
@@ -887,31 +888,27 @@ function ProjectAttachmentsSection({
           <p className="text-xs text-muted-foreground">{t("description")}</p>
         </div>
         {canWrite ? (
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            disabled={addMutation.isPending}
-            render={
-              <label>
-                <UploadIcon />
-                <span>
-                  {addMutation.isPending ? t("uploading") : t("upload")}
-                </span>
-                <input
-                  type="file"
-                  className="sr-only"
-                  accept={ATTACHMENT_ACCEPT}
-                  disabled={addMutation.isPending}
-                  onChange={(event) => {
-                    const file = event.target.files?.[0];
-                    event.currentTarget.value = "";
-                    if (file) uploadFile(file);
-                  }}
-                />
-              </label>
-            }
-          />
+          <label
+            aria-disabled={addMutation.isPending}
+            className={cn(
+              buttonVariants({ variant: "outline", size: "sm" }),
+              addMutation.isPending && "pointer-events-none opacity-50",
+            )}
+          >
+            <UploadIcon />
+            <span>{addMutation.isPending ? t("uploading") : t("upload")}</span>
+            <input
+              type="file"
+              className="sr-only"
+              accept={ATTACHMENT_ACCEPT}
+              disabled={addMutation.isPending}
+              onChange={(event) => {
+                const file = event.target.files?.[0];
+                event.currentTarget.value = "";
+                if (file) uploadFile(file);
+              }}
+            />
+          </label>
         ) : null}
       </div>
       {attachments.length === 0 ? (
