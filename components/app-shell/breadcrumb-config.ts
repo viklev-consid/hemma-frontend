@@ -12,7 +12,8 @@ import {
  * Breadcrumb trail resolver.
  *
  * The trail roots vary by scope:
- *   - Cross-household pages (`/app`, `/app/notifications`, household pages)   → Dashboard › ...
+ *   - Cross-app pages (`/app`, `/app/notifications`, `/app/households/new`) → Dashboard › ...
+ *   - Inside a household (`/app/h/[slug]/*`)                       → <Household name> › ...
  *   - Personal pages (`/app/me/*`)                                → Account › ...
  *   - Admin pages (`/app/admin/*`)                                → Administration › ...
  *
@@ -20,10 +21,9 @@ import {
  * `startsWith` catch-alls. Use the same href ladder pattern (parent +
  * leaf) so the chevron-separated chain stays clickable.
  *
- * Household pages currently render a static "Household" label rather than
- * the actual household name. Plumbing the dynamic name through would require
- * either a hook variant of this resolver or shape changes to the Crumb
- * type; deferred until there's product pressure for it.
+ * Data-driven labels (the active household's name, a project's name) are
+ * emitted as `{ ns: "dynamic" }` crumbs and resolved in `AppHeader` at render
+ * time, since this resolver is a pure function of the pathname.
  */
 type ShellBreadcrumbKey =
   | "dashboard"
