@@ -195,6 +195,7 @@ function ProjectTasksSection({
               tasks={tasks}
               index={index}
               householdId={householdId}
+              householdSlug={householdSlug}
               projectId={project.projectId}
               canWrite={canWrite}
             />
@@ -217,6 +218,7 @@ function ProjectTaskRow({
   tasks,
   index,
   householdId,
+  householdSlug,
   projectId,
   canWrite,
 }: {
@@ -224,6 +226,7 @@ function ProjectTaskRow({
   tasks: ProjectTaskResponse[];
   index: number;
   householdId: string;
+  householdSlug: string;
   projectId: string;
   canWrite: boolean;
 }) {
@@ -268,6 +271,7 @@ function ProjectTaskRow({
         <ProjectTaskForm
           projectId={projectId}
           householdId={householdId}
+          householdSlug={householdSlug}
           task={task}
           onCancel={() => setEditing(false)}
           onSuccess={() => setEditing(false)}
