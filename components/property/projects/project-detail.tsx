@@ -16,6 +16,7 @@ import {
 } from "@/api/generated/@tanstack/react-query.gen";
 import { Money } from "@/components/economy/money";
 import { ProjectForm } from "@/components/property/projects/project-form";
+import { ProjectNestedCollections } from "@/components/property/projects/project-nested-collections";
 import { ProjectStatusBadge } from "@/components/property/projects/project-status-badge";
 import { PropertyCardSkeleton } from "@/components/property/property-skeletons";
 import {
@@ -232,17 +233,12 @@ export function ProjectDetail({ projectId }: { projectId: string }) {
         </p>
       </Section>
 
-      {/* Phase 3 fills these nested collections in. */}
-      <Section title={t("tasks.title")}>
-        <p className="text-sm text-muted-foreground">
-          {t("tasks.placeholder")}
-        </p>
-      </Section>
-      <Section title={t("links.title")}>
-        <p className="text-sm text-muted-foreground">
-          {t("links.placeholder")}
-        </p>
-      </Section>
+      <ProjectNestedCollections
+        project={project}
+        householdId={householdId}
+        householdSlug={slug}
+        canWrite={canWrite}
+      />
       <Section title={t("attachments.title")}>
         <p className="text-sm text-muted-foreground">
           {t("attachments.placeholder")}
