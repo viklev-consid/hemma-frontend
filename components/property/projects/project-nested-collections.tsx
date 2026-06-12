@@ -169,7 +169,7 @@ function ProjectTasksSection({
   const t = useTranslations("property.projects.detail.tasks");
   const tasks = useMemo(
     () =>
-      [...project.tasks].sort(
+      project.tasks.toSorted(
         (a, b) => Number(a.sortOrder) - Number(b.sortOrder),
       ),
     [project.tasks],
@@ -473,13 +473,7 @@ function ProjectTaskForm({
   const isPending = addMutation.isPending || updateMutation.isPending;
 
   return (
-    <form
-      className="grid gap-3"
-      onSubmit={(event) => {
-        event.preventDefault();
-        void form.handleSubmit();
-      }}
-    >
+    <div className="grid gap-3">
       <FieldGroup className="grid gap-3 md:grid-cols-2">
         <form.Field name="title">
           {(field) => (
@@ -600,12 +594,16 @@ function ProjectTaskForm({
             {t("cancel")}
           </Button>
         ) : null}
-        <Button type="submit" disabled={isPending}>
+        <Button
+          type="button"
+          disabled={isPending}
+          onClick={() => void form.handleSubmit()}
+        >
           <PlusIcon />
           <span>{isPending ? t("saving") : isEdit ? t("save") : t("add")}</span>
         </Button>
       </div>
-    </form>
+    </div>
   );
 }
 
@@ -756,13 +754,7 @@ function ProjectLinkForm({
   });
 
   return (
-    <form
-      className="grid gap-3 md:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)_auto]"
-      onSubmit={(event) => {
-        event.preventDefault();
-        void form.handleSubmit();
-      }}
-    >
+    <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)_auto]">
       <form.Field name="label">
         {(field) => (
           <Field data-invalid={Boolean(fieldErrors.label)}>
@@ -798,12 +790,16 @@ function ProjectLinkForm({
         )}
       </form.Field>
       <div className="flex items-end">
-        <Button type="submit" disabled={mutation.isPending}>
+        <Button
+          type="button"
+          disabled={mutation.isPending}
+          onClick={() => void form.handleSubmit()}
+        >
           <PlusIcon />
           <span>{mutation.isPending ? t("saving") : t("add")}</span>
         </Button>
       </div>
-    </form>
+    </div>
   );
 }
 
