@@ -11,6 +11,7 @@ import invite from "./invite.json";
 import marketing from "./marketing.json";
 import metadata from "./metadata.json";
 import onboarding from "./onboarding.json";
+import property from "./property.json";
 import households from "./households.json";
 import settings from "./settings.json";
 import settingsForms from "./settingsForms.json";
@@ -29,6 +30,7 @@ const messages = {
   marketing,
   metadata,
   onboarding,
+  property,
   households,
   settings,
   settingsForms,

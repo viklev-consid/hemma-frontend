@@ -58,6 +58,7 @@
     "orgNavLabel": "Household",
     "orgOverview": "Overview",
     "orgEconomy": "Economy",
+    "orgProperty": "Property",
     "help": "Get help",
     "signOut": "Sign out",
     "profileMenu": {
@@ -83,7 +84,13 @@
       "householdsMembers": "Members",
       "householdsInvitations": "Invitations",
       "householdsAudit": "Audit",
-      "householdsSettings": "Settings"
+      "householdsSettings": "Settings",
+      "economyTransactionNew": "Record transaction",
+      "economyRecurringNew": "Add recurring bill",
+      "economySubscriptionsYear": "Payment schedule",
+      "economySubscriptionsMonth": "Charge calendar",
+      "propertyProjectNew": "New project",
+      "propertyProjectDetail": "Project"
     }
   }
 }

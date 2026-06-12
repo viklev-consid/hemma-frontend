@@ -29,3 +29,22 @@ export const HOUSEHOLD_PERMISSION = {
 
 export type HouseholdPermission =
   (typeof HOUSEHOLD_PERMISSION)[keyof typeof HOUSEHOLD_PERMISSION];
+
+/**
+ * Scoped-permission strings for the Property module, also returned per
+ * household in `MyHouseholdItem.permissions` from `GET /v1/households/my`
+ * (backend confirmed). In v1 both owners and members receive both grants, so
+ * the gate is functionally membership-equal today — but naming the strings
+ * keeps a future owner-only split a one-line change and mirrors Economy's
+ * `economy.data.read/write` convention.
+ *
+ * Gate read views on `Read` and write affordances on `Write`; never inline
+ * these strings in components (see `lib/property/use-can-write-property.ts`).
+ */
+export const PROPERTY_PERMISSION = {
+  Read: "property.data.read",
+  Write: "property.data.write",
+} as const;
+
+export type PropertyPermission =
+  (typeof PROPERTY_PERMISSION)[keyof typeof PROPERTY_PERMISSION];

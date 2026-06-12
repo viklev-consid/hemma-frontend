@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import {
   ChevronDownIcon,
   ChevronRightIcon,
+  HouseIcon,
   LayoutDashboardIcon,
   WalletIcon,
 } from "lucide-react";
@@ -22,20 +23,12 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import { useActiveHousehold } from "@/lib/active-household-context";
-
-const ECONOMY_NAV_ITEMS = [
-  { key: "transactions", path: "transactions" },
-  { key: "transfers", path: "transfers" },
-  { key: "budget", path: "budget" },
-  { key: "recurring", path: "recurring" },
-  { key: "subscriptions", path: "subscriptions" },
-  { key: "analytics", path: "analytics" },
-  { key: "accounts", path: "accounts" },
-  { key: "categories", path: "categories" },
-  { key: "rules", path: "rules" },
-  { key: "import", path: "import" },
-  { key: "privacy", path: "privacy" },
-] as const;
+import { useCanInActiveHousehold } from "@/lib/active-household-permissions";
+import { PROPERTY_PERMISSION } from "@/lib/household-permission-strings";
+import {
+  ECONOMY_NAV_ITEMS,
+  PROPERTY_NAV_ITEMS,
+} from "@/lib/household-sections";
 
 /**
  * Middle sidebar section — the active household's contextual nav.
@@ -47,14 +40,32 @@ const ECONOMY_NAV_ITEMS = [
 export function HouseholdNav() {
   const t = useTranslations("app.shell");
   const te = useTranslations("economy.shell.nav");
+  const tp = useTranslations("property.shell.nav");
   const { activeHousehold } = useActiveHousehold();
   const pathname = usePathname();
-  const [economyOpen, setEconomyOpen] = useState(true);
+  // Both groups start collapsed; `*Open` only tracks an explicit user toggle.
+  // The section whose route is active is force-expanded below (derived), so
+  // landing on or navigating to a sub-page always reveals that section's nav.
+  const [economyOpen, setEconomyOpen] = useState(false);
+  const [propertyOpen, setPropertyOpen] = useState(false);
+  // Override-aware read gate: a PlatformOverride admin isn't in `/my`, so a raw
+  // permission lookup would hide the group from them — `useCanInActiveHousehold`
+  // grants them through (see lib/active-household-permissions.ts).
+  const canReadProperty = useCanInActiveHousehold(PROPERTY_PERMISSION.Read);
 
   const overviewHref = activeHousehold ? `/app/h/${activeHousehold.slug}` : "";
   const economyHref = `${overviewHref}/economy`;
   const isEconomyRoute =
     pathname === economyHref || pathname.startsWith(`${economyHref}/`);
+  const propertyHref = `${overviewHref}/property`;
+  const isPropertyRoute =
+    pathname === propertyHref || pathname.startsWith(`${propertyHref}/`);
+
+  // Expanded when the user opened it OR its route is active. Derived (not an
+  // effect) so it's hydration-safe and never flashes; the active section can't
+  // be collapsed while you're in it, which is the intended behaviour.
+  const economyExpanded = economyOpen || isEconomyRoute;
+  const propertyExpanded = propertyOpen || isPropertyRoute;
 
   if (!activeHousehold) return null;
 
@@ -77,18 +88,18 @@ export function HouseholdNav() {
             type="button"
             isActive={isEconomyRoute}
             tooltip={t("orgEconomy")}
-            aria-expanded={economyOpen}
+            aria-expanded={economyExpanded}
             onClick={() => setEconomyOpen((open) => !open)}
           >
             <WalletIcon />
             <span>{t("orgEconomy")}</span>
-            {economyOpen ? (
+            {economyExpanded ? (
               <ChevronDownIcon className="ml-auto" />
             ) : (
               <ChevronRightIcon className="ml-auto" />
             )}
           </SidebarMenuButton>
-          {economyOpen ? (
+          {economyExpanded ? (
             <SidebarMenuSub>
               {ECONOMY_NAV_ITEMS.map((item) => {
                 const href = `${economyHref}/${item.path}`;
@@ -109,6 +120,45 @@ export function HouseholdNav() {
             </SidebarMenuSub>
           ) : null}
         </SidebarMenuItem>
+        {canReadProperty ? (
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              type="button"
+              isActive={isPropertyRoute}
+              tooltip={t("orgProperty")}
+              aria-expanded={propertyExpanded}
+              onClick={() => setPropertyOpen((open) => !open)}
+            >
+              <HouseIcon />
+              <span>{t("orgProperty")}</span>
+              {propertyExpanded ? (
+                <ChevronDownIcon className="ml-auto" />
+              ) : (
+                <ChevronRightIcon className="ml-auto" />
+              )}
+            </SidebarMenuButton>
+            {propertyExpanded ? (
+              <SidebarMenuSub>
+                {PROPERTY_NAV_ITEMS.map((item) => {
+                  const href = `${propertyHref}/${item.path}`;
+                  const active =
+                    pathname === href || pathname.startsWith(`${href}/`);
+
+                  return (
+                    <SidebarMenuSubItem key={item.key}>
+                      <SidebarMenuSubButton
+                        isActive={active}
+                        render={<Link href={href} />}
+                      >
+                        <span>{tp(item.key)}</span>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                  );
+                })}
+              </SidebarMenuSub>
+            ) : null}
+          </SidebarMenuItem>
+        ) : null}
       </SidebarMenu>
     </SidebarGroup>
   );

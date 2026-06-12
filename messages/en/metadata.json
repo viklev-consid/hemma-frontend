@@ -75,6 +75,13 @@
       "subscriptionsMonth": "Charge calendar | Hemma",
       "analytics": "Insights | Hemma",
       "privacy": "Privacy | Hemma"
+    },
+    "property": {
+      "projects": "Projects | Hemma",
+      "projectNew": "New project | Hemma",
+      "projectDetail": "Project | Hemma",
+      "maintenance": "Maintenance | Hemma",
+      "logbook": "Logbook | Hemma"
     }
   },
   "settings": {
