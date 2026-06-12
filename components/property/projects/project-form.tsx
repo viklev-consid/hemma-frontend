@@ -119,7 +119,13 @@ export function ProjectForm({
       description: project?.description ?? "",
       targetStartDate: project?.targetStartDate ?? "",
       targetEndDate: project?.targetEndDate ?? "",
-      budgetEstimate: project?.budgetEstimate?.amount ?? "",
+      // MoneyDto.amount is typed `string` but the backend can serialize it as a
+      // JSON number (e.g. 50000) — coerce so the controlled text field (and its
+      // `.trim()` on submit) always gets a string.
+      budgetEstimate:
+        project?.budgetEstimate?.amount == null
+          ? ""
+          : String(project.budgetEstimate.amount),
       notes: project?.notes ?? "",
     },
     onSubmit: async ({ value }) => {
