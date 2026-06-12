@@ -78,6 +78,8 @@
     },
     "property": {
       "projects": "Projects | Hemma",
+      "projectNew": "New project | Hemma",
+      "projectDetail": "Project | Hemma",
       "maintenance": "Maintenance | Hemma",
       "logbook": "Logbook | Hemma"
     }

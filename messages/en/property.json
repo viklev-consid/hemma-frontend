@@ -18,9 +18,104 @@
   "projects": {
     "title": "Projects",
     "description": "Renovation and improvement projects for this household.",
+    "new": "New project",
+    "backToList": "Back to projects",
     "empty": {
       "title": "No projects yet",
       "description": "Projects you plan and track will show up here."
+    },
+    "emptyFiltered": {
+      "title": "No matching projects",
+      "description": "No projects match the current filters."
+    },
+    "filters": {
+      "status": "Status",
+      "area": "Area",
+      "areaPlaceholder": "Filter by area",
+      "all": "All",
+      "clear": "Clear filters"
+    },
+    "row": {
+      "noArea": "No area",
+      "noDates": "No target dates",
+      "noBudget": "No estimate"
+    },
+    "form": {
+      "createTitle": "New project",
+      "editTitle": "Edit project",
+      "name": {
+        "label": "Name",
+        "placeholder": "e.g. Kitchen renovation"
+      },
+      "status": {
+        "label": "Status"
+      },
+      "area": {
+        "label": "Area",
+        "placeholder": "e.g. Kitchen"
+      },
+      "description": {
+        "label": "Description",
+        "placeholder": "What is this project about?"
+      },
+      "targetStartDate": {
+        "label": "Target start"
+      },
+      "targetEndDate": {
+        "label": "Target end"
+      },
+      "budgetEstimate": {
+        "label": "Budget estimate",
+        "hint": "Your planned spend for this project."
+      },
+      "notes": {
+        "label": "Notes",
+        "placeholder": "Anything else worth recording"
+      },
+      "submitCreate": "Create project",
+      "submitEdit": "Save changes",
+      "submitting": "Saving…",
+      "cancel": "Cancel",
+      "createdToast": "Project created",
+      "updatedToast": "Project updated",
+      "invalidDates": "Target end can't be before target start.",
+      "invalidBudget": "Enter a valid amount."
+    },
+    "detail": {
+      "edit": "Edit",
+      "delete": "Delete",
+      "area": "Area",
+      "targetDates": "Target dates",
+      "budgetEstimate": "Budget estimate",
+      "completedAt": "Completed",
+      "notes": "Notes",
+      "noNotes": "No notes yet.",
+      "noDescription": "No description.",
+      "dateRange": "{start} – {end}",
+      "tasks": {
+        "title": "Tasks",
+        "placeholder": "Tasks arrive in the next update."
+      },
+      "links": {
+        "title": "Links",
+        "placeholder": "Links arrive in the next update."
+      },
+      "attachments": {
+        "title": "Attachments",
+        "placeholder": "Attachments arrive in the next update."
+      },
+      "notFound": {
+        "title": "Project not found",
+        "description": "This project doesn't exist or you no longer have access."
+      }
+    },
+    "deleteConfirm": {
+      "title": "Delete project?",
+      "description": "“{name}” and its tasks, links, and attachments will be permanently deleted. This can't be undone.",
+      "cancel": "Cancel",
+      "confirm": "Delete project",
+      "deleting": "Deleting…",
+      "deletedToast": "Project deleted"
     }
   },
   "maintenance": {

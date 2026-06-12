@@ -2,33 +2,32 @@ import type { Metadata } from "next";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { getTranslations } from "next-intl/server";
 
-import { listPropertyProjectsOptions } from "@/api/generated/@tanstack/react-query.gen";
+import { getPropertyProjectOptions } from "@/api/generated/@tanstack/react-query.gen";
 import { serverClient } from "@/api/server-client";
-import { ProjectsListPage } from "@/components/property/projects/projects-list-page";
+import { ProjectDetail } from "@/components/property/projects/project-detail";
 import { resolveHouseholdId } from "@/lib/economy/resolve-household-id";
 import { createQueryClient } from "@/lib/query-client";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("metadata.app.property");
-  return { title: t("projects") };
+  return { title: t("projectDetail") };
 }
 
-export default async function PropertyProjectsPage({
+export default async function PropertyProjectDetailPage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; projectId: string }>;
 }) {
-  const { slug } = await params;
+  const { slug, projectId } = await params;
   const queryClient = createQueryClient();
   const householdId = await resolveHouseholdId(slug);
 
   if (householdId) {
-    // Warm the unfiltered list for first paint. Filtered queries (status/area)
-    // use a different query key and fetch on the client when applied.
     await queryClient
       .prefetchQuery(
-        listPropertyProjectsOptions({
+        getPropertyProjectOptions({
           client: serverClient,
+          path: { projectId },
           query: { householdId },
         }),
       )
@@ -37,7 +36,7 @@ export default async function PropertyProjectsPage({
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <ProjectsListPage />
+      <ProjectDetail projectId={projectId} />
     </HydrationBoundary>
   );
 }
