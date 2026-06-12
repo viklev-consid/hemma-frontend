@@ -85,7 +85,11 @@ export function ProjectDetail({ projectId }: { projectId: string }) {
   const { push } = useRouter();
   const [editOpen, setEditOpen] = useState(false);
 
-  const projectQuery = useQuery(
+  const {
+    data: project,
+    isLoading,
+    isError,
+  } = useQuery(
     getPropertyProjectOptions({
       path: { projectId },
       query: { householdId },
@@ -104,16 +108,13 @@ export function ProjectDetail({ projectId }: { projectId: string }) {
     onError: (error) => handleProblem(error as unknown as ProblemDetails),
   });
 
-  if (projectQuery.isLoading) {
+  if (isLoading) {
     return <PropertyCardSkeleton />;
   }
 
-  const status = (projectQuery.error as unknown as ProblemDetails | null)
-    ?.status;
-  if (projectQuery.isError || !projectQuery.data) {
+  if (isError || !project) {
     // 404 (not found / no access) and anything else land on the same terminal
     // state — there's no project to render either way.
-    void status;
     return (
       <Empty>
         <EmptyHeader>
@@ -124,7 +125,6 @@ export function ProjectDetail({ projectId }: { projectId: string }) {
     );
   }
 
-  const project = projectQuery.data;
   const hasDates = project.targetStartDate || project.targetEndDate;
 
   return (

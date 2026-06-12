@@ -44,7 +44,7 @@ export function ProjectsListPage() {
   const area = filters.area?.trim() ? filters.area.trim() : undefined;
   const hasFilters = Boolean(filters.status) || Boolean(area);
 
-  const projectsQuery = useQuery(
+  const { data, isLoading } = useQuery(
     listPropertyProjectsOptions({
       query: {
         householdId,
@@ -54,7 +54,7 @@ export function ProjectsListPage() {
     }),
   );
 
-  const projects = projectsQuery.data?.projects ?? [];
+  const projects = data?.projects ?? [];
 
   return (
     <div className="grid gap-6">
@@ -127,7 +127,7 @@ export function ProjectsListPage() {
         </Button>
       </div>
 
-      {projectsQuery.isLoading ? (
+      {isLoading ? (
         <ProjectListSkeleton />
       ) : projects.length === 0 ? (
         <Empty>
