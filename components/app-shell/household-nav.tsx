@@ -59,7 +59,10 @@ export function HouseholdNav() {
   const tp = useTranslations("property.shell.nav");
   const { activeHousehold } = useActiveHousehold();
   const pathname = usePathname();
-  const [economyOpen, setEconomyOpen] = useState(true);
+  // Both groups start collapsed; `*Open` only tracks an explicit user toggle.
+  // The section whose route is active is force-expanded below (derived), so
+  // landing on or navigating to a sub-page always reveals that section's nav.
+  const [economyOpen, setEconomyOpen] = useState(false);
   const [propertyOpen, setPropertyOpen] = useState(false);
   // Override-aware read gate: a PlatformOverride admin isn't in `/my`, so a raw
   // permission lookup would hide the group from them — `useCanInActiveHousehold`
@@ -73,6 +76,12 @@ export function HouseholdNav() {
   const propertyHref = `${overviewHref}/property`;
   const isPropertyRoute =
     pathname === propertyHref || pathname.startsWith(`${propertyHref}/`);
+
+  // Expanded when the user opened it OR its route is active. Derived (not an
+  // effect) so it's hydration-safe and never flashes; the active section can't
+  // be collapsed while you're in it, which is the intended behaviour.
+  const economyExpanded = economyOpen || isEconomyRoute;
+  const propertyExpanded = propertyOpen || isPropertyRoute;
 
   if (!activeHousehold) return null;
 
@@ -95,18 +104,18 @@ export function HouseholdNav() {
             type="button"
             isActive={isEconomyRoute}
             tooltip={t("orgEconomy")}
-            aria-expanded={economyOpen}
+            aria-expanded={economyExpanded}
             onClick={() => setEconomyOpen((open) => !open)}
           >
             <WalletIcon />
             <span>{t("orgEconomy")}</span>
-            {economyOpen ? (
+            {economyExpanded ? (
               <ChevronDownIcon className="ml-auto" />
             ) : (
               <ChevronRightIcon className="ml-auto" />
             )}
           </SidebarMenuButton>
-          {economyOpen ? (
+          {economyExpanded ? (
             <SidebarMenuSub>
               {ECONOMY_NAV_ITEMS.map((item) => {
                 const href = `${economyHref}/${item.path}`;
@@ -133,18 +142,18 @@ export function HouseholdNav() {
               type="button"
               isActive={isPropertyRoute}
               tooltip={t("orgProperty")}
-              aria-expanded={propertyOpen}
+              aria-expanded={propertyExpanded}
               onClick={() => setPropertyOpen((open) => !open)}
             >
               <HouseIcon />
               <span>{t("orgProperty")}</span>
-              {propertyOpen ? (
+              {propertyExpanded ? (
                 <ChevronDownIcon className="ml-auto" />
               ) : (
                 <ChevronRightIcon className="ml-auto" />
               )}
             </SidebarMenuButton>
-            {propertyOpen ? (
+            {propertyExpanded ? (
               <SidebarMenuSub>
                 {PROPERTY_NAV_ITEMS.map((item) => {
                   const href = `${propertyHref}/${item.path}`;
