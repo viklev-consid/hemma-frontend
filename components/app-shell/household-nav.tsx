@@ -25,26 +25,10 @@ import {
 import { useActiveHousehold } from "@/lib/active-household-context";
 import { useCanInActiveHousehold } from "@/lib/active-household-permissions";
 import { PROPERTY_PERMISSION } from "@/lib/household-permission-strings";
-
-const ECONOMY_NAV_ITEMS = [
-  { key: "transactions", path: "transactions" },
-  { key: "transfers", path: "transfers" },
-  { key: "budget", path: "budget" },
-  { key: "recurring", path: "recurring" },
-  { key: "subscriptions", path: "subscriptions" },
-  { key: "analytics", path: "analytics" },
-  { key: "accounts", path: "accounts" },
-  { key: "categories", path: "categories" },
-  { key: "rules", path: "rules" },
-  { key: "import", path: "import" },
-  { key: "privacy", path: "privacy" },
-] as const;
-
-const PROPERTY_NAV_ITEMS = [
-  { key: "projects", path: "projects" },
-  { key: "maintenance", path: "maintenance" },
-  { key: "logbook", path: "logbook" },
-] as const;
+import {
+  ECONOMY_NAV_ITEMS,
+  PROPERTY_NAV_ITEMS,
+} from "@/lib/household-sections";
 
 /**
  * Middle sidebar section — the active household's contextual nav.

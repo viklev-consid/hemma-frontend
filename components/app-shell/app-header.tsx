@@ -17,6 +17,9 @@ export function AppHeader() {
   const pathname = usePathname();
   const crumbs = resolveBreadcrumb(pathname);
   const tShell = useTranslations("app.shell.breadcrumb");
+  const tApp = useTranslations("app.shell");
+  const tEconomyNav = useTranslations("economy.shell.nav");
+  const tPropertyNav = useTranslations("property.shell.nav");
   const tSettings = useTranslations("settings.nav");
   const tAdmin = useTranslations("admin.nav");
 
@@ -26,6 +29,14 @@ export function AppHeader() {
         return tSettings(crumb.key);
       case "admin.nav":
         return tAdmin(crumb.key);
+      case "app.shell":
+        return tApp(crumb.key);
+      // Keys are URL segments validated against the section nav list in
+      // breadcrumb-config, so the cast to next-intl's typed key is safe.
+      case "economy.shell.nav":
+        return tEconomyNav(crumb.key as Parameters<typeof tEconomyNav>[0]);
+      case "property.shell.nav":
+        return tPropertyNav(crumb.key as Parameters<typeof tPropertyNav>[0]);
       case "app.shell.breadcrumb":
         return tShell(crumb.key);
     }

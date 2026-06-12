@@ -87,6 +87,112 @@ describe("resolveBreadcrumb", () => {
     },
   );
 
+  it("returns Dashboard › Household › Property › Projects for a property list page", () => {
+    expect(resolveBreadcrumb("/app/h/acme/property/projects")).toEqual([
+      { ns: "app.shell.breadcrumb", key: "dashboard", href: "/app" },
+      {
+        ns: "app.shell.breadcrumb",
+        key: "householdsActive",
+        href: "/app/h/acme",
+      },
+      { ns: "app.shell", key: "orgProperty", href: "/app/h/acme/property" },
+      { ns: "property.shell.nav", key: "projects" },
+    ]);
+  });
+
+  it("links the sub-page and adds a leaf for a property project detail", () => {
+    expect(resolveBreadcrumb("/app/h/acme/property/projects/abc-123")).toEqual([
+      { ns: "app.shell.breadcrumb", key: "dashboard", href: "/app" },
+      {
+        ns: "app.shell.breadcrumb",
+        key: "householdsActive",
+        href: "/app/h/acme",
+      },
+      { ns: "app.shell", key: "orgProperty", href: "/app/h/acme/property" },
+      {
+        ns: "property.shell.nav",
+        key: "projects",
+        href: "/app/h/acme/property/projects",
+      },
+      { ns: "app.shell.breadcrumb", key: "propertyProjectDetail" },
+    ]);
+  });
+
+  it("uses a named leaf for property project create", () => {
+    expect(resolveBreadcrumb("/app/h/acme/property/projects/new")).toEqual([
+      { ns: "app.shell.breadcrumb", key: "dashboard", href: "/app" },
+      {
+        ns: "app.shell.breadcrumb",
+        key: "householdsActive",
+        href: "/app/h/acme",
+      },
+      { ns: "app.shell", key: "orgProperty", href: "/app/h/acme/property" },
+      {
+        ns: "property.shell.nav",
+        key: "projects",
+        href: "/app/h/acme/property/projects",
+      },
+      { ns: "app.shell.breadcrumb", key: "propertyProjectNew" },
+    ]);
+  });
+
+  it("returns Dashboard › Household › Economy › Transactions for an economy page", () => {
+    expect(resolveBreadcrumb("/app/h/acme/economy/transactions")).toEqual([
+      { ns: "app.shell.breadcrumb", key: "dashboard", href: "/app" },
+      {
+        ns: "app.shell.breadcrumb",
+        key: "householdsActive",
+        href: "/app/h/acme",
+      },
+      { ns: "app.shell", key: "orgEconomy", href: "/app/h/acme/economy" },
+      { ns: "economy.shell.nav", key: "transactions" },
+    ]);
+  });
+
+  it("adds a named leaf for a nested economy page", () => {
+    expect(resolveBreadcrumb("/app/h/acme/economy/subscriptions/year")).toEqual(
+      [
+        { ns: "app.shell.breadcrumb", key: "dashboard", href: "/app" },
+        {
+          ns: "app.shell.breadcrumb",
+          key: "householdsActive",
+          href: "/app/h/acme",
+        },
+        { ns: "app.shell", key: "orgEconomy", href: "/app/h/acme/economy" },
+        {
+          ns: "economy.shell.nav",
+          key: "subscriptions",
+          href: "/app/h/acme/economy/subscriptions",
+        },
+        { ns: "app.shell.breadcrumb", key: "economySubscriptionsYear" },
+      ],
+    );
+  });
+
+  it("treats a bare section as the leaf", () => {
+    expect(resolveBreadcrumb("/app/h/acme/property")).toEqual([
+      { ns: "app.shell.breadcrumb", key: "dashboard", href: "/app" },
+      {
+        ns: "app.shell.breadcrumb",
+        key: "householdsActive",
+        href: "/app/h/acme",
+      },
+      { ns: "app.shell", key: "orgProperty" },
+    ]);
+  });
+
+  it("stops at the section for an unknown sub-page (e.g. economy setup)", () => {
+    expect(resolveBreadcrumb("/app/h/acme/economy/setup")).toEqual([
+      { ns: "app.shell.breadcrumb", key: "dashboard", href: "/app" },
+      {
+        ns: "app.shell.breadcrumb",
+        key: "householdsActive",
+        href: "/app/h/acme",
+      },
+      { ns: "app.shell", key: "orgEconomy" },
+    ]);
+  });
+
   it("falls back to Dashboard for unknown paths", () => {
     expect(resolveBreadcrumb("/somewhere/else")).toEqual([
       { ns: "app.shell.breadcrumb", key: "dashboard" },

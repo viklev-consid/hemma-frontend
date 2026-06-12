@@ -84,7 +84,13 @@
       "householdsMembers": "Members",
       "householdsInvitations": "Invitations",
       "householdsAudit": "Audit",
-      "householdsSettings": "Settings"
+      "householdsSettings": "Settings",
+      "economyTransactionNew": "Record transaction",
+      "economyRecurringNew": "Add recurring bill",
+      "economySubscriptionsYear": "Payment schedule",
+      "economySubscriptionsMonth": "Charge calendar",
+      "propertyProjectNew": "New project",
+      "propertyProjectDetail": "Project"
     }
   }
 }
