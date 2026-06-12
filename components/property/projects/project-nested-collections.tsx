@@ -1,16 +1,20 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Image from "next/image";
 import { useForm } from "@tanstack/react-form";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import {
   ArrowDownIcon,
   ArrowUpIcon,
+  DownloadIcon,
   ExternalLinkIcon,
+  FileIcon,
   LinkIcon,
   PlusIcon,
   Trash2Icon,
+  UploadIcon,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -19,16 +23,19 @@ import type {
   ListHouseholdMembersResponse,
   ProjectLinkResponse,
   ProjectResponse,
+  ProjectAttachmentResponse,
   ProjectTaskResponse,
   ProjectTaskStatus,
 } from "@/api/generated";
 import {
+  addPropertyProjectAttachmentMutation,
   addPropertyProjectLinkMutation,
   addPropertyProjectTaskMutation,
   deletePropertyProjectTaskMutation,
   getPropertyProjectQueryKey,
   getPropertyProjectTasksQueryKey,
   listHouseholdMembersOptions,
+  removePropertyProjectAttachmentMutation,
   removePropertyProjectLinkMutation,
   reorderPropertyProjectTasksMutation,
   updatePropertyProjectTaskMutation,
@@ -71,6 +78,10 @@ import {
 } from "@/components/ui/alert-dialog";
 import { isValidMoneyAmount, toMoneyRequest } from "@/lib/economy/money";
 import { formatDateOnly } from "@/lib/property/dates";
+import {
+  ATTACHMENT_ACCEPT,
+  validateAttachmentFile,
+} from "@/lib/property/attachment";
 import { PROJECT_TASK_STATUS_OPTIONS } from "@/lib/property/enums";
 
 const TASK_TITLE_MAX = 160;
@@ -132,6 +143,12 @@ export function ProjectNestedCollections({
         projectId={project.projectId}
         householdId={householdId}
         links={project.links}
+        canWrite={canWrite}
+      />
+      <ProjectAttachmentsSection
+        projectId={project.projectId}
+        householdId={householdId}
+        attachments={project.attachments}
         canWrite={canWrite}
       />
     </div>
@@ -787,5 +804,221 @@ function ProjectLinkForm({
         </Button>
       </div>
     </form>
+  );
+}
+
+function formatBytes(value: number | string) {
+  const bytes = Number(value);
+  if (!Number.isFinite(bytes) || bytes <= 0) return "0 B";
+  const units = ["B", "KB", "MB", "GB"];
+  const index = Math.min(
+    Math.floor(Math.log(bytes) / Math.log(1024)),
+    units.length - 1,
+  );
+  return `${(bytes / 1024 ** index).toFixed(index === 0 ? 0 : 1)} ${units[index]}`;
+}
+
+function projectAttachmentContentUrl(
+  projectId: string,
+  attachmentId: string,
+  householdId: string,
+) {
+  const path = `/api/proxy/v1/property/projects/${encodeURIComponent(
+    projectId,
+  )}/attachments/${encodeURIComponent(attachmentId)}/content`;
+  return `${path}?householdId=${encodeURIComponent(householdId)}`;
+}
+
+function ProjectAttachmentsSection({
+  projectId,
+  householdId,
+  attachments,
+  canWrite,
+}: {
+  projectId: string;
+  householdId: string;
+  attachments: ProjectAttachmentResponse[];
+  canWrite: boolean;
+}) {
+  const t = useTranslations("property.projects.detail.attachments");
+  const queryClient = useQueryClient();
+
+  const addMutation = useMutation({
+    ...addPropertyProjectAttachmentMutation(),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: getPropertyProjectQueryKey({
+          path: { projectId },
+          query: { householdId },
+        }),
+      });
+      toast.success(t("uploadedToast"));
+    },
+    onError: (error) => handleProblem(error as unknown as ProblemDetails),
+  });
+  const removeMutation = useMutation({
+    ...removePropertyProjectAttachmentMutation(),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: getPropertyProjectQueryKey({
+          path: { projectId },
+          query: { householdId },
+        }),
+      });
+      toast.success(t("removedToast"));
+    },
+    onError: (error) => handleProblem(error as unknown as ProblemDetails),
+  });
+
+  const uploadFile = (file: File) => {
+    const validationError = validateAttachmentFile(file);
+    if (validationError) {
+      toast.error(t(`validation.${validationError}`));
+      return;
+    }
+    addMutation.mutate({
+      path: { projectId },
+      query: { householdId },
+      body: { file },
+    });
+  };
+
+  return (
+    <section className="grid gap-3 border p-4">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <div>
+          <h2 className="text-sm font-semibold">{t("title")}</h2>
+          <p className="text-xs text-muted-foreground">{t("description")}</p>
+        </div>
+        {canWrite ? (
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            disabled={addMutation.isPending}
+            render={
+              <label>
+                <UploadIcon />
+                <span>
+                  {addMutation.isPending ? t("uploading") : t("upload")}
+                </span>
+                <input
+                  type="file"
+                  className="sr-only"
+                  accept={ATTACHMENT_ACCEPT}
+                  disabled={addMutation.isPending}
+                  onChange={(event) => {
+                    const file = event.target.files?.[0];
+                    event.currentTarget.value = "";
+                    if (file) uploadFile(file);
+                  }}
+                />
+              </label>
+            }
+          />
+        ) : null}
+      </div>
+      {attachments.length === 0 ? (
+        <p className="text-sm text-muted-foreground">{t("empty")}</p>
+      ) : (
+        <div className="grid gap-3">
+          {attachments.map((attachment) => {
+            const url = projectAttachmentContentUrl(
+              projectId,
+              attachment.attachmentId,
+              householdId,
+            );
+            const isImage = attachment.contentType.startsWith("image/");
+            return (
+              <div
+                key={attachment.attachmentId}
+                className="grid gap-3 border p-3 md:grid-cols-[96px_1fr_auto]"
+              >
+                <div className="relative flex size-24 items-center justify-center overflow-hidden border bg-muted/30">
+                  {isImage ? (
+                    <Image
+                      src={url}
+                      alt=""
+                      fill
+                      sizes="96px"
+                      className="object-cover"
+                      unoptimized
+                    />
+                  ) : (
+                    <FileIcon className="size-8 text-muted-foreground" />
+                  )}
+                </div>
+                <div className="grid content-center gap-1">
+                  <p className="truncate text-sm font-medium">
+                    {attachment.fileName}
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    {attachment.contentType} · {formatBytes(attachment.size)}
+                  </p>
+                </div>
+                <div className="flex items-center gap-1">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    render={
+                      <a href={url} target="_blank" rel="noopener">
+                        <DownloadIcon />
+                        <span>{t("open")}</span>
+                      </a>
+                    }
+                  />
+                  {canWrite ? (
+                    <AlertDialog>
+                      <AlertDialogTrigger
+                        render={
+                          <Button type="button" variant="ghost" size="icon-sm">
+                            <Trash2Icon />
+                            <span className="sr-only">{t("remove")}</span>
+                          </Button>
+                        }
+                      />
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>
+                            {t("deleteTitle")}
+                          </AlertDialogTitle>
+                          <AlertDialogDescription>
+                            {t("deleteDescription", {
+                              name: attachment.fileName,
+                            })}
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
+                          <Button
+                            type="button"
+                            variant="destructive"
+                            disabled={removeMutation.isPending}
+                            onClick={() =>
+                              removeMutation.mutate({
+                                path: {
+                                  projectId,
+                                  attachmentId: attachment.attachmentId,
+                                },
+                                query: { householdId },
+                              })
+                            }
+                          >
+                            {removeMutation.isPending
+                              ? t("removing")
+                              : t("remove")}
+                          </Button>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  ) : null}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </section>
   );
 }

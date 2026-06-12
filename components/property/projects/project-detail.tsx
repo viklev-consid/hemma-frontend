@@ -239,11 +239,6 @@ export function ProjectDetail({ projectId }: { projectId: string }) {
         householdSlug={slug}
         canWrite={canWrite}
       />
-      <Section title={t("attachments.title")}>
-        <p className="text-sm text-muted-foreground">
-          {t("attachments.placeholder")}
-        </p>
-      </Section>
     </div>
   );
 }

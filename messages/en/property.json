@@ -138,7 +138,23 @@
       },
       "attachments": {
         "title": "Attachments",
-        "placeholder": "Attachments arrive in the next update."
+        "description": "Upload PDFs or images for this project.",
+        "empty": "No attachments yet.",
+        "upload": "Upload",
+        "uploading": "Uploading…",
+        "open": "Open",
+        "remove": "Remove",
+        "removing": "Removing…",
+        "cancel": "Cancel",
+        "deleteTitle": "Remove attachment?",
+        "deleteDescription": "“{name}” will be removed from this project.",
+        "uploadedToast": "Attachment uploaded",
+        "removedToast": "Attachment removed",
+        "validation": {
+          "empty": "Choose a non-empty file.",
+          "type": "Use a PDF, JPG, PNG, or WebP file.",
+          "size": "Attachments can be at most 10 MB."
+        }
       },
       "notFound": {
         "title": "Project not found",
