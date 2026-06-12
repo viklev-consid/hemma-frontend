@@ -65,6 +65,14 @@ export type Crumb =
       href?: string;
     }
   | {
+      // Labels resolved at render time from live data, not i18n: the active
+      // household's name and the current project's name. The header falls back
+      // to an i18n string while the data loads.
+      ns: "dynamic";
+      key: "householdName" | "projectName";
+      href?: string;
+    }
+  | {
       ns: "settings.nav";
       key: SettingsRouteLabelKey;
       href?: string;
@@ -92,12 +100,7 @@ function householdSubPageCrumbs(
   leafKey: ShellBreadcrumbKey,
 ): Crumb[] {
   return [
-    { ns: "app.shell.breadcrumb", key: "dashboard", href: "/app" },
-    {
-      ns: "app.shell.breadcrumb",
-      key: "householdsActive",
-      href: `/app/h/${slug}`,
-    },
+    { ns: "dynamic", key: "householdName", href: `/app/h/${slug}` },
     { ns: "app.shell.breadcrumb", key: leafKey },
   ];
 }
@@ -137,10 +140,7 @@ function sectionCrumbs(
 ): Crumb[] {
   const base = `/app/h/${slug}`;
   const config = SECTION_CONFIG[section];
-  const crumbs: Crumb[] = [
-    { ns: "app.shell.breadcrumb", key: "dashboard", href: "/app" },
-    { ns: "app.shell.breadcrumb", key: "householdsActive", href: base },
-  ];
+  const crumbs: Crumb[] = [{ ns: "dynamic", key: "householdName", href: base }];
 
   const sub = rest[0];
   const knownSub =
@@ -163,18 +163,17 @@ function sectionCrumbs(
     return crumbs;
   }
 
-  // Nested page (e.g. `/projects/new`, `/projects/:id`). Resolve its leaf; the
-  // sub-page then links back to its list. A property project detail has a
-  // dynamic name we don't resolve here, so it gets a generic "Project" leaf.
-  const deepLeaf =
-    SECTION_DEEP_LEAF[`${section}/${sub}/${rest[1]}`] ??
-    (section === "property" && sub === "projects"
-      ? "propertyProjectDetail"
-      : undefined);
-
+  // Nested page (e.g. `/projects/new`, `/projects/:id`). The sub-page then links
+  // back to its list and the nested page is the leaf.
+  const deepLeaf = SECTION_DEEP_LEAF[`${section}/${sub}/${rest[1]}`];
   if (deepLeaf) {
     crumbs.push({ ns: config.navNs, key: sub, href: subHref });
     crumbs.push({ ns: "app.shell.breadcrumb", key: deepLeaf });
+  } else if (section === "property" && sub === "projects") {
+    // Project detail — leaf is the project's name, resolved from cache in the
+    // header (falls back to a generic "Project" label while loading).
+    crumbs.push({ ns: config.navNs, key: sub, href: subHref });
+    crumbs.push({ ns: "dynamic", key: "projectName" });
   } else {
     // Unknown nested page → stop at the sub-page as the leaf.
     crumbs.push({ ns: config.navNs, key: sub });
@@ -263,10 +262,7 @@ const trails: Trail[] = [
   },
   {
     match: (p) => p.startsWith("/app/h/"),
-    build: () => [
-      { ns: "app.shell.breadcrumb", key: "dashboard", href: "/app" },
-      { ns: "app.shell.breadcrumb", key: "householdsActive" },
-    ],
+    build: () => [{ ns: "dynamic", key: "householdName" }],
   },
 ];
 
