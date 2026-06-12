@@ -10,7 +10,7 @@ import { listPropertyProjectsOptions } from "@/api/generated/@tanstack/react-que
 import { Money } from "@/components/economy/money";
 import { ProjectListSkeleton } from "@/components/property/property-skeletons";
 import { ProjectStatusBadge } from "@/components/property/projects/project-status-badge";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Empty,
   EmptyDescription,
@@ -64,12 +64,13 @@ export function ProjectsListPage() {
           <p className="text-sm text-muted-foreground">{t("description")}</p>
         </div>
         {canWrite ? (
-          <Button
-            render={<Link href={`/app/h/${slug}/property/projects/new`} />}
+          <Link
+            href={`/app/h/${slug}/property/projects/new`}
+            className={buttonVariants()}
           >
             <PlusIcon />
             <span>{t("new")}</span>
-          </Button>
+          </Link>
         ) : null}
       </div>
 
