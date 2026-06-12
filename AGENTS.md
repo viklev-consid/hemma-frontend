@@ -27,6 +27,10 @@ Before any Next.js work, find and read the relevant doc in `node_modules/next/di
 - This app uses Tailwind CSS v4 and shadcn style `base-lyra`; match the existing component style and token usage.
 - Avoid adding new design systems or one-off component libraries unless explicitly requested.
 
+# Browser testing
+
+- For local browser verification against seeded backend data, the dev seed admin is documented in `docs/workflows/phase-6-analytics.md` and `docs/workflows/phase-7-privacy.md`: `admin@example.test` / `Admin1!Admin1!`. The backend DB resets on restart, and that admin is expected to exist after each restart.
+
 # Generated/API workflow
 
 - `pnpm api:sync` expects the backend OpenAPI endpoint at `https://localhost:7297/openapi/v1.json`.

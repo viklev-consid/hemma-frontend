@@ -1,11 +1,16 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { ArrowLeftIcon } from "lucide-react";
 
 import { ProjectForm } from "@/components/property/projects/project-form";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { useHousehold } from "@/lib/household-context";
 
 export function NewProjectPage() {
@@ -15,21 +20,20 @@ export function NewProjectPage() {
   const { push } = useRouter();
 
   const listHref = `/app/h/${slug}/property/projects`;
+  const close = () => push(listHref);
 
   return (
-    <section className="grid gap-4">
-      <Link
-        href={listHref}
-        className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
-      >
-        <ArrowLeftIcon className="size-3.5" />
-        <span>{t("backToList")}</span>
-      </Link>
-      <h1 className="text-lg font-semibold">{tf("createTitle")}</h1>
-      <ProjectForm
-        onSuccess={(project) => push(`${listHref}/${project.projectId}`)}
-        onCancel={() => push(listHref)}
-      />
-    </section>
+    <Dialog open onOpenChange={(open) => (!open ? close() : undefined)}>
+      <DialogContent className="max-h-[min(90vh,48rem)] overflow-y-auto sm:max-w-xl">
+        <DialogHeader>
+          <DialogTitle>{tf("createTitle")}</DialogTitle>
+          <DialogDescription>{t("description")}</DialogDescription>
+        </DialogHeader>
+        <ProjectForm
+          onSuccess={(project) => push(`${listHref}/${project.projectId}`)}
+          onCancel={close}
+        />
+      </DialogContent>
+    </Dialog>
   );
 }
